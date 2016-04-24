@@ -40,6 +40,11 @@ public class SortTest {
 		testSort(new MergeSort<>());
 	}
 
+	@Test
+	public void testHeapSort() {
+		testSort(new HeapSort<>());
+	}
+
 	private void testSort(Sorter<Integer> sorter) {
 		Collections.shuffle(Arrays.asList(randomlyPermuted));
 

@@ -12,20 +12,20 @@ import static org.hamcrest.core.Is.is;
 /**
  * @author khanhpdt
  */
-public class BinaryHeapTest {
+public class BinaryMaxHeapTest {
 
 	@Test
 	public void testBuildHeap() {
 		Integer[] nodes = IntStream.range(1, 20).boxed().toArray(Integer[]::new);
 		Collections.shuffle(Arrays.asList(nodes));
 
-		BinaryHeap<Integer> heap = new BinaryHeap<>(nodes);
+		BinaryMaxHeap<Integer> heap = new BinaryMaxHeap<>(nodes);
 
 		assertThat("max heap property satisfied", checkMaxHeapProperty(heap), is(true));
 	}
 
-	private boolean checkMaxHeapProperty(BinaryHeap<Integer> binaryHeap) {
-		Integer[] nodes = binaryHeap.getNodes();
+	private boolean checkMaxHeapProperty(BinaryMaxHeap<Integer> binaryMaxHeap) {
+		Integer[] nodes = binaryMaxHeap.getNodes();
 		for (int i = 0; i < nodes.length; i++) {
 			int leftChildIndex = 2 * i + 1;
 			if (leftChildIndex < nodes.length && nodes[leftChildIndex].compareTo(nodes[i]) > 0) {

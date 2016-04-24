@@ -1,22 +1,23 @@
 package org.khanhpdt.playgrounds.datastructures.trees;
 
-import java.util.Arrays;
-
 /**
  * @param <T> node type
  * @author khanhpdt
  */
-public class BinaryHeap<T extends Comparable<T>> {
+public class BinaryMaxHeap<T extends Comparable<T>> {
 
 	private T[] nodes;
 
-	public BinaryHeap(T[] nodes) {
-		this.nodes = Arrays.copyOf(nodes, nodes.length);
+	private int heapSize;
+
+	public BinaryMaxHeap(T[] nodes) {
+		this.nodes = nodes;
+		this.heapSize = nodes.length;
+
 		build();
 	}
 
 	private void build() {
-		int heapSize = nodes.length;
 		// heap leaves are from (floor(nodes.length/2)) to nodes.length
 		int leafStartingIndex = (int) Math.floor(heapSize / 2) + 1;
 
@@ -27,7 +28,7 @@ public class BinaryHeap<T extends Comparable<T>> {
 		}
 	}
 
-	private void maxHeapify(int indexCurrent) {
+	public void maxHeapify(int indexCurrent) {
 		int indexLeftChild = 2 * indexCurrent + 1;
 		int indexRightChild = 2 * indexCurrent + 2;
 
@@ -55,17 +56,27 @@ public class BinaryHeap<T extends Comparable<T>> {
 	private int getIndexMax(int... indexes) {
 		int indexMax = indexes[0];
 		T max = nodes[indexMax];
+
 		for (int j = 1; j < indexes.length; j++) {
 			int index = indexes[j];
-			if (index < nodes.length && nodes[index].compareTo(max) > 0) {
+			if (index < heapSize && nodes[index].compareTo(max) > 0) {
 				indexMax = index;
 				max = nodes[indexMax];
 			}
 		}
+
 		return indexMax;
 	}
 
 	public T[] getNodes() {
 		return nodes;
+	}
+
+	public void maxHeapifyRoot() {
+		maxHeapify(0);
+	}
+
+	public void reduceHeapSizeBy(int reductionSize) {
+		this.heapSize -= reductionSize;
 	}
 }
