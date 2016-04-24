@@ -13,6 +13,7 @@ A place to play with data structures and algorithms in Java.
     - Double-ended queues (deques)
 - Trees
     - Binary search trees
+- Heaps
 
 ## Algorithms
 
@@ -22,3 +23,5 @@ A place to play with data structures and algorithms in Java.
     - Insertion sort
     - Shell sort
     - Merge sort
+    - Heap sort
+    - Quick sort
