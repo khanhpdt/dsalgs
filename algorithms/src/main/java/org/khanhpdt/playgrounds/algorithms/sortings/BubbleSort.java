@@ -1,5 +1,7 @@
 package org.khanhpdt.playgrounds.algorithms.sortings;
 
+import static org.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.swap;
+
 /**
  * @author khanhpdt
  */
@@ -19,12 +21,6 @@ public class BubbleSort<T extends Comparable<T>> implements Sorter<T> {
 			}
 			sorted++;
 		}
-	}
-
-	private void swap(T[] elements, int i, int j) {
-		T temp = elements[i];
-		elements[i] = elements[j];
-		elements[j] = temp;
 	}
 
 }

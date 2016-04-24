@@ -45,6 +45,11 @@ public class SortTest {
 		testSort(new HeapSort<>());
 	}
 
+	@Test
+	public void testQuickSort() {
+		testSort(new QuickSort<>());
+	}
+
 	private void testSort(Sorter<Integer> sorter) {
 		Collections.shuffle(Arrays.asList(randomlyPermuted));
 

@@ -1,5 +1,7 @@
 package org.khanhpdt.playgrounds.datastructures.trees;
 
+import static org.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.swap;
+
 /**
  * @param <T> node type
  * @author khanhpdt
@@ -40,17 +42,11 @@ public class BinaryMaxHeap<T extends Comparable<T>> {
 		}
 
 		// swap the node and its max child. so the node floats down.
-		swap(indexCurrent, indexMax);
+		swap(nodes, indexCurrent, indexMax);
 
 		// because the node floats down, it might break the heap property in its subtree. so we must continue to
 		// heapify the subtree.
 		maxHeapify(indexMax);
-	}
-
-	private void swap(int i1, int i2) {
-		T temp = nodes[i1];
-		nodes[i1] = nodes[i2];
-		nodes[i2] = temp;
 	}
 
 	private int getIndexMax(int... indexes) {

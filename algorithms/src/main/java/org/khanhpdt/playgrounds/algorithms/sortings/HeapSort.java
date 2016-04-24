@@ -2,6 +2,8 @@ package org.khanhpdt.playgrounds.algorithms.sortings;
 
 import org.khanhpdt.playgrounds.datastructures.trees.BinaryMaxHeap;
 
+import static org.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.swap;
+
 /**
  * @author khanhpdt
  */
@@ -18,12 +20,6 @@ public class HeapSort<T extends Comparable<T>> implements Sorter<T> {
 			// restructure the heap because of the new root
 			heap.maxHeapifyRoot();
 		}
-	}
-
-	private void swap(T[] elements, int i1, int i2) {
-		T temp = elements[i1];
-		elements[i1] = elements[i2];
-		elements[i2] = temp;
 	}
 
 }
