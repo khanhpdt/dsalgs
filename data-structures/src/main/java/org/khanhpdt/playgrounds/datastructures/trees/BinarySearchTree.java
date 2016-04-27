@@ -1,5 +1,8 @@
 package org.khanhpdt.playgrounds.datastructures.trees;
 
+import org.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
+import org.khanhpdt.playgrounds.datastructures.stacks.Stack;
+
 import java.util.*;
 
 /**
@@ -71,7 +74,7 @@ public class BinarySearchTree {
 		List<BinaryTreeNode> result = new ArrayList<>();
 
 		// for temporarily holding nodes during traverse
-		Stack<LinkedBinaryTreeNode> stack = new Stack<>();
+		Stack<BinaryTreeNode> stack = new Stack<>();
 
 		/*
 		Main idea: Keep traversing accordingly to the in-order order. When reaching the sentinel node, goes back to the
@@ -83,12 +86,12 @@ public class BinarySearchTree {
 		while (currentNode != null || !stack.isEmpty()) {
 			if (currentNode != null) {
 				// save node to move to it later
-				stack.push(new LinkedBinaryTreeNode(currentNode));
+				stack.push(currentNode);
 				// traverse the left subtree of the node before traversing the node
 				currentNode = currentNode.getLeft();
 			} else {
 				// visit node
-				BinaryTreeNode visitedNode = stack.pop().getNode();
+				BinaryTreeNode visitedNode = stack.pop();
 				result.add(visitedNode);
 
 				// traverse the right subtree of the node after traversing the node
@@ -118,7 +121,7 @@ public class BinarySearchTree {
 	public List<BinaryTreeNode> traversePreOrderIterative() {
 		List<BinaryTreeNode> result = new ArrayList<>();
 
-		Stack<LinkedBinaryTreeNode> stack = new Stack<>();
+		Stack<BinaryTreeNode> stack = new Stack<>();
 
 		BinaryTreeNode currentNode = this.root;
 		while (currentNode != null || !stack.isEmpty()) {
@@ -128,14 +131,14 @@ public class BinarySearchTree {
 
 				// save right to move to it later
 				if (currentNode.getRight() != null) {
-					stack.push(new LinkedBinaryTreeNode(currentNode.getRight()));
+					stack.push(currentNode.getRight());
 				}
 
 				// traverse left
 				currentNode = currentNode.getLeft();
 			} else {
 				// traverse right
-				currentNode = stack.pop().getNode();
+				currentNode = stack.pop();
 			}
 		}
 
@@ -161,7 +164,7 @@ public class BinarySearchTree {
 	public List<BinaryTreeNode> traversePostOrderIterative() {
 		List<BinaryTreeNode> result = new ArrayList<>();
 
-		Stack<LinkedBinaryTreeNode> stack = new Stack<>();
+		Stack<BinaryTreeNode> stack = new Stack<>();
 
 		// to avoid revisit a child of the current node, which will lead to endless loop
 		BinaryTreeNode lastVisited = null;
@@ -170,20 +173,20 @@ public class BinarySearchTree {
 		while (currentNode != null || !stack.isEmpty()) {
 			if (currentNode != null) {
 				// save node to traverse to it later
-				stack.push(new LinkedBinaryTreeNode(currentNode));
+				stack.push(currentNode);
 
 				// traverse left
 				currentNode = currentNode.getLeft();
 			} else {
 				// one of the child of this node is the most recently visited node
-				BinaryTreeNode parentOfLastVisited = stack.peek().getNode();
+				BinaryTreeNode parentOfLastVisited = stack.peek();
 
 				if (parentOfLastVisited.getRight() != null && !parentOfLastVisited.getRight().equals(lastVisited)) {
 					// traverse right
 					currentNode = parentOfLastVisited.getRight();
 				} else {
 					// visit node
-					BinaryTreeNode node = stack.pop().getNode();
+					BinaryTreeNode node = stack.pop();
 					result.add(node);
 					lastVisited = node;
 

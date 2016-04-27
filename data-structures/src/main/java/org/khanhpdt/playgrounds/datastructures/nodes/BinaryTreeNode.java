@@ -1,4 +1,4 @@
-package org.khanhpdt.playgrounds.datastructures.trees;
+package org.khanhpdt.playgrounds.datastructures.nodes;
 
 import java.util.Random;
 import java.util.UUID;
@@ -6,27 +6,22 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class BinaryTreeNode implements Comparable<BinaryTreeNode> {
+public class BinaryTreeNode implements Comparable<BinaryTreeNode>, LinkedNodeIntf<BinaryTreeNode> {
 
-	private final UUID key;
-
-	private final Integer value;
+	private Node<UUID, Integer> content;
 
 	private BinaryTreeNode left;
 
 	private BinaryTreeNode right;
 
-	public BinaryTreeNode(Integer value) {
-		this.key = UUID.randomUUID();
-		this.value = value;
-	}
+	private BinaryTreeNode next;
 
-	public UUID getKey() {
-		return key;
+	public BinaryTreeNode(Integer value) {
+		this.content = new Node<>(UUID.randomUUID(), value);
 	}
 
 	public Integer getValue() {
-		return value;
+		return content.getValue();
 	}
 
 	public BinaryTreeNode getLeft() {
@@ -47,7 +42,7 @@ public class BinaryTreeNode implements Comparable<BinaryTreeNode> {
 
 	@Override
 	public int compareTo(BinaryTreeNode o) {
-		return value.compareTo(o.getValue());
+		return getValue().compareTo(o.getValue());
 	}
 
 	@Override
@@ -61,19 +56,39 @@ public class BinaryTreeNode implements Comparable<BinaryTreeNode> {
 		}
 
 		BinaryTreeNode that = (BinaryTreeNode) o;
-		return key.equals(that.getKey());
+		return getKey().equals(that.getKey());
 
 	}
 
 	@Override
 	public int hashCode() {
 		int result = 17;
-		int c = key.hashCode();
+		int c = getKey().hashCode();
 		return 31 + result * c;
 	}
 
 	public static BinaryTreeNode random() {
 		return new BinaryTreeNode(new Random().nextInt());
+	}
+
+	@Override
+	public Node<UUID, Integer> getContent() {
+		return content;
+	}
+
+	@Override
+	public UUID getKey() {
+		return content.getKey();
+	}
+
+	@Override
+	public BinaryTreeNode getNext() {
+		return this.next;
+	}
+
+	@Override
+	public void setNext(BinaryTreeNode next) {
+		this.next = next;
 	}
 
 }

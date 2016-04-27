@@ -2,6 +2,7 @@ package org.khanhpdt.playgrounds.datastructures.trees;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 
 import java.util.Arrays;
 import java.util.List;

@@ -2,7 +2,7 @@ package org.khanhpdt.playgrounds.datastructures.stacks;
 
 import org.junit.Test;
 import org.khanhpdt.playgrounds.datastructures.TestUtils;
-import org.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,6 +1,7 @@
 package org.khanhpdt.playgrounds.datastructures.linkedlists;
 
 import org.junit.Test;
+import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.UUID;
 

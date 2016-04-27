@@ -1,6 +1,6 @@
 package org.khanhpdt.playgrounds.datastructures.queues;
 
-import org.khanhpdt.playgrounds.datastructures.linkedlists.DoublyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNodeIntf;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import java.util.List;
  *
  * @author khanhpdt
  */
-public class Queue {
+public class Queue<N extends DoublyLinkedNodeIntf<N>> {
 
-	private DoublyLinkedNode front;
+	private N front;
 
-	private DoublyLinkedNode rear;
+	private N rear;
 
-	public void enqueueRear(DoublyLinkedNode node) {
+	public void enqueueRear(N node) {
 		if (rear != null) {
 			rear.setNext(node);
 			node.setPrevious(rear);
@@ -29,14 +29,14 @@ public class Queue {
 		}
 	}
 
-	public DoublyLinkedNode dequeueFront() {
-		DoublyLinkedNode currentFront = front;
+	public N dequeueFront() {
+		N currentFront = front;
 
 		if (currentFront == null) {
 			return null;
 		}
 
-		DoublyLinkedNode newFront = front.getNext();
+		N newFront = front.getNext();
 		if (newFront != null) {
 			newFront.setPrevious(null);
 		} else {
@@ -48,25 +48,25 @@ public class Queue {
 		return currentFront;
 	}
 
-	public static Queue from(List<DoublyLinkedNode> nodes) {
-		Queue queue = new Queue();
+	public static <N extends DoublyLinkedNodeIntf<N>> Queue from(List<N> nodes) {
+		Queue<N> queue = new Queue<>();
 		nodes.forEach(queue::enqueueRear);
 		return queue;
 	}
 
-	public DoublyLinkedNode getFront() {
+	public N getFront() {
 		return front;
 	}
 
-	public void setFront(DoublyLinkedNode front) {
+	public void setFront(N front) {
 		this.front = front;
 	}
 
-	public DoublyLinkedNode getRear() {
+	public N getRear() {
 		return rear;
 	}
 
-	public void setRear(DoublyLinkedNode rear) {
+	public void setRear(N rear) {
 		this.rear = rear;
 	}
 }

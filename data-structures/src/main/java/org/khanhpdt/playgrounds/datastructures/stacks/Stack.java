@@ -1,12 +1,12 @@
 package org.khanhpdt.playgrounds.datastructures.stacks;
 
-import org.khanhpdt.playgrounds.datastructures.linkedlists.LinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
 
 /**
  * @param <N> type of node
  * @author khanhpdt
  */
-public class Stack<N extends LinkedNode<N>> {
+public class Stack<N extends LinkedNodeIntf<N>> {
 
 	private N head;
 
@@ -32,5 +32,4 @@ public class Stack<N extends LinkedNode<N>> {
 	public boolean isEmpty() {
 		return head == null;
 	}
-
 }

@@ -1,7 +1,7 @@
 package org.khanhpdt.playgrounds.datastructures;
 
-import org.khanhpdt.playgrounds.datastructures.linkedlists.DoublyLinkedNode;
-import org.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.ArrayList;
 import java.util.List;

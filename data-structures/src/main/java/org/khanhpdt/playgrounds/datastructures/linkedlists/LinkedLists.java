@@ -1,5 +1,7 @@
 package org.khanhpdt.playgrounds.datastructures.linkedlists;
 
+import org.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,7 +11,7 @@ import java.util.UUID;
  */
 public class LinkedLists {
 
-	public static <N extends LinkedNode<N>> List<N> traverse(LinkedList<N> linkedList) {
+	public static <N extends LinkedNodeIntf<N>> List<N> traverse(LinkedList<N> linkedList) {
 		List<N> nodes = new ArrayList<>();
 
 		N currentNode = linkedList.getHead();
@@ -21,7 +23,7 @@ public class LinkedLists {
 		return nodes;
 	}
 
-	public static <N extends LinkedNode<N>> void remove(LinkedList<N> linkedList, UUID removeKey) {
+	public static <N extends LinkedNodeIntf<N>> void remove(LinkedList<N> linkedList, UUID removeKey) {
 		// NOTE: duplicated nodes are allowed in the list and this method will remove
 		// all nodes with the same key as the given key
 

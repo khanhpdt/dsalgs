@@ -1,5 +1,7 @@
 package org.khanhpdt.playgrounds.datastructures.linkedlists;
 
+import org.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

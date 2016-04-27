@@ -2,7 +2,7 @@ package org.khanhpdt.playgrounds.datastructures.queues;
 
 import org.junit.Test;
 import org.khanhpdt.playgrounds.datastructures.TestUtils;
-import org.khanhpdt.playgrounds.datastructures.linkedlists.DoublyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 
 import java.util.List;
 

@@ -3,6 +3,7 @@ package org.khanhpdt.playgrounds.datastructures.linkedlists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.Test;
 import org.khanhpdt.playgrounds.datastructures.TestUtils;
+import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.List;
 import java.util.UUID;
