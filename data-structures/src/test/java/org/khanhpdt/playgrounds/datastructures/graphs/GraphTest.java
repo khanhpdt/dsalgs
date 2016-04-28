@@ -6,6 +6,7 @@ import org.khanhpdt.playgrounds.datastructures.nodes.GraphNode;
 
 import java.awt.Color;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -57,9 +58,23 @@ public class GraphTest {
 
 	@Test
 	public void testColorsAfterBreadthFirstSearch() throws Exception {
+		testColorsAfterTraversing(graph -> graph.breadthFirstSearch(0));
+	}
+
+	@Test
+	public void testColorsAfterDepthFirstSearch() throws Exception {
+		testColorsAfterTraversing(graph -> graph.depthFirstSearch(0));
+	}
+
+	@Test
+	public void testColorsAfterRecursiveDepthFirstSearch() throws Exception {
+		testColorsAfterTraversing(graph -> graph.recursiveDepthFirstSearch(0));
+	}
+
+	private void testColorsAfterTraversing(Consumer<Graph> traversingMethod) throws Exception {
 		Graph graph = createDefaultGraph();
 
-		graph.breadthFirstSearch(0);
+		traversingMethod.accept(graph);
 
 		IntStream.range(0, graph.numberOfVertices()).forEach(
 				i -> assertThat(graph.getVertex(i).getColor(), is(Color.BLACK)));
@@ -73,12 +88,12 @@ public class GraphTest {
 		graph.breadthFirstSearch(0);
 
 		IntStream.range(0, graph.numberOfVertices()).forEach(
-				i -> assertThat(graph.getVertex(i).getDistance(), is(distances[i])));
+				i -> assertThat("distance to source", graph.getVertex(i).getDistance(), is(distances[i])));
 	}
 
 	private Graph createDefaultGraph() {
 		Graph graph = new Graph();
-		IntStream.range(0, 8).forEach(i -> graph.addVertex(UUID.randomUUID()));
+		IntStream.range(0, 8).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addEdges(new int[][]{{0, 1}, {0, 2}, {1, 3}, {2, 4}, {2, 6}, {4, 5}, {4, 6}, {5, 6}, {5, 7}, {6, 7}});
 		return graph;
 	}

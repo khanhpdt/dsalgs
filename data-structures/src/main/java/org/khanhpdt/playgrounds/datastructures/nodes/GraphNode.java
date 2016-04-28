@@ -40,6 +40,10 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
 		this.content = new Node<>(key);
 	}
 
+	public GraphNode(UUID key, int value) {
+		this.content = new Node<>(key, value);
+	}
+
 	@Override
 	public Node<UUID, Integer> getContent() {
 		return this.content;
@@ -82,11 +86,11 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
 		return distance;
 	}
 
-	public void setDistance(int distance) {
+	private void setDistance(int distance) {
 		this.distance = distance;
 	}
 
-	public void setPredecessor(GraphNode predecessor) {
+	private void setPredecessor(GraphNode predecessor) {
 		this.predecessor = predecessor;
 	}
 
@@ -110,15 +114,25 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
 		this.previous = previous;
 	}
 
-	public boolean isNotVisited() {
+	public boolean isNotDiscovered() {
 		return this.color == Color.WHITE;
 	}
 
 	public void markVisited() {
-		this.color = Color.GRAY;
+		this.color = Color.BLACK;
 	}
 
-	public void markProcessed() {
-		this.color = Color.BLACK;
+	public void markDiscoveredAsSource() {
+		markDiscovered(null);
+	}
+
+	public void markDiscovered(GraphNode predecessor) {
+		setPredecessor(predecessor);
+		setDistance(predecessor == null ? 0 : predecessor.getDistance() + 1);
+		setColor(Color.GRAY);
+	}
+
+	private void setColor(Color color) {
+		this.color = color;
 	}
 }

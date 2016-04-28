@@ -2,6 +2,7 @@ package org.khanhpdt.playgrounds.datastructures.graphs;
 
 import org.khanhpdt.playgrounds.datastructures.nodes.GraphNode;
 import org.khanhpdt.playgrounds.datastructures.queues.Queue;
+import org.khanhpdt.playgrounds.datastructures.stacks.Stack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,12 @@ public class Graph {
 
 	public GraphNode addVertex(UUID vertexKey) {
 		GraphNode vertex = new GraphNode(vertexKey);
+		vertices.add(vertex);
+		return vertex;
+	}
+
+	public GraphNode addVertex(UUID key, int value) {
+		GraphNode vertex = new GraphNode(key, value);
 		vertices.add(vertex);
 		return vertex;
 	}
@@ -56,27 +63,57 @@ public class Graph {
 	public void breadthFirstSearch(int sourceIndex) {
 		Queue<GraphNode> queue = new Queue<>();
 
-		// put the source to the queue
 		GraphNode source = vertices.get(sourceIndex);
-		source.setPredecessor(null);
-		source.setDistance(0);
-		source.markVisited();
+		source.markDiscoveredAsSource();
 		queue.enqueueRear(source);
 
 		while (!queue.isEmpty()) {
 			GraphNode current = queue.dequeueFront();
-			// visits all nodes adjacent to the current node
 			current.getAdjacents().stream()
-					// only visits not which has not been visited
-					.filter(GraphNode::isNotVisited)
+					.filter(GraphNode::isNotDiscovered)
 					.forEach(adj -> {
-						// put each adjacent nodes to the queue for later processing
-						adj.setPredecessor(current);
-						adj.setDistance(current.getDistance() + 1);
-						adj.markVisited();
+						// breadth-first: discovers all nodes adjacent to the current node, but adds them to a queue
+						// so that they will be visited before their adjacents
+						adj.markDiscovered(current);
 						queue.enqueueRear(adj);
 					});
-			current.markProcessed();
+			current.markVisited();
+		}
+	}
+
+	public void depthFirstSearch(int sourceIndex) {
+		Stack<GraphNode> stack = new Stack<>();
+
+		GraphNode source = vertices.get(sourceIndex);
+		source.markDiscoveredAsSource();
+		stack.push(source);
+
+		while (!stack.isEmpty()) {
+			GraphNode current = stack.pop();
+			current.getAdjacents().stream()
+					.filter(GraphNode::isNotDiscovered)
+					.forEach(adj -> {
+						// depth-first: discovers all nodes adjacent to the current node, but adds them to a stack
+						// so that they will be visited after their adjacents
+						adj.markDiscovered(current);
+						stack.push(adj);
+					});
+			current.markVisited();
+		}
+	}
+
+	public void recursiveDepthFirstSearch(int sourceIndex) {
+		GraphNode source = vertices.get(sourceIndex);
+		recursiveDepthFirstSearch(null, source);
+	}
+
+	private void recursiveDepthFirstSearch(GraphNode predecessor, GraphNode vertex) {
+		if (vertex.isNotDiscovered()) {
+			vertex.markDiscovered(predecessor);
+			vertex.getAdjacents().stream()
+					.filter(GraphNode::isNotDiscovered)
+					.forEach(adj -> recursiveDepthFirstSearch(vertex, adj));
+			vertex.markVisited();
 		}
 	}
 }
