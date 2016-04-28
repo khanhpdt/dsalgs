@@ -69,4 +69,8 @@ public class Queue<N extends DoublyLinkedNodeIntf<N>> {
 	public void setRear(N rear) {
 		this.rear = rear;
 	}
+
+	public boolean isEmpty() {
+		return front == null;
+	}
 }
