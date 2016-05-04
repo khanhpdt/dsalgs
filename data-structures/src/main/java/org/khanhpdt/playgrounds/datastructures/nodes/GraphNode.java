@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
+public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<GraphNode> {
 
 	private Node<UUID, Integer> content;
 
@@ -122,6 +122,10 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
 		this.color = Color.BLACK;
 	}
 
+	public void markDiscovered() {
+		this.color = Color.GRAY;
+	}
+
 	public void markDiscoveredAsSource() {
 		markDiscovered(null);
 	}
@@ -134,5 +138,22 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode> {
 
 	private void setColor(Color color) {
 		this.color = color;
+	}
+
+	@Override
+	public int compareTo(GraphNode o) {
+		Integer thisValue = this.getContent().getValue();
+		Integer otherValue = o.getContent().getValue();
+
+		if (thisValue == null && otherValue == null) {
+			return 0;
+		}
+		if (otherValue == null) {
+			return 1;
+		}
+		if (thisValue == null) {
+			return -1;
+		}
+		return thisValue.compareTo(otherValue);
 	}
 }

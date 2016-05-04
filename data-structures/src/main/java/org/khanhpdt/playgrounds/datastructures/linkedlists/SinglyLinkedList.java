@@ -1,6 +1,6 @@
 package org.khanhpdt.playgrounds.datastructures.linkedlists;
 
-import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
 
 import java.util.List;
 import java.util.UUID;
@@ -8,19 +8,19 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class SinglyLinkedList implements LinkedList<SinglyLinkedNode> {
+public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList<N> {
 
-	private SinglyLinkedNode head;
+	private N head;
 
-	public void insert(SinglyLinkedNode node) {
+	public void insert(N node) {
 		// new node is inserted at the beginning of the list
 		node.setNext(head);
 		// new node becomes the new head
 		head = node;
 	}
 
-	public SinglyLinkedNode search(UUID nodeKey) {
-		SinglyLinkedNode currentNode = this.head;
+	public N search(UUID nodeKey) {
+		N currentNode = this.head;
 		while (currentNode != null) {
 			// found
 			if (currentNode.getKey().equals(nodeKey)) {
@@ -36,20 +36,21 @@ public class SinglyLinkedList implements LinkedList<SinglyLinkedNode> {
 	}
 
 	@Override
-	public SinglyLinkedNode getHead() {
+	public N getHead() {
 		return head;
 	}
 
 	@Override
-	public void setHead(SinglyLinkedNode head) {
+	public void setHead(N head) {
 		this.head = head;
 	}
 
-	public static SinglyLinkedList from(List<SinglyLinkedNode> nodes) {
-		SinglyLinkedList linkedList = new SinglyLinkedList();
+	public static <N extends LinkedNodeIntf<N>> SinglyLinkedList<N> from(List<N> nodes) {
+		SinglyLinkedList<N> linkedList = new SinglyLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			linkedList.insert(nodes.get(i));
 		}
 		return linkedList;
 	}
+
 }

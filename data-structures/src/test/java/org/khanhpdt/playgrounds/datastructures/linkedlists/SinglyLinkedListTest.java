@@ -20,7 +20,7 @@ public class SinglyLinkedListTest {
 
     @Test
     public void testHeadOfNewListPointsToTheFirstInsertedElement() throws Exception {
-        SinglyLinkedList linkedList = new SinglyLinkedList();
+        SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
 
         SinglyLinkedNode newNode = SinglyLinkedNode.random();
         linkedList.insert(newNode);
@@ -31,7 +31,7 @@ public class SinglyLinkedListTest {
     @Test
     public void testHeadPointsToTheFirstInsertedElement() throws Exception {
         // list already has an item
-        SinglyLinkedList linkedList = new SinglyLinkedList();
+        SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
         linkedList.insert(SinglyLinkedNode.random());
 
         SinglyLinkedNode newNode = SinglyLinkedNode.random();
@@ -44,7 +44,7 @@ public class SinglyLinkedListTest {
     public void testCreateList() throws Exception {
         List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(3);
 
-        SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
+        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
 		List<SinglyLinkedNode> linkedNodes = LinkedLists.traverse(linkedList);
 		assertThat(linkedNodes, contains(nodes.toArray(new SinglyLinkedNode[nodes.size()])));
@@ -53,7 +53,7 @@ public class SinglyLinkedListTest {
     @Test
     public void testSearchNode() throws Exception {
         List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
-        SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
+        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
         SinglyLinkedNode nodeToFind = nodes.get(4);
         SinglyLinkedNode foundNode = linkedList.search(nodeToFind.getKey());
@@ -91,7 +91,7 @@ public class SinglyLinkedListTest {
 		for (int index : indexes) {
 			nodes.add(index, new SinglyLinkedNode(removeKey));
 		}
-		SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
+		SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
 		linkedList.remove(removeKey);
 
@@ -108,7 +108,7 @@ public class SinglyLinkedListTest {
         nodes.add(new SinglyLinkedNode(removeKey));
         nodes.add(new SinglyLinkedNode(removeKey));
 
-        SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
+        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
 		linkedList.remove(removeKey);
 

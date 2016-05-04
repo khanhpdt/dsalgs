@@ -97,4 +97,21 @@ public class GraphTest {
 		graph.addEdges(new int[][]{{0, 1}, {0, 2}, {1, 3}, {2, 4}, {2, 6}, {4, 5}, {4, 6}, {5, 6}, {5, 7}, {6, 7}});
 		return graph;
 	}
+
+	@Test
+	public void testTopologicalSort() throws Exception {
+		Graph dag = createDefaultDAG();
+
+		dag.topologicalSort();
+
+		assertThat("topological sorted", dag.checkTopologicalSort(), is(true));
+	}
+
+	private Graph createDefaultDAG() {
+		Graph graph = new Graph();
+		IntStream.range(0, 8).forEach(i -> graph.addVertex(UUID.randomUUID()));
+		graph.addDirectedEdges(new int[][]{ {0, 1}, {0, 2}, {0, 3}, {3, 2}, {2, 6}, {6, 4}, {6, 5}, {5, 7}, {7, 4} });
+		return graph;
+	}
+
 }
