@@ -12,6 +12,10 @@ import java.util.List;
 public class Graphs {
 
 	public static Graph topologicalSort(Graph graph) {
+		if (checkDirectedCycle(graph)) {
+			throw new IllegalArgumentException("Graph has directed cycles. Topological sort is not possible.");
+		}
+
 		SinglyLinkedList<GraphNode> sortedVertices = new SinglyLinkedList<>();
 		topologicalSort(graph.getVertex(0), sortedVertices);
 
