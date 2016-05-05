@@ -98,38 +98,4 @@ public class GraphTest {
 		return graph;
 	}
 
-	@Test
-	public void testTopologicalSort() throws Exception {
-		Graph dag = createDefaultDAG();
-
-		Graph sortedGraph = Graphs.topologicalSort(dag);
-
-		assertThat("topological sorted", Graphs.checkTopologicalSort(sortedGraph), is(true));
-	}
-
-	private Graph createDefaultDAG() {
-		Graph graph = new Graph();
-		IntStream.range(0, 8).forEach(i -> graph.addVertex(UUID.randomUUID()));
-		graph.addDirectedEdges(new int[][]{ {0, 1}, {0, 2}, {0, 3}, {3, 2}, {2, 6}, {6, 4}, {6, 5}, {5, 7}, {7, 4} });
-		return graph;
-	}
-
-	@Test
-	public void testCheckDirectedCycleOnGraphWithoutCycle() throws Exception {
-		Graph dag = createDefaultDAG();
-		assertThat("has no cycle", Graphs.checkDirectedCycle(dag), is(false));
-	}
-
-	@Test
-	public void testCheckDirectedCycleOnGraphWithCycle() throws Exception {
-		Graph graph = new Graph();
-		IntStream.range(0, 4).forEach(i -> graph.addVertex(UUID.randomUUID()));
-
-		// add edges such that there's a cycle
-		graph.addDirectedEdges(new int[][]{ {0, 1}, {0, 2}, {1, 2}, {2, 0} });
-
-		assertThat("has cycle", Graphs.checkDirectedCycle(graph), is(true));
-	}
-
-
 }

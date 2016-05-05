@@ -1,5 +1,6 @@
-package org.khanhpdt.playgrounds.datastructures.graphs;
+package org.khanhpdt.playgrounds.algorithms.graphs;
 
+import org.khanhpdt.playgrounds.datastructures.graphs.Graph;
 import org.khanhpdt.playgrounds.datastructures.linkedlists.LinkedLists;
 import org.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
 import org.khanhpdt.playgrounds.datastructures.nodes.GraphNode;
@@ -9,10 +10,16 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-public class Graphs {
+public class TopologicalSort {
 
-	public static Graph topologicalSort(Graph graph) {
-		if (checkDirectedCycle(graph)) {
+	private Graph graph;
+
+	private TopologicalSort(Graph graph) {
+		this.graph = graph;
+	}
+
+	private Graph get() {
+		if (DirectedCycle.checkExists(graph)) {
 			throw new IllegalArgumentException("Graph has directed cycles. Topological sort is not possible.");
 		}
 
@@ -23,7 +30,7 @@ public class Graphs {
 		return new Graph(sortedVerticesList);
 	}
 
-	private static void topologicalSort(GraphNode vertex, SinglyLinkedList<GraphNode> sortedVertices) {
+	private void topologicalSort(GraphNode vertex, SinglyLinkedList<GraphNode> sortedVertices) {
 		if (vertex.isNotDiscovered()) {
 			vertex.markDiscovered();
 			vertex.getAdjacents().stream()
@@ -37,7 +44,7 @@ public class Graphs {
 		}
 	}
 
-	public static boolean checkTopologicalSort(Graph graph) {
+	public static boolean checkExists(Graph graph) {
 		List<GraphNode> vertices = graph.getVertices();
 		for (int vertexIndex = 0; vertexIndex < vertices.size(); vertexIndex++) {
 			for (GraphNode adjacent : vertices.get(vertexIndex).getAdjacents()) {
@@ -51,30 +58,7 @@ public class Graphs {
 		return true;
 	}
 
-	public static boolean checkDirectedCycle(Graph graph) {
-		for (GraphNode vertex : graph.getVertices()) {
-			if (vertex.isNotDiscovered() && checkDirectedCycleFrom(vertex)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static boolean checkDirectedCycleFrom(GraphNode vertex) {
-		// because the traverse is depth-first, a discovered vertex must be visited before the traverse can go back to
-		// the vertex
-		if (vertex.isDiscovered() && vertex.isNotVisited()) {
-			return true;
-		} else {
-			vertex.markDiscovered();
-			for (GraphNode adjacent : vertex.getAdjacents()) {
-				if (checkDirectedCycleFrom(adjacent)) {
-					return true;
-				}
-			}
-			vertex.markVisited();
-
-			return false;
-		}
+	public static Graph from(Graph graph) {
+		return new TopologicalSort(graph).get();
 	}
 }
