@@ -1,7 +1,5 @@
 package org.khanhpdt.playgrounds.datastructures.graphs;
 
-import org.khanhpdt.playgrounds.datastructures.linkedlists.LinkedLists;
-import org.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
 import org.khanhpdt.playgrounds.datastructures.nodes.GraphNode;
 import org.khanhpdt.playgrounds.datastructures.queues.Queue;
 import org.khanhpdt.playgrounds.datastructures.stacks.Stack;
@@ -17,7 +15,15 @@ import java.util.UUID;
  */
 public class Graph {
 
-	private List<GraphNode> vertices = new ArrayList<>();
+	private List<GraphNode> vertices;
+
+	public Graph() {
+		this.vertices = new ArrayList<>();
+	}
+
+	public Graph(List<GraphNode> vertices) {
+		this.vertices = vertices;
+	}
 
 	public GraphNode addVertex(UUID vertexKey) {
 		GraphNode vertex = new GraphNode(vertexKey);
@@ -132,37 +138,7 @@ public class Graph {
 		vertex.getAdjacents().add(adjacentVertex);
 	}
 
-	public void topologicalSort() {
-		SinglyLinkedList<GraphNode> sortedVertices = new SinglyLinkedList<>();
-		topologicalSort(vertices.get(0), sortedVertices);
-		vertices = LinkedLists.traverse(sortedVertices);
+	public List<GraphNode> getVertices() {
+		return vertices;
 	}
-
-	private void topologicalSort(GraphNode vertex, SinglyLinkedList<GraphNode> sortedVertices) {
-		if (vertex.isNotDiscovered()) {
-			vertex.markDiscovered();
-			vertex.getAdjacents().stream()
-					.filter(GraphNode::isNotDiscovered)
-					.forEach(adj -> topologicalSort(adj, sortedVertices));
-
-			// Because this traverse is depth-first, when a vertex is visited, all of its adjacents are already visited.
-			// Thus, we add the vertex to the front of the linked list to make sure that it is positioned before its adjacents.
-			vertex.markVisited();
-			sortedVertices.insert(vertex);
-		}
-	}
-
-	public boolean checkTopologicalSort() {
-		for (int vertexIndex = 0; vertexIndex < vertices.size(); vertexIndex++) {
-			for (GraphNode adjacent : vertices.get(vertexIndex).getAdjacents()) {
-				int adjacentIndex = vertices.indexOf(adjacent);
-				// a graph is topologically sorted if any of its vertices stands before its adjacents in the vertices list
-				if (vertexIndex > adjacentIndex) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 }

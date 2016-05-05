@@ -102,9 +102,9 @@ public class GraphTest {
 	public void testTopologicalSort() throws Exception {
 		Graph dag = createDefaultDAG();
 
-		dag.topologicalSort();
+		Graph sortedGraph = Graphs.topologicalSort(dag);
 
-		assertThat("topological sorted", dag.checkTopologicalSort(), is(true));
+		assertThat("topological sorted", Graphs.checkTopologicalSort(sortedGraph), is(true));
 	}
 
 	private Graph createDefaultDAG() {
