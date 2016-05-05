@@ -118,6 +118,10 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 		return this.color == Color.WHITE;
 	}
 
+	public boolean isDiscovered() {
+		return this.color != Color.WHITE;
+	}
+
 	public void markVisited() {
 		this.color = Color.BLACK;
 	}
@@ -155,5 +159,9 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 			return -1;
 		}
 		return thisValue.compareTo(otherValue);
+	}
+
+	public boolean isNotVisited() {
+		return this.color != Color.BLACK;
 	}
 }

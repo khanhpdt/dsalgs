@@ -114,4 +114,22 @@ public class GraphTest {
 		return graph;
 	}
 
+	@Test
+	public void testCheckDirectedCycleOnGraphWithoutCycle() throws Exception {
+		Graph dag = createDefaultDAG();
+		assertThat("has no cycle", Graphs.checkDirectedCycle(dag), is(false));
+	}
+
+	@Test
+	public void testCheckDirectedCycleOnGraphWithCycle() throws Exception {
+		Graph graph = new Graph();
+		IntStream.range(0, 4).forEach(i -> graph.addVertex(UUID.randomUUID()));
+
+		// add edges such that there's a cycle
+		graph.addDirectedEdges(new int[][]{ {0, 1}, {0, 2}, {1, 2}, {2, 0} });
+
+		assertThat("has cycle", Graphs.checkDirectedCycle(graph), is(true));
+	}
+
+
 }

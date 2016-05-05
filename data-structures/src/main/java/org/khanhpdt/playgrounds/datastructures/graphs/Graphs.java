@@ -47,4 +47,30 @@ public class Graphs {
 		return true;
 	}
 
+	public static boolean checkDirectedCycle(Graph graph) {
+		for (GraphNode vertex : graph.getVertices()) {
+			if (vertex.isNotDiscovered() && checkDirectedCycleFrom(vertex)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static boolean checkDirectedCycleFrom(GraphNode vertex) {
+		// because the traverse is depth-first, a discovered vertex must be visited before the traverse can go back to
+		// the vertex
+		if (vertex.isDiscovered() && vertex.isNotVisited()) {
+			return true;
+		} else {
+			vertex.markDiscovered();
+			for (GraphNode adjacent : vertex.getAdjacents()) {
+				if (checkDirectedCycleFrom(adjacent)) {
+					return true;
+				}
+			}
+			vertex.markVisited();
+
+			return false;
+		}
+	}
 }
