@@ -8,11 +8,11 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<GraphNode> {
+public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparable<GraphVertex> {
 
 	private Node<UUID, Integer> content;
 
-	private List<GraphNode> adjacents;
+	private List<GraphVertex> adjacents;
 
 	/**
 	 * Distance to the source in breadth-first search (BFS) or depth-first search (DFS)
@@ -30,20 +30,27 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 	 * Predecessor of this vertex during BFS and DFS
 	 *
 	 */
-	private GraphNode predecessor;
+	private GraphVertex predecessor;
 
-	// we need to put this node into queue during BFS
-	private GraphNode next;
-	private GraphNode previous;
+	private int discoveredTime;
 
-	public GraphNode(UUID key) {
+	private int visitedTime;
+
+	// we need to put this vertex into queue during BFS
+	private GraphVertex next;
+	private GraphVertex previous;
+
+	public GraphVertex(UUID key) {
 		this.content = new Node<>(key);
 	}
 
-	public GraphNode(UUID key, int value) {
+	public GraphVertex(UUID key, int value) {
 		this.content = new Node<>(key, value);
 	}
 
+	public GraphVertex(GraphVertex other) {
+		this.content = new Node<>(other.getContent().getKey(), other.getContent().getValue());
+	}
 	@Override
 	public Node<UUID, Integer> getContent() {
 		return this.content;
@@ -58,7 +65,7 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 		return color;
 	}
 
-	public List<GraphNode> getAdjacents() {
+	public List<GraphVertex> getAdjacents() {
 		if (adjacents == null) {
 			adjacents = new ArrayList<>();
 		}
@@ -74,11 +81,11 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof GraphNode)) {
+		if (!(obj instanceof GraphVertex)) {
 			return false;
 		}
 
-		GraphNode otherNode = (GraphNode) obj;
+		GraphVertex otherNode = (GraphVertex) obj;
 		return this.getKey().equals(otherNode.getKey());
 	}
 
@@ -90,27 +97,27 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 		this.distance = distance;
 	}
 
-	private void setPredecessor(GraphNode predecessor) {
+	private void setPredecessor(GraphVertex predecessor) {
 		this.predecessor = predecessor;
 	}
 
 	@Override
-	public GraphNode getNext() {
+	public GraphVertex getNext() {
 		return this.next;
 	}
 
 	@Override
-	public void setNext(GraphNode next) {
+	public void setNext(GraphVertex next) {
 		this.next = next;
 	}
 
 	@Override
-	public GraphNode getPrevious() {
+	public GraphVertex getPrevious() {
 		return this.previous;
 	}
 
 	@Override
-	public void setPrevious(GraphNode previous) {
+	public void setPrevious(GraphVertex previous) {
 		this.previous = previous;
 	}
 
@@ -123,7 +130,12 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 	}
 
 	public void markVisited() {
-		this.color = Color.BLACK;
+		setColor(Color.BLACK);
+	}
+
+	public void markVisited(int time) {
+		setColor(Color.BLACK);
+		setVisitedTime(time);
 	}
 
 	public void markDiscovered() {
@@ -131,13 +143,14 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 	}
 
 	public void markDiscoveredAsSource() {
-		markDiscovered(null);
+		markDiscovered(null, 0);
 	}
 
-	public void markDiscovered(GraphNode predecessor) {
+	public void markDiscovered(GraphVertex predecessor, int time) {
 		setPredecessor(predecessor);
 		setDistance(predecessor == null ? 0 : predecessor.getDistance() + 1);
 		setColor(Color.GRAY);
+		setDiscoveredTime(time);
 	}
 
 	private void setColor(Color color) {
@@ -145,7 +158,7 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 	}
 
 	@Override
-	public int compareTo(GraphNode o) {
+	public int compareTo(GraphVertex o) {
 		Integer thisValue = this.getContent().getValue();
 		Integer otherValue = o.getContent().getValue();
 
@@ -163,5 +176,17 @@ public class GraphNode implements DoublyLinkedNodeIntf<GraphNode>, Comparable<Gr
 
 	public boolean isNotVisited() {
 		return this.color != Color.BLACK;
+	}
+
+	public void setAdjacents(List<GraphVertex> adjacents) {
+		this.adjacents = adjacents;
+	}
+
+	public void setDiscoveredTime(int discoveredTime) {
+		this.discoveredTime = discoveredTime;
+	}
+
+	public void setVisitedTime(int visitedTime) {
+		this.visitedTime = visitedTime;
 	}
 }

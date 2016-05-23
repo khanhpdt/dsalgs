@@ -1,7 +1,7 @@
 package org.khanhpdt.playgrounds.algorithms.graphs;
 
 import org.khanhpdt.playgrounds.datastructures.graphs.Graph;
-import org.khanhpdt.playgrounds.datastructures.nodes.GraphNode;
+import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 
 /**
  * @author khanhpdt
@@ -15,7 +15,7 @@ public class DirectedCycle {
 	}
 
 	private boolean exists() {
-		for (GraphNode vertex : graph.getVertices()) {
+		for (GraphVertex vertex : graph.getVertices()) {
 			if (vertex.isNotDiscovered() && checkDirectedCycleFrom(vertex)) {
 				return true;
 			}
@@ -23,14 +23,14 @@ public class DirectedCycle {
 		return false;
 	}
 
-	private boolean checkDirectedCycleFrom(GraphNode vertex) {
+	private boolean checkDirectedCycleFrom(GraphVertex vertex) {
 		// because the traverse is depth-first, a discovered vertex must be visited before the traverse can go back to
 		// the vertex
 		if (vertex.isDiscovered() && vertex.isNotVisited()) {
 			return true;
 		} else {
 			vertex.markDiscovered();
-			for (GraphNode adjacent : vertex.getAdjacents()) {
+			for (GraphVertex adjacent : vertex.getAdjacents()) {
 				if (checkDirectedCycleFrom(adjacent)) {
 					return true;
 				}

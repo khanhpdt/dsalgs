@@ -20,7 +20,7 @@ public class TopologicalSortTest {
 
 		Graph sortedGraph = TopologicalSort.from(dag);
 
-		assertThat("topological sorted", TopologicalSort.checkExists(sortedGraph), is(true));
+		assertThat("topological sorted", TopologicalSort.verify(sortedGraph), is(true));
 	}
 
 	private Graph createDefaultDAG() {

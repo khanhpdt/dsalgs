@@ -14,6 +14,7 @@ A place to play with data structures and algorithms in Java.
 - Trees
     - Binary search trees
 - Heaps
+- Graphs
 
 ## Algorithms
 
@@ -25,3 +26,15 @@ A place to play with data structures and algorithms in Java.
     - Merge sort
     - Heap sort
     - Quick sort
+    
+- Tree
+    - Post-order traverse
+    - Pre-order traverse
+    - In-order traverse
+    
+- Graph
+    - Depth-first search
+    - Breadth-first search
+    - Directed cycle check
+    - Topological sort
+    - Strongly connected components

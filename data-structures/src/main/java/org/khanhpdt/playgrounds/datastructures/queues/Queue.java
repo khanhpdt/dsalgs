@@ -5,7 +5,7 @@ import org.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNodeIntf;
 import java.util.List;
 
 /**
- * An implementation of queues by using linked list.
+ * An implementation of queues using linked lists.
  *
  * @author khanhpdt
  */
