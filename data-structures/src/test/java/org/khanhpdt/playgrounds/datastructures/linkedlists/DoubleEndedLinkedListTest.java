@@ -20,7 +20,7 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertFirstToEmptyList() throws Exception {
-		DoubleEndedLinkedList linkedList = new DoubleEndedLinkedList();
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
 
 		SinglyLinkedNode newNode = SinglyLinkedNode.random();
 		linkedList.insertFirst(newNode);
@@ -31,7 +31,7 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertFirstToNonEmptyList() throws Exception {
-		DoubleEndedLinkedList linkedList = new DoubleEndedLinkedList();
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
 
 		SinglyLinkedNode firstNode = SinglyLinkedNode.random();
 		linkedList.insertFirst(firstNode);
@@ -45,7 +45,7 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertLastToEmptyList() throws Exception {
-		DoubleEndedLinkedList linkedList = new DoubleEndedLinkedList();
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
 
 		SinglyLinkedNode newNode = SinglyLinkedNode.random();
 		linkedList.insertLast(newNode);
@@ -56,7 +56,7 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertLastToNonEmptyList() throws Exception {
-		DoubleEndedLinkedList linkedList = new DoubleEndedLinkedList();
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
 
 		SinglyLinkedNode firstNode = SinglyLinkedNode.random();
 		linkedList.insertFirst(firstNode);
@@ -77,7 +77,7 @@ public class DoubleEndedLinkedListTest {
 		nodes.add(7, new SinglyLinkedNode(removeKey));
 		nodes.add(new SinglyLinkedNode(removeKey));
 
-		DoubleEndedLinkedList linkedList = DoubleEndedLinkedList.from(nodes);
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = DoubleEndedLinkedList.from(nodes);
 
 		linkedList.remove(removeKey);
 

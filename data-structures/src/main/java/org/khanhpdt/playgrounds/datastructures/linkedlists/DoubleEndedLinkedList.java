@@ -1,5 +1,6 @@
 package org.khanhpdt.playgrounds.datastructures.linkedlists;
 
+import org.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
 import org.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.List;
@@ -8,13 +9,13 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class DoubleEndedLinkedList implements LinkedList<SinglyLinkedNode> {
+public class DoubleEndedLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList<N> {
 
-	private SinglyLinkedNode head;
+	private N head;
 
-	private SinglyLinkedNode tail;
+	private N tail;
 
-	public void insertFirst(SinglyLinkedNode node) {
+	public void insertFirst(N node) {
 		node.setNext(head);
 		head = node;
 
@@ -23,7 +24,7 @@ public class DoubleEndedLinkedList implements LinkedList<SinglyLinkedNode> {
 		}
 	}
 
-	public void insertLast(SinglyLinkedNode node) {
+	public void insertLast(N node) {
 		if (tail != null) {
 			tail.setNext(node);
 		}
@@ -39,12 +40,12 @@ public class DoubleEndedLinkedList implements LinkedList<SinglyLinkedNode> {
 		tail = getLastNode();
 	}
 
-	private SinglyLinkedNode getLastNode() {
+	private N getLastNode() {
 		if (head == null) {
 			return null;
 		}
 
-		SinglyLinkedNode currentNode = head;
+		N currentNode = head;
 		// only last node has null "next" reference
 		while (currentNode.getNext() != null) {
 			currentNode = currentNode.getNext();
@@ -53,21 +54,21 @@ public class DoubleEndedLinkedList implements LinkedList<SinglyLinkedNode> {
 	}
 
 	@Override
-	public SinglyLinkedNode getHead() {
+	public N getHead() {
 		return head;
 	}
 
 	@Override
-	public void setHead(SinglyLinkedNode head) {
+	public void setHead(N head) {
 		this.head = head;
 	}
 
-	public SinglyLinkedNode getTail() {
+	public N getTail() {
 		return tail;
 	}
 
-	public static DoubleEndedLinkedList from(List<SinglyLinkedNode> nodes) {
-		DoubleEndedLinkedList linkedList = new DoubleEndedLinkedList();
+	public static DoubleEndedLinkedList<SinglyLinkedNode> from(List<SinglyLinkedNode> nodes) {
+		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			linkedList.insertFirst(nodes.get(i));
 		}
