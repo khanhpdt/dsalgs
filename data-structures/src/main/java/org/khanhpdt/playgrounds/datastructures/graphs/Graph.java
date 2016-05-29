@@ -49,21 +49,29 @@ public class Graph {
 	}
 
 	public void addEdge(GraphVertex vertex1, GraphVertex vertex2) {
-		vertex1.getAdjacents().add(vertex2);
-		vertex2.getAdjacents().add(vertex1);
+		addEdge(vertex1, vertex2, 0);
+	}
+
+	private void addEdge(GraphVertex vertex1, GraphVertex vertex2, double weight) {
+		vertex1.addEdge(vertex2, weight);
+		vertex2.addEdge(vertex1, weight);
 	}
 
 	public void addEdge(int vertex1Index, int vertex2Index) {
-		GraphVertex vertex1 = vertices.get(vertex1Index);
-		GraphVertex vertex2 = vertices.get(vertex2Index);
+		addEdge(vertices.get(vertex1Index), vertices.get(vertex2Index), 0);
+	}
 
-		vertex1.getAdjacents().add(vertex2);
-		vertex2.getAdjacents().add(vertex1);
+	private void addEdge(int vertex1Index, int vertex2Index, double weight) {
+		addEdge(vertices.get(vertex1Index), vertices.get(vertex2Index), weight);
 	}
 
 	public void addEdges(int[][] pairIndexes) {
 		for (int[] pairIndex : pairIndexes) {
-			addEdge(pairIndex[0], pairIndex[1]);
+			if (pairIndex.length == 2) {
+				addEdge(pairIndex[0], pairIndex[1]);
+			} else if (pairIndex.length == 3) {
+				addEdge(pairIndex[0], pairIndex[1], (double) pairIndex[2]);
+			}
 		}
 	}
 
@@ -78,10 +86,7 @@ public class Graph {
 	}
 
 	private void addDirectedEdge(int vertexIndex, int adjacentVertexIndex) {
-		GraphVertex vertex = getVertex(vertexIndex);
-		GraphVertex adjacentVertex = getVertex(adjacentVertexIndex);
-
-		vertex.getAdjacents().add(adjacentVertex);
+		getVertex(vertexIndex).addEdge(getVertex(adjacentVertexIndex));
 	}
 
 	public List<GraphVertex> getVertices() {
@@ -90,6 +95,12 @@ public class Graph {
 
 	public boolean hasVertex(GraphVertex vertex) {
 		return vertices.stream().anyMatch(v -> v.equals(vertex));
+	}
+
+	public List<GraphEdge> getEdges() {
+		List<GraphEdge> edges = new ArrayList<>();
+		vertices.forEach(v -> edges.addAll(v.getEdges()));
+		return edges;
 	}
 
 }

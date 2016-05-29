@@ -1,8 +1,12 @@
 package org.khanhpdt.playgrounds.datastructures.nodes;
 
+import org.khanhpdt.playgrounds.datastructures.graphs.GraphEdge;
+
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -13,6 +17,9 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 	private Node<UUID, Integer> content;
 
 	private List<GraphVertex> adjacents;
+
+	// outgoing edges from this vertex
+	private List<GraphEdge> edges;
 
 	/**
 	 * Distance to the source in breadth-first search (BFS) or depth-first search (DFS)
@@ -142,10 +149,6 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 		this.color = Color.GRAY;
 	}
 
-	public void markDiscoveredAsSource() {
-		markDiscovered(null, 0);
-	}
-
 	public void markDiscovered(GraphVertex predecessor, int time) {
 		setPredecessor(predecessor);
 		setDistance(predecessor == null ? 0 : predecessor.getDistance() + 1);
@@ -182,11 +185,27 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 		this.adjacents = adjacents;
 	}
 
-	public void setDiscoveredTime(int discoveredTime) {
+	private void setDiscoveredTime(int discoveredTime) {
 		this.discoveredTime = discoveredTime;
 	}
 
-	public void setVisitedTime(int visitedTime) {
+	private void setVisitedTime(int visitedTime) {
 		this.visitedTime = visitedTime;
+	}
+
+	public List<GraphEdge> getEdges() {
+		if (edges == null) {
+			edges = new ArrayList<>();
+		}
+		return edges;
+	}
+
+	public void addEdge(GraphVertex toVertex) {
+		addEdge(toVertex, 0);
+	}
+
+	public void addEdge(GraphVertex toVertex, double weight) {
+		this.getAdjacents().add(toVertex);
+		this.getEdges().add(new GraphEdge(this, toVertex, weight));
 	}
 }
