@@ -31,8 +31,9 @@ public class KruskalMST extends MinimumSpanningTree {
 
 		disjointSetNodes.values().forEach(DisjointSets::makeSet);
 
+		// sort the edges to make it easy to loop over them in ascending order
 		List<GraphEdge> edges = getGraph().getEdges();
-		Collections.sort(edges);
+		Collections.sort(edges, (e1, e2) -> Double.compare(e1.getWeight(), e2.getWeight()));
 
 		List<GraphEdge> result = new ArrayList<>();
 		edges.forEach(e -> {

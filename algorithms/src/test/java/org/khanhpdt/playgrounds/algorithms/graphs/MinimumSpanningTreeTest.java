@@ -46,7 +46,9 @@ public class MinimumSpanningTreeTest {
 
 		assertThat(mstEdges, Matchers.hasSize(8));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{0, 1, 4})));
-		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{1, 2, 8})));
+		assertThat(mstEdges, Matchers.anyOf(
+				Matchers.hasItem(isEdgeWith(graph, new int[]{1, 2, 8})),
+				Matchers.hasItem(isEdgeWith(graph, new int[]{0, 7, 8}))));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{2, 8, 2})));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{2, 5, 4})));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{5, 6, 2})));
@@ -65,7 +67,7 @@ public class MinimumSpanningTreeTest {
 		return graph;
 	}
 
-	private Matcher<? super GraphEdge> isEdgeWith(Graph graph, int[] edgeDescription) {
+	private static Matcher<? super GraphEdge> isEdgeWith(Graph graph, int[] edgeDescription) {
 		return new TypeSafeMatcher<GraphEdge>() {
 			@Override
 			protected boolean matchesSafely(GraphEdge edge) {
@@ -75,7 +77,7 @@ public class MinimumSpanningTreeTest {
 
 				boolean matchedVertices = (edge.getFromVertex().equals(vertex1) && edge.getToVertex().equals(vertex2))
 						|| (edge.getFromVertex().equals(vertex2) && edge.getToVertex().equals(vertex1));
-				boolean matchedWeight = (int) edge.getWeight() == weight;
+				boolean matchedWeight = edge.getWeight() == weight;
 
 				return matchedVertices && matchedWeight;
 			}

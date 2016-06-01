@@ -5,7 +5,7 @@ import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 /**
  * @author khanhpdt
  */
-public class GraphEdge implements Comparable<GraphEdge> {
+public class GraphEdge {
 
 	private GraphVertex fromVertex;
 
@@ -17,12 +17,6 @@ public class GraphEdge implements Comparable<GraphEdge> {
 		this.fromVertex = fromVertex;
 		this.toVertex = toVertex;
 		this.weight = weight;
-	}
-
-	public GraphEdge(GraphVertex fromVertex, GraphVertex toVertex) {
-		this.fromVertex = fromVertex;
-		this.toVertex = toVertex;
-		this.weight = 0;
 	}
 
 	public GraphVertex getFromVertex() {
@@ -37,8 +31,4 @@ public class GraphEdge implements Comparable<GraphEdge> {
 		return weight;
 	}
 
-	@Override
-	public int compareTo(GraphEdge o) {
-		return Double.compare(this.getWeight(), o.getWeight());
-	}
 }

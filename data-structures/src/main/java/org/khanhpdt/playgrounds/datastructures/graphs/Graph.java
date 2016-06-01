@@ -52,7 +52,7 @@ public class Graph {
 		addEdge(vertex1, vertex2, 0);
 	}
 
-	private void addEdge(GraphVertex vertex1, GraphVertex vertex2, double weight) {
+	private void addEdge(GraphVertex vertex1, GraphVertex vertex2, int weight) {
 		vertex1.addEdge(vertex2, weight);
 		vertex2.addEdge(vertex1, weight);
 	}
@@ -61,7 +61,7 @@ public class Graph {
 		addEdge(vertices.get(vertex1Index), vertices.get(vertex2Index), 0);
 	}
 
-	private void addEdge(int vertex1Index, int vertex2Index, double weight) {
+	private void addEdge(int vertex1Index, int vertex2Index, int weight) {
 		addEdge(vertices.get(vertex1Index), vertices.get(vertex2Index), weight);
 	}
 
@@ -70,7 +70,7 @@ public class Graph {
 			if (pairIndex.length == 2) {
 				addEdge(pairIndex[0], pairIndex[1]);
 			} else if (pairIndex.length == 3) {
-				addEdge(pairIndex[0], pairIndex[1], (double) pairIndex[2]);
+				addEdge(pairIndex[0], pairIndex[1], pairIndex[2]);
 			}
 		}
 	}

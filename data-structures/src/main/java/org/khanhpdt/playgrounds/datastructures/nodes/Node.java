@@ -25,4 +25,8 @@ public class Node<K, V> {
 	public V getValue() {
 		return value;
 	}
+
+	public void setValue(V value) {
+		this.value = value;
+	}
 }

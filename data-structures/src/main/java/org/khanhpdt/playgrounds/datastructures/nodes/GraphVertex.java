@@ -4,48 +4,37 @@ import org.khanhpdt.playgrounds.datastructures.graphs.GraphEdge;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
-public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparable<GraphVertex> {
+public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 
 	private Node<UUID, Integer> content;
 
-	private List<GraphVertex> adjacents;
+	private List<GraphVertex> adjacents = new ArrayList<>();
 
 	// outgoing edges from this vertex
-	private List<GraphEdge> edges;
+	private Map<GraphVertex, GraphEdge> edges = new HashMap<>();
 
-	/**
-	 * Distance to the source in breadth-first search (BFS) or depth-first search (DFS)
-	 *
-	 */
+	// for searching (BFS, DFS)
 	private int distance = Integer.MAX_VALUE;
-
-	/**
-	 * Used as marker during BFS and DFS
-	 *
-	 */
 	private Color color = Color.WHITE;
-
-	/**
-	 * Predecessor of this vertex during BFS and DFS
-	 *
-	 */
 	private GraphVertex predecessor;
-
 	private int discoveredTime;
-
 	private int visitedTime;
 
 	// we need to put this vertex into queue during BFS
 	private GraphVertex next;
 	private GraphVertex previous;
+
+	// for finding minimum spanning tree. this represents the minimum weight among the edges connecting
+	// this vertex to the vertices already in the MST
+	private double minWeightToMST;
 
 	public GraphVertex(UUID key) {
 		this.content = new Node<>(key);
@@ -73,9 +62,6 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 	}
 
 	public List<GraphVertex> getAdjacents() {
-		if (adjacents == null) {
-			adjacents = new ArrayList<>();
-		}
 		return adjacents;
 	}
 
@@ -102,10 +88,6 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 
 	private void setDistance(int distance) {
 		this.distance = distance;
-	}
-
-	private void setPredecessor(GraphVertex predecessor) {
-		this.predecessor = predecessor;
 	}
 
 	@Override
@@ -160,23 +142,6 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 		this.color = color;
 	}
 
-	@Override
-	public int compareTo(GraphVertex o) {
-		Integer thisValue = this.getContent().getValue();
-		Integer otherValue = o.getContent().getValue();
-
-		if (thisValue == null && otherValue == null) {
-			return 0;
-		}
-		if (otherValue == null) {
-			return 1;
-		}
-		if (thisValue == null) {
-			return -1;
-		}
-		return thisValue.compareTo(otherValue);
-	}
-
 	public boolean isNotVisited() {
 		return this.color != Color.BLACK;
 	}
@@ -194,18 +159,39 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex>, Comparabl
 	}
 
 	public List<GraphEdge> getEdges() {
-		if (edges == null) {
-			edges = new ArrayList<>();
-		}
-		return edges;
+		return new ArrayList<>(edges.values());
 	}
 
 	public void addEdge(GraphVertex toVertex) {
 		addEdge(toVertex, 0);
 	}
 
-	public void addEdge(GraphVertex toVertex, double weight) {
-		this.getAdjacents().add(toVertex);
-		this.getEdges().add(new GraphEdge(this, toVertex, weight));
+	public void addEdge(GraphVertex toVertex, int weight) {
+		adjacents.add(toVertex);
+		edges.put(toVertex, new GraphEdge(this, toVertex, weight));
+	}
+
+	public double getWeightOfEdgeTo(GraphVertex toVertex) {
+		return edges.get(toVertex).getWeight();
+	}
+
+	public GraphEdge getEdgeTo(GraphVertex toVertex) {
+		return edges.get(toVertex);
+	}
+
+	public double getMinWeightToMST() {
+		return minWeightToMST;
+	}
+
+	public void setMinWeightToMST(double minWeightToMST) {
+		this.minWeightToMST = minWeightToMST;
+	}
+
+	public void setPredecessor(GraphVertex predecessor) {
+		this.predecessor = predecessor;
+	}
+
+	public GraphVertex getPredecessor() {
+		return predecessor;
 	}
 }

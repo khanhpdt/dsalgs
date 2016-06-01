@@ -15,6 +15,10 @@ public class BinaryMaxHeap<T> extends BinaryHeap<T> {
 
 	@Override
 	protected int getIndexGivenHeapProperty(int... nodeIndices) {
+		return getIndexOfMax(nodeIndices);
+	}
+
+	private int getIndexOfMax(int[] nodeIndices) {
 		int indexMax = nodeIndices[0];
 		T max = getNode(indexMax);
 
@@ -27,7 +31,5 @@ public class BinaryMaxHeap<T> extends BinaryHeap<T> {
 		}
 
 		return indexMax;
-
 	}
-
 }
