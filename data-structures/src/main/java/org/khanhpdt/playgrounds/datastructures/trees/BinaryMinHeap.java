@@ -33,20 +33,4 @@ public class BinaryMinHeap<T> extends BinaryHeap<T> {
 		return indexMin;
 	}
 
-	public void minHeapifyUp(T node) {
-		int nodeIndex = getIndexOf(node);
-		int parentIndex = getParentIndexOf(nodeIndex);
-		// heapify when the current node and its parent are out of order
-		while (parentIndex >= 0 && getNodeComparator().compare(getNode(nodeIndex), getNode(parentIndex)) < 0) {
-			swapNodes(nodeIndex, parentIndex);
-
-			// keep going up to check for the heap property
-			nodeIndex = parentIndex;
-			parentIndex = getParentIndexOf(nodeIndex);
-		}
-	}
-
-	public T extractMin() {
-		return extractRoot();
-	}
 }

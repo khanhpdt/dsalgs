@@ -1,14 +1,19 @@
-package org.khanhpdt.playgrounds.datastructures.trees;
+package org.khanhpdt.playgrounds.datastructures.queues;
 
 import org.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author khanhpdt
  */
-public abstract class BinaryHeap<T> {
+public abstract class PriorityQueue<T> {
 
 	private List<T> nodes;
 
@@ -16,10 +21,22 @@ public abstract class BinaryHeap<T> {
 
 	private int heapSize;
 
-	BinaryHeap(List<T> nodes, Comparator<T> nodeComparator) {
-		this.nodes = nodes;
+	// to check if the node is in this heap in constant time
+	private Set<T> nodeSet;
+
+	// to get index for a given node in constant time
+	private Map<T, Integer> indices;
+
+	protected PriorityQueue(List<T> nodes, Comparator<T> nodeComparator) {
+		this.nodes = new ArrayList<>(nodes);
 		this.nodeComparator = nodeComparator;
 		this.heapSize = nodes.size();
+		this.nodeSet = new HashSet<>(nodes);
+
+		this.indices = new HashMap<>();
+		for (int i = 0; i < this.nodes.size(); i ++) {
+			this.indices.put(this.nodes.get(i), i);
+		}
 
 		build();
 	}
@@ -56,7 +73,10 @@ public abstract class BinaryHeap<T> {
 		heapify(heapifiedNodeIndex);
 	}
 
-	private void swapNodes(int i1, int i2) {
+	public void swapNodes(int i1, int i2) {
+		indices.put(getNode(i1), i2);
+		indices.put(getNode(i2), i1);
+
 		Commons.swap(nodes, i1, i2);
 	}
 
@@ -66,6 +86,14 @@ public abstract class BinaryHeap<T> {
 
 	private int getLeftChildIndexOf(int indexCurrent) {
 		return 2 * indexCurrent + 1;
+	}
+
+	protected int getParentIndexOf(int indexCurrent) {
+		return (int) Math.ceil((double) indexCurrent/2) - 1;
+	}
+
+	protected int getIndexOf(T node) {
+		return indices.get(node);
 	}
 
 	/**
@@ -78,15 +106,15 @@ public abstract class BinaryHeap<T> {
 		return nodes;
 	}
 
-	T getNode(int index) {
+	protected T getNode(int index) {
 		return nodes.get(index);
 	}
 
-	public int getHeapSize() {
+	protected int getHeapSize() {
 		return heapSize;
 	}
 
-	Comparator<T> getNodeComparator() {
+	protected Comparator<T> getNodeComparator() {
 		return nodeComparator;
 	}
 
@@ -96,6 +124,27 @@ public abstract class BinaryHeap<T> {
 
 	public void heapifyRoot() {
 		heapify(0);
+	}
+
+	public boolean isNotEmpty() {
+		return heapSize > 0;
+	}
+
+	protected T extractRoot() {
+		T root = nodes.get(0);
+
+		// move root out of the heap, and re-heapify the heap
+		swapNodes(0, heapSize - 1);
+		reduceHeapSizeBy(1);
+		heapify(0);
+
+		nodeSet.remove(root);
+
+		return root;
+	}
+
+	public boolean contains(T node) {
+		return nodeSet.contains(node);
 	}
 
 }

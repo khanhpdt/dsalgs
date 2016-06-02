@@ -3,7 +3,7 @@ package org.khanhpdt.playgrounds.algorithms.graphs;
 import org.khanhpdt.playgrounds.datastructures.graphs.Graph;
 import org.khanhpdt.playgrounds.datastructures.graphs.GraphEdge;
 import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
-import org.khanhpdt.playgrounds.datastructures.trees.BinaryMinHeap;
+import org.khanhpdt.playgrounds.datastructures.queues.MinPriorityQueue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class PrimMST extends MinimumSpanningTree {
 
 		// use a min-priority queue to accelerate the process of finding the safe edge and also to hold
 		// the vertices not yet in the MST
-		BinaryMinHeap<GraphVertex> minPriorityQueue = new BinaryMinHeap<>(getGraph().getVertices(),
+		MinPriorityQueue<GraphVertex> minPriorityQueue = new MinPriorityQueue<>(getGraph().getVertices(),
 				(v1, v2) -> Double.compare(v1.getMinWeightToMST(), v2.getMinWeightToMST()));
 
 		List<GraphEdge> result = new ArrayList<>();
