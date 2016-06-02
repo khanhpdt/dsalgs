@@ -1,7 +1,15 @@
 package org.khanhpdt.playgrounds.datastructures.queues;
 
+import org.khanhpdt.playgrounds.datastructures.trees.BinaryHeap;
+import org.khanhpdt.playgrounds.datastructures.trees.BinaryMinHeap;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @param <T> node type
@@ -9,35 +17,30 @@ import java.util.List;
  */
 public class MinPriorityQueue<T> extends PriorityQueue<T> {
 
+	private final BinaryMinHeap<T> minHeap;
+
 	public MinPriorityQueue(List<T> nodes, Comparator<T> nodeComparator) {
-		super(nodes, nodeComparator);
+		minHeap = new BinaryMinHeap<>(new ArrayList<>(nodes), nodeComparator);
+
+		minHeap.setIndices(
+				IntStream.range(0, getNodes().size())
+						.boxed()
+						.collect(Collectors.toMap(this::getNode, Function.identity())));
 	}
 
 	@Override
-	protected int getIndexGivenHeapProperty(int... nodeIndices) {
-		return getIndexOfMin(nodeIndices);
+	protected BinaryHeap<T> getHeap() {
+		return minHeap;
 	}
 
-	private int getIndexOfMin(int[] nodeIndices) {
-		int indexMin = nodeIndices[0];
-		T min = getNode(indexMin);
+	public <K> void decreaseKey(T node, K key, BiConsumer<T, K> keySetter) {
+		keySetter.accept(node, key);
 
-		for (int j = 1; j < nodeIndices.length; j++) {
-			int index = nodeIndices[j];
-			if (index < getHeapSize() && getNodeComparator().compare(getNode(index), min) < 0) {
-				indexMin = index;
-				min = getNode(indexMin);
-			}
-		}
-
-		return indexMin;
-	}
-
-	public void minHeapifyUp(T node) {
+		// re-order because decreasing key can cause the current node and its parent out of order
 		int nodeIndex = getIndexOf(node);
 		int parentIndex = getParentIndexOf(nodeIndex);
-		// heapify when the current node and its parent are out of order
 		while (parentIndex >= 0 && getNodeComparator().compare(getNode(nodeIndex), getNode(parentIndex)) < 0) {
+			// re-order
 			swapNodes(nodeIndex, parentIndex);
 
 			// keep going up to check for the heap property

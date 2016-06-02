@@ -44,9 +44,8 @@ public class PrimMST extends MinimumSpanningTree {
 				// make sure that the value of each vertex represents the minimum weight among the edges
 				// connecting the vertex to the vertices already in the MST
 				if (minPriorityQueue.contains(adj) && adj.getMinWeightToMST() > edgeWeight) {
-					adj.setMinWeightToMST(edgeWeight);
 					adj.setPredecessor(v);
-					minPriorityQueue.minHeapifyUp(adj);
+					minPriorityQueue.decreaseKey(adj, edgeWeight, GraphVertex::setMinWeightToMST);
 				}
 			});
 		}

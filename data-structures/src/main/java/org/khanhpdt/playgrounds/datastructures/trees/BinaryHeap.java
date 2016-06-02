@@ -4,6 +4,7 @@ import org.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author khanhpdt
@@ -15,6 +16,9 @@ public abstract class BinaryHeap<T> {
 	private Comparator<T> nodeComparator;
 
 	private int heapSize;
+
+	// to get index for a given node in constant time
+	private Map<T, Integer> indices;
 
 	BinaryHeap(List<T> nodes, Comparator<T> nodeComparator) {
 		this.nodes = nodes;
@@ -56,7 +60,12 @@ public abstract class BinaryHeap<T> {
 		heapify(heapifiedNodeIndex);
 	}
 
-	private void swapNodes(int i1, int i2) {
+	public void swapNodes(int i1, int i2) {
+		// keep track of the indices
+		if (indices != null) {
+			indices.put(getNode(i1), i2);
+			indices.put(getNode(i2), i1);
+		}
 		Commons.swap(nodes, i1, i2);
 	}
 
@@ -86,7 +95,7 @@ public abstract class BinaryHeap<T> {
 		return heapSize;
 	}
 
-	Comparator<T> getNodeComparator() {
+	public Comparator<T> getNodeComparator() {
 		return nodeComparator;
 	}
 
@@ -97,5 +106,33 @@ public abstract class BinaryHeap<T> {
 	public void heapifyRoot() {
 		heapify(0);
 	}
+
+	public Map<T, Integer> getIndices() {
+		return indices;
+	}
+
+	public void setIndices(Map<T, Integer> indices) {
+		this.indices = indices;
+	}
+
+	public boolean contains(T node) {
+		if (indices != null) {
+			Integer nodeIndex = indices.get(node);
+			return nodeIndex != null && nodeIndex >= 0 && nodeIndex < heapSize;
+		}
+		return nodes.stream().anyMatch(n -> n.equals(node));
+	}
+
+	public T extractRoot() {
+		T root = getNodes().get(0);
+
+		// move root out of the heap, and re-heapify the heap
+		swapNodes(0, getHeapSize() - 1);
+		reduceHeapSizeBy(1);
+		heapify(0);
+
+		return root;
+	}
+
 
 }
