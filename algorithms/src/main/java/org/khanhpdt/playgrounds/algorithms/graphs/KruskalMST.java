@@ -14,8 +14,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Kruskal algorithm to find the minimum spanning tree of a graph.
- *
  * @author khanhpdt
  */
 public class KruskalMST extends MinimumSpanningTree {
