@@ -4,7 +4,10 @@ import org.khanhpdt.playgrounds.datastructures.graphs.Graph;
 import org.khanhpdt.playgrounds.datastructures.graphs.GraphEdge;
 import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,10 +23,13 @@ public class BellmanFordShortestPath {
 
 	private final Map<GraphVertex, Double> distances;
 
+	private final Map<GraphVertex, List<GraphVertex>> paths;
+
 	public BellmanFordShortestPath(Graph graph, GraphVertex source) {
 		this.graph = graph;
 		this.source = source;
 		this.distances = new HashMap<>();
+		this.paths = new HashMap<>();
 
 		build();
 	}
@@ -73,7 +79,26 @@ public class BellmanFordShortestPath {
 		});
 	}
 
-	public double distanceTo(GraphVertex vertex) {
+	public double getDistanceTo(GraphVertex vertex) {
 		return distances.get(vertex);
+	}
+
+	public List<GraphVertex> getPathTo(GraphVertex vertex) {
+		paths.putIfAbsent(vertex, getPath(vertex));
+		return paths.get(vertex);
+	}
+
+	private List<GraphVertex> getPath(GraphVertex vertex) {
+		List<GraphVertex> result = new ArrayList<>();
+
+		GraphVertex current = vertex;
+		while (current != null) {
+			result.add(current);
+			current = current.getPredecessor();
+		}
+
+		Collections.reverse(result);
+
+		return result;
 	}
 }
