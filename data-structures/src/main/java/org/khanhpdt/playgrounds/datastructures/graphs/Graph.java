@@ -81,12 +81,28 @@ public class Graph {
 
 	public void addDirectedEdges(int[][] pairIndexes) {
 		for (int[] pairIndex : pairIndexes) {
-			addDirectedEdge(pairIndex[0], pairIndex[1]);
+			if (pairIndex.length == 2) {
+				addDirectedEdge(pairIndex[0], pairIndex[1]);
+			} else if (pairIndex.length == 3) {
+				addDirectedEdge(pairIndex[0], pairIndex[1], pairIndex[2]);
+			}
 		}
 	}
 
 	private void addDirectedEdge(int vertexIndex, int adjacentVertexIndex) {
-		getVertex(vertexIndex).addEdge(getVertex(adjacentVertexIndex));
+		addDirectedEdge(getVertex(vertexIndex), getVertex(adjacentVertexIndex));
+	}
+
+	private void addDirectedEdge(GraphVertex from, GraphVertex to) {
+		from.addEdge(to);
+	}
+
+	private void addDirectedEdge(int vertexIndex, int adjacentVertexIndex, int weight) {
+		addDirectedEdge(getVertex(vertexIndex), getVertex(adjacentVertexIndex), weight);
+	}
+
+	private void addDirectedEdge(GraphVertex from, GraphVertex to, int weight) {
+		from.addEdge(to, weight);
 	}
 
 	public List<GraphVertex> getVertices() {
