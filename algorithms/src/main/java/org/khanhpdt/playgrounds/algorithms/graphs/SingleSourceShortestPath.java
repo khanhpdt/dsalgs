@@ -78,7 +78,8 @@ public abstract class SingleSourceShortestPath {
 		Double distanceVertexTo = distances.get(vertexTo);
 		Double distanceVertexFrom = distances.get(vertexFrom);
 
-		// this is to guarantee the triangle inequality, which is the key to find shortest paths
+		// This is the key to the algorithms to find single-source shortest paths. This updates the shortest path found
+		// so far if the newly found path is shorter.
 		if (distanceVertexTo > distanceVertexFrom + edge.getWeight()) {
 			distances.put(vertexTo, distanceVertexFrom + edge.getWeight());
 			vertexTo.setPredecessor(vertexFrom);

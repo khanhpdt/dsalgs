@@ -18,6 +18,7 @@ public class DAGShortestPath extends SingleSourceShortestPath {
 	protected void build() {
 		initialize();
 
+		// this will also check for cycles in the given graph, as topological sort cannot be applied on graphs with cycles
 		Graph topologicallySortedGraph = TopologicalSort.from(graph);
 
 		topologicallySortedGraph.getVertices()
