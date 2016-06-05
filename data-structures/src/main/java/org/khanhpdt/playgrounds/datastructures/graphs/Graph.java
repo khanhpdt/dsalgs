@@ -115,8 +115,11 @@ public class Graph {
 
 	public List<GraphEdge> getEdges() {
 		List<GraphEdge> edges = new ArrayList<>();
-		vertices.forEach(v -> edges.addAll(v.getEdges()));
+		vertices.forEach(v -> edges.addAll(v.getOutgoingEdges()));
 		return edges;
 	}
 
+	public void resetAfterTraverse() {
+		getVertices().forEach(GraphVertex::resetAfterTraverse);
+	}
 }

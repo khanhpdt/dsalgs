@@ -8,13 +8,14 @@ import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
  */
 public class DirectedCycle {
 
-	private Graph graph;
+	private boolean exists;
 
 	private DirectedCycle(Graph graph) {
-		this.graph = graph;
+		this.exists = check(graph);
+		graph.resetAfterTraverse();
 	}
 
-	private boolean exists() {
+	private boolean check(Graph graph) {
 		for (GraphVertex vertex : graph.getVertices()) {
 			if (vertex.isNotDiscovered() && checkDirectedCycleFrom(vertex)) {
 				return true;
@@ -39,6 +40,10 @@ public class DirectedCycle {
 
 			return false;
 		}
+	}
+
+	private boolean exists() {
+		return exists;
 	}
 
 	public static boolean checkExists(Graph graph) {

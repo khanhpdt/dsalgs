@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 
 /**
@@ -54,12 +55,45 @@ public class ShortestPathTest {
 		assertThat(shortestPath.getPathTo(graph.getVertex(3)), Matchers.contains(getVertexMatchers(graph, 0, 4, 2, 1, 3)));
 		assertThat(shortestPath.getPathTo(graph.getVertex(4)), Matchers.contains(getVertexMatchers(graph, 0, 4)));
 	}
-
 	private static List<Matcher<? super GraphVertex>> getVertexMatchers(Graph graph, int... vertexIndices) {
 		return Arrays.stream(vertexIndices).boxed()
 				.map(graph::getVertex)
 				.map(IsEqual::new)
 				.collect(Collectors.toList());
+	}
+
+	@Test
+	public void testDAGShortestPath_distance() throws Exception {
+		Graph graph = new Graph();
+		IntStream.range(0, 6).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
+		graph.addDirectedEdges(new int[][]{
+				{0, 1, 2}, {0, 2, 6}, {1, 2, 7}, {1, 3, 4}, {1, 4, 2},
+				{2, 3, -1}, {2, 4, 1}, {3, 4, -2}, {5, 0, 5}, {5, 1, 3} });
+
+		DAGShortestPath shortestPath = new DAGShortestPath(graph, graph.getVertex(0));
+
+		assertThat(shortestPath.getDistanceTo(graph.getVertex(1)), closeTo(2, DOUBLE_ERROR));
+		assertThat(shortestPath.getDistanceTo(graph.getVertex(2)), closeTo(6, DOUBLE_ERROR));
+		assertThat(shortestPath.getDistanceTo(graph.getVertex(3)), closeTo(5, DOUBLE_ERROR));
+		assertThat(shortestPath.getDistanceTo(graph.getVertex(4)), closeTo(3, DOUBLE_ERROR));
+		assertThat(shortestPath.getDistanceTo(graph.getVertex(5)), is(Double.POSITIVE_INFINITY));
+	}
+
+	@Test
+	public void testDAGShortestPath_path() throws Exception {
+		Graph graph = new Graph();
+		IntStream.range(0, 6).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
+		graph.addDirectedEdges(new int[][]{
+				{0, 1, 2}, {0, 2, 6}, {1, 2, 7}, {1, 3, 4}, {1, 4, 2},
+				{2, 3, -1}, {2, 4, 1}, {3, 4, -2}, {5, 0, 5}, {5, 1, 3} });
+
+		DAGShortestPath shortestPath = new DAGShortestPath(graph, graph.getVertex(0));
+
+		assertThat(shortestPath.getPathTo(graph.getVertex(1)), Matchers.contains(getVertexMatchers(graph, 0, 1)));
+		assertThat(shortestPath.getPathTo(graph.getVertex(2)), Matchers.contains(getVertexMatchers(graph, 0, 2)));
+		assertThat(shortestPath.getPathTo(graph.getVertex(3)), Matchers.contains(getVertexMatchers(graph, 0, 2, 3)));
+		assertThat(shortestPath.getPathTo(graph.getVertex(4)), Matchers.contains(getVertexMatchers(graph, 0, 2, 3, 4)));
+		assertThat(shortestPath.getPathTo(graph.getVertex(5)), Matchers.empty());
 	}
 
 }

@@ -1,0 +1,27 @@
+package org.khanhpdt.playgrounds.algorithms.graphs;
+
+import org.khanhpdt.playgrounds.datastructures.graphs.Graph;
+import org.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
+
+/**
+ * Algorithm to find shortest paths in a directed acyclic graph.
+ *
+ * @author khanhpdt
+ */
+public class DAGShortestPath extends SingleSourceShortestPath {
+
+	public DAGShortestPath(Graph graph, GraphVertex source) {
+		super(graph, source);
+	}
+
+	@Override
+	protected void build() {
+		initialize();
+
+		Graph topologicallySortedGraph = TopologicalSort.from(graph);
+
+		topologicallySortedGraph.getVertices()
+				.forEach(v -> v.getOutgoingEdges()
+						.forEach(this::relax));
+	}
+}

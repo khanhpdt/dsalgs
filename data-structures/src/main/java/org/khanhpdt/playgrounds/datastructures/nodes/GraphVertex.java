@@ -19,7 +19,7 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 	private List<GraphVertex> adjacents = new ArrayList<>();
 
 	// outgoing edges from this vertex
-	private Map<GraphVertex, GraphEdge> edges = new HashMap<>();
+	private Map<GraphVertex, GraphEdge> outgoingEdges = new HashMap<>();
 
 	// for searching (BFS, DFS)
 	private int distance = Integer.MAX_VALUE;
@@ -158,8 +158,8 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 		this.visitedTime = visitedTime;
 	}
 
-	public List<GraphEdge> getEdges() {
-		return new ArrayList<>(edges.values());
+	public List<GraphEdge> getOutgoingEdges() {
+		return new ArrayList<>(outgoingEdges.values());
 	}
 
 	public void addEdge(GraphVertex toVertex) {
@@ -168,15 +168,15 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 
 	public void addEdge(GraphVertex toVertex, int weight) {
 		adjacents.add(toVertex);
-		edges.put(toVertex, new GraphEdge(this, toVertex, weight));
+		outgoingEdges.put(toVertex, new GraphEdge(this, toVertex, weight));
 	}
 
 	public double getWeightOfEdgeTo(GraphVertex toVertex) {
-		return edges.get(toVertex).getWeight();
+		return outgoingEdges.get(toVertex).getWeight();
 	}
 
 	public GraphEdge getEdgeTo(GraphVertex toVertex) {
-		return edges.get(toVertex);
+		return outgoingEdges.get(toVertex);
 	}
 
 	public double getMinWeightToMST() {
@@ -193,5 +193,13 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 
 	public GraphVertex getPredecessor() {
 		return predecessor;
+	}
+
+	public void resetAfterTraverse() {
+		distance = Integer.MAX_VALUE;
+		color = Color.WHITE;
+		predecessor = null;
+		discoveredTime = 0;
+		visitedTime = 0;
 	}
 }
