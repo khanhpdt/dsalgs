@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>org.khanhpdt.playgrounds</groupId>
-            <artifactId>data-structures-algorithms-commons</artifactId>
+            <artifactId>datastructures-algorithms-commons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
