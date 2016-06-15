@@ -19,7 +19,7 @@ public class HashTableTest {
 
 	@Test
 	public void testInsert() throws Exception {
-		HashTable hashTable = new HashTable();
+		HashTableChaining hashTable = new HashTableChaining();
 
 		Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
 
@@ -31,7 +31,7 @@ public class HashTableTest {
 
 	@Test
 	public void testInsertMultiple() throws Exception {
-		HashTable hashTable = new HashTable();
+		HashTableChaining hashTable = new HashTableChaining();
 
 		for (int i = 0; i < 20; i ++) {
 			Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
@@ -45,7 +45,7 @@ public class HashTableTest {
 
 	@Test
 	public void testSize() throws Exception {
-		HashTable hashTable = new HashTable();
+		HashTableChaining hashTable = new HashTableChaining();
 		int size = 24;
 
 		for (int i = 0; i < size; i ++) {
@@ -58,7 +58,7 @@ public class HashTableTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		HashTable hashTable = new HashTable();
+		HashTableChaining hashTable = new HashTableChaining();
 		Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
 		hashTable.insert(item);
 
