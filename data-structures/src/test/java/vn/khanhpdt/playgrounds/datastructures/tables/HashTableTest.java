@@ -1,5 +1,6 @@
 package vn.khanhpdt.playgrounds.datastructures.tables;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.datastructures.nodes.Node;
 
@@ -33,12 +34,12 @@ public class HashTableTest {
 		HashTable hashTable = new HashTable();
 
 		for (int i = 0; i < 20; i ++) {
-			Node<UUID, Integer> element = new Node<>(UUID.randomUUID(), random.nextInt());
+			Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
 
-			hashTable.insert(element);
+			hashTable.insert(item);
 
-			Node<UUID, Integer> inserted = hashTable.search(element.getKey());
-			assertThat(inserted, is(element));
+			Node<UUID, Integer> inserted = hashTable.search(item.getKey());
+			assertThat(inserted, is(item));
 		}
 	}
 
@@ -48,11 +49,22 @@ public class HashTableTest {
 		int size = 24;
 
 		for (int i = 0; i < size; i ++) {
-			Node<UUID, Integer> element = new Node<>(UUID.randomUUID(), random.nextInt());
-			hashTable.insert(element);
+			Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
+			hashTable.insert(item);
 		}
 
 		assertThat(hashTable.size(), is(size));
+	}
+
+	@Test
+	public void testRemove() throws Exception {
+		HashTable hashTable = new HashTable();
+		Node<UUID, Integer> item = new Node<>(UUID.randomUUID(), random.nextInt());
+		hashTable.insert(item);
+
+		hashTable.remove(item.getKey());
+
+		assertThat(hashTable.search(item.getKey()), Matchers.nullValue());
 	}
 
 }

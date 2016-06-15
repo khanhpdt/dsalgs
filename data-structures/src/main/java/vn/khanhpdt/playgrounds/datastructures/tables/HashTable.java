@@ -39,13 +39,13 @@ public class HashTable {
 		this.hashFunction = this::defaultHash;
 	}
 
-	private Integer defaultHash(UUID key) {
+	private Integer defaultHash(UUID itemKey) {
 		// make sure the index is in range
-		return Math.abs(key.hashCode() % nSlots);
+		return Math.abs(itemKey.hashCode() % nSlots);
 	}
 
-	public void insert(Node<UUID, Integer> element) {
-		int slotIndex = hashFunction.apply(element.getKey());
+	public void insert(Node<UUID, Integer> item) {
+		int slotIndex = hashFunction.apply(item.getKey());
 		SinglyLinkedList<SinglyLinkedNode> slot = slots[slotIndex];
 
 		// first item in the chaining
@@ -54,25 +54,43 @@ public class HashTable {
 			slots[slotIndex] = slot;
 		}
 
-		// the new element is always inserted into the head of the chaining
-		slot.insert(new SinglyLinkedNode(element));
+		// the new item is always inserted into the head of the chaining
+		slot.insert(new SinglyLinkedNode(item));
 
 		nItems++;
 	}
 
-	private SinglyLinkedList<SinglyLinkedNode> getSlotFor(UUID key) {
-		int slotIndex = hashFunction.apply(key);
+	private SinglyLinkedList<SinglyLinkedNode> getSlotFor(UUID itemKey) {
+		int slotIndex = hashFunction.apply(itemKey);
 		return slots[slotIndex];
 	}
 
-	public Node<UUID, Integer> search(UUID key) {
-		SinglyLinkedList<SinglyLinkedNode> slot = getSlotFor(key);
-		// node in the chaining
-		SinglyLinkedNode chainNode = slot.search(key);
-		return chainNode.getContent();
+	public Node<UUID, Integer> search(UUID itemKey) {
+		SinglyLinkedList<SinglyLinkedNode> slot = getSlotFor(itemKey);
+
+		// no slot found, which means item is never in the hash table
+		if (slot == null) {
+			return null;
+		}
+
+		SinglyLinkedNode slotItem = slot.search(itemKey);
+		if (slotItem == null) {
+			return null;
+		}
+		return slotItem.getContent();
 	}
 
 	public int size() {
 		return nItems;
+	}
+
+	public void remove(UUID itemKey) {
+		SinglyLinkedList<SinglyLinkedNode> slot = getSlotFor(itemKey);
+
+		if (slot == null) {
+			return;
+		}
+
+		slot.remove(itemKey);
 	}
 }
