@@ -45,7 +45,8 @@ public class QuadraticProbing implements ProbingMethod {
 	}
 
 	private Integer hash(UUID key) {
-		// quadratic probing: the hash value is quadratic to the sequence number
+		// quadratic probing: the hash value is quadratic to the sequence number. However, this implementation can only
+		// be guaranteed to work if the number of slots is a power of two.
 		int probingOffset = ((sequenceNumber * sequenceNumber + sequenceNumber) / 2) % nSlots;
 		return Math.abs((auxiliaryHashFunction.apply(key) + probingOffset) % nSlots);
 	}
