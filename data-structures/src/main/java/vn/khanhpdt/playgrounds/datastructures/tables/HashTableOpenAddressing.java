@@ -45,13 +45,17 @@ public class HashTableOpenAddressing extends HashTable {
 		}
 
 		if (slotStatuses[slotIndex] == SlotStatus.AVAILABLE) {
-			slots[slotIndex] = item;
-			slotStatuses[slotIndex] = SlotStatus.ALLOCATED;
-			nItems++;
+			insertItem(item, slotIndex);
 		}
 		else {
 			throw new IllegalStateException("Could not find any available slot.");
 		}
+	}
+
+	private void insertItem(Node<UUID, Integer> item, int slotIndex) {
+		slots[slotIndex] = item;
+		slotStatuses[slotIndex] = SlotStatus.ALLOCATED;
+		nItems++;
 	}
 
 	@Override
@@ -70,8 +74,8 @@ public class HashTableOpenAddressing extends HashTable {
 		int slotIndex = probingMethod.firstProbe(itemKey);
 		int nProbes = 1;
 
-		// if the slot slotIndex is still available, the item is not in the hash table, because otherwise it would have
-		// been inserted into the slot slotIndex
+		// if the slot at slotIndex is still available, the item is not in the hash table, because otherwise it would have
+		// been inserted into the slot
 		while (slotStatuses[slotIndex] == SlotStatus.ALLOCATED && !isSlotWithKey(slotIndex, itemKey) && nProbes <= nSlots) {
 			slotIndex = probingMethod.probe(itemKey);
 			nProbes++;
@@ -94,9 +98,14 @@ public class HashTableOpenAddressing extends HashTable {
 		int slotIndex = searchSlot(itemKey);
 		// item found
 		if (slotIndex >= 0) {
-			slots[slotIndex] = null;
-			slotStatuses[slotIndex] = SlotStatus.AVAILABLE;
+			removeItem(slotIndex);
 		}
+	}
+
+	private void removeItem(int slotIndex) {
+		slots[slotIndex] = null;
+		slotStatuses[slotIndex] = SlotStatus.AVAILABLE;
+		nItems--;
 	}
 
 }
