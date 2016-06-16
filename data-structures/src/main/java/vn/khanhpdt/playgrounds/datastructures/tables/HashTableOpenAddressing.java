@@ -15,17 +15,27 @@ public class HashTableOpenAddressing extends HashTable {
 
 	private Node<UUID, Integer>[] slots;
 
-	private final ProbingMethodName probingMethodName;
+	private ProbingMethodName probingMethodName;
 
 	private SlotStatus[] slotStatuses;
 
-	@SuppressWarnings("unchecked")
 	public HashTableOpenAddressing(ProbingMethodName probingMethodName) {
 		super();
+		init(probingMethodName);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void init(ProbingMethodName probingMethodName) {
 		this.probingMethodName = probingMethodName;
 		this.slots = (Node<UUID, Integer>[]) new Node[nSlots];
 		this.slotStatuses = new SlotStatus[nSlots];
 		Arrays.fill(slotStatuses, SlotStatus.AVAILABLE);
+	}
+
+	public HashTableOpenAddressing(int nSlots, ProbingMethodName probingMethodName) {
+		super();
+		this.nSlots = nSlots;
+		init(probingMethodName);
 	}
 
 	@Override

@@ -25,10 +25,11 @@ public class HashTableTest {
 
 	private static final String HASH_TABLE_CHAINING = "HashTableChaining";
 	private static final String HASH_TABLE_OPEN_ADDRESSING_LINEAR_PROBING = "HashTableOpenAddressing_LinearProbing";
+	private static final String HASH_TABLE_OPEN_ADDRESSING_QUADRATIC_PROBING = "HashTableOpenAddressing_QuadraticProbing";
 
 	@Parameterized.Parameters(name = "{index}: {0}")
 	public static Iterable<? extends String> data() {
-		return Arrays.asList(HASH_TABLE_CHAINING, HASH_TABLE_OPEN_ADDRESSING_LINEAR_PROBING);
+		return Arrays.asList(HASH_TABLE_CHAINING, HASH_TABLE_OPEN_ADDRESSING_LINEAR_PROBING, HASH_TABLE_OPEN_ADDRESSING_QUADRATIC_PROBING);
 	}
 
 	@Parameterized.Parameter
@@ -47,8 +48,11 @@ public class HashTableTest {
 			case HASH_TABLE_OPEN_ADDRESSING_LINEAR_PROBING:
 				hashTable = new HashTableOpenAddressing(ProbingMethodName.LINEAR_PROBING);
 				break;
+			case HASH_TABLE_OPEN_ADDRESSING_QUADRATIC_PROBING:
+				hashTable = new HashTableOpenAddressing(32, ProbingMethodName.QUADRATIC_PROBING);
+				break;
 			default:
-				throw new UnsupportedOperationException("not supported");
+				throw new UnsupportedOperationException(hashTableType + ": not supported");
 		}
 	}
 

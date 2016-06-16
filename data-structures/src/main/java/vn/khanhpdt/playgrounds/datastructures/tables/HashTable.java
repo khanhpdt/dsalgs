@@ -9,7 +9,6 @@ import java.util.UUID;
  */
 public abstract class HashTable {
 
-	// should be prime number
 	private static final int DEFAULT_NUMBER_OF_SLOTS = 11;
 
 	/**

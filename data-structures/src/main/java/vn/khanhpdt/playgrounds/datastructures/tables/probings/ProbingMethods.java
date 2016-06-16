@@ -9,10 +9,11 @@ public class ProbingMethods {
 		switch (probingMethodName) {
 			case LINEAR_PROBING:
 				return new LinearProbing(nSlots);
+			case QUADRATIC_PROBING:
+				return new QuadraticProbing(nSlots);
 			default:
-				break;
+				throw new UnsupportedOperationException("Not supported yet.");
 		}
-		return null;
 	}
 
 }
