@@ -9,7 +9,8 @@ import java.util.UUID;
  */
 public abstract class HashTable {
 
-	private static final int DEFAULT_NUMBER_OF_SLOTS = 10;
+	// should be prime number
+	private static final int DEFAULT_NUMBER_OF_SLOTS = 11;
 
 	/**
 	 * Number of available slots in the hash table.

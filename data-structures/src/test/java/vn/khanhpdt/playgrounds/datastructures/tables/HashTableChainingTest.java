@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 /**
  * @author khanhpdt
  */
-public class HashTableTest {
+public class HashTableChainingTest {
 
 	private Random random = new Random();
 

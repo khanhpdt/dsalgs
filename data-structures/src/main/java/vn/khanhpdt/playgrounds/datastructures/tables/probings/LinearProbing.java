@@ -1,4 +1,4 @@
-package vn.khanhpdt.playgrounds.datastructures.tables;
+package vn.khanhpdt.playgrounds.datastructures.tables.probings;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -8,13 +8,11 @@ import java.util.function.Function;
  */
 public class LinearProbing implements ProbingMethod {
 
-	private final int nSlots;
-
 	private final Function<UUID, Integer> auxiliaryHashFunction;
 
-	private int sequenceNumber;
+	private final int nSlots;
 
-	private Integer auxiliaryHash;
+	private int sequenceNumber;
 
 	public LinearProbing(int nSlots) {
 		this.nSlots = nSlots;
@@ -27,20 +25,23 @@ public class LinearProbing implements ProbingMethod {
 	}
 
 	@Override
+	public int firstProbe(UUID key) {
+		sequenceNumber = 0;
+		return probe(key);
+	}
+
+	@Override
 	public int probe(UUID key) {
 		int result = hash(key);
+
+		// linear probing: the sequence number is linearly increased after each probe
 		sequenceNumber++;
+
 		return result;
 	}
 
 	private Integer hash(UUID key) {
-		// save the result because it will not change during the usage of this probing method
-		if (auxiliaryHash == null) {
-			auxiliaryHash = auxiliaryHashFunction.apply(key);
-		}
-
-		// linear probing because the sequence number is linearly increased after each probe
-		return Math.abs((auxiliaryHash + sequenceNumber) % nSlots);
+		return Math.abs((auxiliaryHashFunction.apply(key) + sequenceNumber) % nSlots);
 	}
 
 }
