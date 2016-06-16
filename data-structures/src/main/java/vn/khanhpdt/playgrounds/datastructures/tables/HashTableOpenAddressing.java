@@ -37,7 +37,7 @@ public class HashTableOpenAddressing extends HashTable {
 		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, nSlots);
 
 		// keep searching until either finding an available slot or all the slots are probed
-		int slotIndex = probingMethod.firstProbe(item.getKey());
+		int slotIndex = probingMethod.probe(item.getKey());
 		int nProbes = 1;
 		while (slotStatuses[slotIndex] == SlotStatus.ALLOCATED && nProbes <= nSlots) {
 			slotIndex = probingMethod.probe(item.getKey());
@@ -71,7 +71,7 @@ public class HashTableOpenAddressing extends HashTable {
 	private int searchSlot(UUID itemKey) {
 		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, nSlots);
 
-		int slotIndex = probingMethod.firstProbe(itemKey);
+		int slotIndex = probingMethod.probe(itemKey);
 		int nProbes = 1;
 
 		// if the slot at slotIndex is still available, the item is not in the hash table, because otherwise it would have

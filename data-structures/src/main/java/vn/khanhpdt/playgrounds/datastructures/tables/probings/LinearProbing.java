@@ -25,12 +25,6 @@ public class LinearProbing implements ProbingMethod {
 	}
 
 	@Override
-	public int firstProbe(UUID key) {
-		sequenceNumber = 0;
-		return probe(key);
-	}
-
-	@Override
 	public int probe(UUID key) {
 		int result = hash(key);
 

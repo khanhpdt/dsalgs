@@ -9,5 +9,4 @@ public interface ProbingMethod {
 
 	int probe(UUID key);
 
-	int firstProbe(UUID key);
 }
