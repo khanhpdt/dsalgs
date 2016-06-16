@@ -78,5 +78,7 @@ public class HashTableChaining extends HashTable {
 		}
 
 		slot.remove(itemKey);
+
+		nItems--;
 	}
 }
