@@ -1,45 +1,39 @@
 package vn.khanhpdt.playgrounds.datastructures.tables;
 
-import vn.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
 import vn.khanhpdt.playgrounds.datastructures.nodes.Node;
-import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 /**
  * @author khanhpdt
  */
-public class HashTable {
+public abstract class HashTable {
 
-	private static final int DEFAULT_CAPACITY = 10;
+	private static final int DEFAULT_NUMBER_OF_SLOTS = 11;
 
-	private final Function<UUID, Integer> hashFunction;
+	/**
+	 * Number of available slots in the hash table.
+	 */
+	protected int nSlots;
 
-	// collision resolution by chaining
-	private final List<SinglyLinkedList<SinglyLinkedNode>> slots;
+	/**
+	 * Number of items currently stored in the hash table.
+	 */
+	protected int nItems;
 
-	private int capacity;
-
-	private int size;
-
-	public HashTable() {
-		this.capacity = DEFAULT_CAPACITY;
-		this.slots = new ArrayList<>(DEFAULT_CAPACITY);
-		this.size = 0;
-		this.hashFunction = this::defaultHash;
+	protected HashTable() {
+		this.nSlots = DEFAULT_NUMBER_OF_SLOTS;
+		this.nItems = 0;
 	}
 
-	private Integer defaultHash(UUID key) {
-		return 0;
+	public int size() {
+		return nItems;
 	}
 
-	public void insert(Node<UUID, Integer> element) {
-	}
+	public abstract void insert(Node<UUID, Integer> item);
 
-	public Node<UUID, Integer> search(UUID key) {
-		return null;
-	}
+	public abstract Node<UUID, Integer> search(UUID itemKey);
+
+	public abstract void remove(UUID itemKey);
+
 }

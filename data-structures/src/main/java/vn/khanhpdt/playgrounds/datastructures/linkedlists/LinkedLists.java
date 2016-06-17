@@ -34,8 +34,7 @@ public class LinkedLists {
 			linkedList.setHead(head);
 		}
 
-		// now the head can be either null or points to a node with a key different than the given key
-		// so we can skip the head
+		// now the head can be either null or points to a node with a key different than the given key. so we can skip the head.
 		N currentNode = head == null ? null : head.getNext();
 		N previousNode = head;
 		while (currentNode != null) {

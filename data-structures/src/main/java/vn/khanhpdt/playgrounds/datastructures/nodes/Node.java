@@ -29,4 +29,23 @@ public class Node<K, V> {
 	public void setValue(V value) {
 		this.value = value;
 	}
+
+	@Override
+	public int hashCode() {
+		int result = 17;
+
+		int c = this.getKey().hashCode();
+
+		return 31 + result * c;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Node)) {
+			return false;
+		}
+
+		Node otherNode = (Node) obj;
+		return this.getKey().equals(otherNode.getKey());
+	}
 }

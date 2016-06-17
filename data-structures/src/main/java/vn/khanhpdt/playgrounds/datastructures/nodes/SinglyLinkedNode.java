@@ -15,6 +15,10 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 		this.content = new Node<>(key);
 	}
 
+	public SinglyLinkedNode(Node<UUID, Integer> content) {
+		this.content = content;
+	}
+
 	public static SinglyLinkedNode random() {
 		UUID randomUuid = UUID.randomUUID();
 		return new SinglyLinkedNode(randomUuid);
