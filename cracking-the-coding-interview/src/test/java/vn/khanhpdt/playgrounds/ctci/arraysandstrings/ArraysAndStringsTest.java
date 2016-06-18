@@ -62,4 +62,12 @@ public class ArraysAndStringsTest {
 		assertThat(ArraysAndStrings.checkPermutation(s1, s2), is(true));
 	}
 
+	@Test
+	public void testReplaceSpaces() throws Exception {
+		String s = "Mr John Smith    ";
+
+		String result = ArraysAndStrings.replaceSpaces(s);
+
+		assertThat(result, is("Mr%20John%20Smith"));
+	}
 }

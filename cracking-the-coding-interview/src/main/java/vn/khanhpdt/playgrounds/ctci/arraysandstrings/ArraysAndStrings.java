@@ -96,4 +96,35 @@ public class ArraysAndStrings {
 
 		return true;
 	}
+
+	/**
+	 * Problem 1.4.
+	 *
+	 * <p>Complexity: O(n^2) in the worst case, where n = length of the strings.
+	 * The main computation is the shifting of the array elements.</p>
+	 */
+	public static String replaceSpaces(String s) {
+		char[] chars = s.toCharArray();
+
+		for (int i = 0; i < chars.length; i++) {
+			if (chars[i] == ' ') {
+				// shift the array 2 positions to the right for the replacement. the shift starts
+				// from (i + 1) to the end.
+				// NOTE: we need to do the shifting in-place
+				for (int j = chars.length - 1; j >= i + 3; j--) {
+					chars[j] = chars[j - 2];
+				}
+
+				// replace space by"%20"
+				chars[i] = '%';
+				chars[i + 1] = '2';
+				chars[i + 2] = '0';
+
+				// no need to check the replacements
+				i += 2;
+			}
+		}
+
+		return String.valueOf(chars);
+	}
 }
