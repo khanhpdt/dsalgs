@@ -159,13 +159,49 @@ public class ArraysAndStrings {
 		int nRows = matrix.length;
 		int nCols = matrix[0].length;
 
-		Integer[][] result = new Integer[nRows][nCols];
+		Integer[][] result = new Integer[nCols][nRows];
 		// right rotation
 		for (int origRow = 0; origRow < nRows; origRow++) {
-			int col = (nCols - 1) - origRow;
+			int col = (nRows - 1) - origRow;
 			for (int origCol = 0; origCol < nCols; origCol++) {
 				int row = origCol;
 				result[row][col] = matrix[origRow][origCol];
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Problem 1.7.
+	 *
+	 * <p>Complexity: O(m*n*(m+n)), where m and n are the number of rows and columns of the given matrix.</p>
+	 * @param matrix
+	 * @return
+	 */
+	public static Integer[][] setZeros(Integer[][] matrix) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+
+		Integer[][] result = new Integer[nRows][nCols];
+
+		// clone the original matrix
+		for (int i = 0; i < nRows; i++) {
+			System.arraycopy(matrix[i], 0, result[i], 0, nCols);
+		}
+
+		for (int i = 0; i < nRows; i++) {
+			for (int j = 0; j < nCols; j++) {
+				if (matrix[i][j] == 0) {
+					// set zeros for the whole row i
+					for (int k = 0; k < nCols; k++) {
+						result[i][k] = 0;
+					}
+					// set zeros for the whole column j
+					for (int k = 0; k < nRows; k++) {
+						result[k][j] = 0;
+					}
+				}
 			}
 		}
 
