@@ -1,6 +1,7 @@
 package vn.khanhpdt.playgrounds.ctci.arraysandstrings;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.collection.IsArray;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -97,5 +98,16 @@ public class ArraysAndStringsTest {
 
 		assertThat("should be the original because length after the compression is not reduced",
 				compressed, is(s));
+	}
+
+	@Test
+	public void testRotateMatrix() throws Exception {
+		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+
+		Integer[][] rotated = ArraysAndStrings.rotateRight(matrix);
+
+		assertThat(rotated[0], IsArray.array(is(7), is(4), is(1)));
+		assertThat(rotated[1], IsArray.array(is(8), is(5), is(2)));
+		assertThat(rotated[2], IsArray.array(is(9), is(6), is(3)));
 	}
 }

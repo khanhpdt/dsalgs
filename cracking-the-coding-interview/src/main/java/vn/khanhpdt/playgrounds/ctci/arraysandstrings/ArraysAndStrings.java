@@ -131,7 +131,7 @@ public class ArraysAndStrings {
 	/**
 	 * Problem 1.5.
 	 *
-	 * <p>Complexity: O(n)</p>
+	 * <p>Complexity: O(n), where n = length of the given string</p>
 	 */
 	public static String compress(String s) {
 		StringBuilder builder = new StringBuilder();
@@ -148,5 +148,27 @@ public class ArraysAndStrings {
 
 		String compressed = builder.toString();
 		return compressed.length() < s.length() ? compressed : s;
+	}
+
+	/**
+	 * Problem 1.6.
+	 *
+	 * <p>Complexity: O(m*n), where m and n are the number of rows and columns of the given matrix.</p>
+	 */
+	public static Integer[][] rotateRight(Integer[][] matrix) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+
+		Integer[][] result = new Integer[nRows][nCols];
+		// right rotation
+		for (int origRow = 0; origRow < nRows; origRow++) {
+			int col = (nCols - 1) - origRow;
+			for (int origCol = 0; origCol < nCols; origCol++) {
+				int row = origCol;
+				result[row][col] = matrix[origRow][origCol];
+			}
+		}
+
+		return result;
 	}
 }
