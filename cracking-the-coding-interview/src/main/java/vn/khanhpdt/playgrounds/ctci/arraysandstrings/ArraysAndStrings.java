@@ -176,8 +176,6 @@ public class ArraysAndStrings {
 	 * Problem 1.7.
 	 *
 	 * <p>Complexity: O(m*n*(m+n)), where m and n are the number of rows and columns of the given matrix.</p>
-	 * @param matrix
-	 * @return
 	 */
 	public static Integer[][] setZeros(Integer[][] matrix) {
 		int nRows = matrix.length;
