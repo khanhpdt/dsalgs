@@ -127,4 +127,26 @@ public class ArraysAndStrings {
 
 		return String.valueOf(chars);
 	}
+
+	/**
+	 * Problem 1.5.
+	 *
+	 * <p>Complexity: O(n)</p>
+	 */
+	public static String compress(String s) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			char ch = s.charAt(i);
+			int count = 1;
+			// keep finding all the similar consecutive characters
+			while (i < s.length() - 1 && ch == s.charAt(i + 1)) {
+				count++;
+				i++;
+			}
+			builder.append(ch).append(count);
+		}
+
+		String compressed = builder.toString();
+		return compressed.length() < s.length() ? compressed : s;
+	}
 }

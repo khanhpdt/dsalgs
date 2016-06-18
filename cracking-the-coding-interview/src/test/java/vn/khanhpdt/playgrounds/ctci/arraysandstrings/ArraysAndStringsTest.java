@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author khanhpdt
@@ -69,5 +68,34 @@ public class ArraysAndStringsTest {
 		String result = ArraysAndStrings.replaceSpaces(s);
 
 		assertThat(result, is("Mr%20John%20Smith"));
+	}
+
+	@Test
+	public void testCompressString_1() throws Exception {
+		String s = "aabcccccaaa";
+
+		String compressed = ArraysAndStrings.compress(s);
+
+		assertThat(compressed, is("a2b1c5a3"));
+	}
+
+	@Test
+	public void testCompressString_2() throws Exception {
+		String s = "aabbcaaa";
+
+		String compressed = ArraysAndStrings.compress(s);
+
+		assertThat("should be the original because length after the compression is not reduced",
+				compressed, is(s));
+	}
+
+	@Test
+	public void testCompressString_3() throws Exception {
+		String s = "aabbccaa";
+
+		String compressed = ArraysAndStrings.compress(s);
+
+		assertThat("should be the original because length after the compression is not reduced",
+				compressed, is(s));
 	}
 }
