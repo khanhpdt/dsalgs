@@ -101,10 +101,10 @@ public class ArraysAndStringsTest {
 	}
 
 	@Test
-	public void testRotateMatrix_1() throws Exception {
+	public void testRotateMatrix1_1() throws Exception {
 		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-		Integer[][] rotated = ArraysAndStrings.rotateRight(matrix);
+		Integer[][] rotated = ArraysAndStrings.rotateRight_1(matrix);
 
 		assertThat(rotated[0], IsArray.array(is(7), is(4), is(1)));
 		assertThat(rotated[1], IsArray.array(is(8), is(5), is(2)));
@@ -112,14 +112,37 @@ public class ArraysAndStringsTest {
 	}
 
 	@Test
-	public void testRotateMatrix_2() throws Exception {
+	public void testRotateMatrix1_2() throws Exception {
 		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
 
-		Integer[][] rotated = ArraysAndStrings.rotateRight(matrix);
+		Integer[][] rotated = ArraysAndStrings.rotateRight_1(matrix);
 
 		assertThat(rotated[0], IsArray.array(is(10), is(7), is(4), is(1)));
 		assertThat(rotated[1], IsArray.array(is(11), is(8), is(5), is(2)));
 		assertThat(rotated[2], IsArray.array(is(12), is(9), is(6), is(3)));
+	}
+
+	@Test
+	public void testRotateMatrix2_1() throws Exception {
+		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+
+		ArraysAndStrings.rotateRight_2(matrix);
+
+		assertThat(matrix[0], IsArray.array(is(7), is(4), is(1)));
+		assertThat(matrix[1], IsArray.array(is(8), is(5), is(2)));
+		assertThat(matrix[2], IsArray.array(is(9), is(6), is(3)));
+	}
+
+	@Test
+	public void testRotateMatrix2_2() throws Exception {
+		Integer[][] matrix = {{1, 2, 3, 10}, {4, 5, 6, 11}, {7, 8, 9, 12}, {13, 14, 15, 16}};
+
+		ArraysAndStrings.rotateRight_2(matrix);
+
+		assertThat(matrix[0], IsArray.array(is(13), is(7), is(4), is(1)));
+		assertThat(matrix[1], IsArray.array(is(14), is(8), is(5), is(2)));
+		assertThat(matrix[2], IsArray.array(is(15), is(9), is(6), is(3)));
+		assertThat(matrix[3], IsArray.array(is(16), is(12), is(11), is(10)));
 	}
 
 	@Test

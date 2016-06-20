@@ -155,11 +155,13 @@ public class ArraysAndStrings {
 	 *
 	 * <p>Complexity: O(m*n), where m and n are the number of rows and columns of the given matrix.</p>
 	 */
-	public static Integer[][] rotateRight(Integer[][] matrix) {
+	public static Integer[][] rotateRight_1(Integer[][] matrix) {
 		int nRows = matrix.length;
 		int nCols = matrix[0].length;
 
+		// O(m*n) memory
 		Integer[][] result = new Integer[nCols][nRows];
+
 		// right rotation
 		for (int origRow = 0; origRow < nRows; origRow++) {
 			int col = (nRows - 1) - origRow;
@@ -170,6 +172,41 @@ public class ArraysAndStrings {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Problem 1.6.
+	 *
+	 * <p>Complexity: O(m*n), where m and n are the number of rows and columns of the given matrix.</p>
+	 * <p>In-place rotation.</p>
+	 */
+	public static void rotateRight_2(Integer[][] matrix) {
+		int nRows = matrix.length;
+		int nCols = matrix[0].length;
+		
+		if (nRows != nCols) {
+			throw new IllegalArgumentException("This in-place rotation only supports square matrix.");
+		}
+
+		// NOTE: We do the rotation in-place. The rotation is done layer by layer and in inward direction.
+		int nLayers = (int) Math.ceil(nRows / 2);
+		for (int layerIndex = 0; layerIndex < nLayers; layerIndex++) {
+			int top = layerIndex, right = nCols - 1 - layerIndex, bottom = nRows - 1 - layerIndex, left = layerIndex;
+			// Because we rotate from left to right, the element at position (nRows - layerIndex) is already the
+			// correct element when we reach it. Thus, we don't rotate it.
+			for (int i = layerIndex; i < (nRows - layerIndex) - 1; i++) { // nRows or nCols is fine because they are equal
+				Integer tmp = matrix[top][i];
+
+				// rotate the left-most column to become the top-most row
+				matrix[top][i] = matrix[nRows - 1 - i][left];
+				// rotate the bottom-most row to become the left-most column
+				matrix[nRows - 1 - i][left] = matrix[bottom][nCols - 1 - i];
+				// rotate the right-most column to become the bottom-most row
+				matrix[bottom][nCols - 1 - i] = matrix[i][right];
+				// rotate the top-most row to become the right-most column
+				matrix[i][right] = tmp;
+			}
+		}
 	}
 
 	/**
