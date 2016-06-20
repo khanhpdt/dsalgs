@@ -220,7 +220,7 @@ public class ArraysAndStrings {
 			return true;
 		}
 
-		// Assume that s1 = xy, then s2 is the rotation of s1 iff s2 = yx.
+		// Assume that s1 = xy and the rotation happens at the point between x and y, then s2 is the rotation of s1 iff s2 = yx.
 		// If s1.length = s2.length and s1 != s2, then s2 = yx iff s2 is a substring of s1 + s2 = xyxy
 
 		return (s1 + s1).contains(s2);
