@@ -143,4 +143,34 @@ public class ArraysAndStringsTest {
 		assertThat(result[1], IsArray.array(is(0), is(0), is(0), is(0)));
 		assertThat(result[2], IsArray.array(is(0), is(0), is(0), is(0)));
 	}
+
+	@Test
+	public void testCheckRotation_1() {
+		String s1 = "erbottlewat";
+		String s2 = "waterbottle";
+
+		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+
+		assertThat(isRotation, is(true));
+	}
+
+	@Test
+	public void testCheckRotation_2() {
+		String s1 = "waterbottle";
+		String s2 = "tlewaterbot";
+
+		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+
+		assertThat(isRotation, is(true));
+	}
+
+	@Test
+	public void testCheckRotation_3() {
+		String s1 = "waterbottle";
+		String s2 = "tleawterbot";
+
+		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+
+		assertThat(isRotation, is(false));
+	}
 }
