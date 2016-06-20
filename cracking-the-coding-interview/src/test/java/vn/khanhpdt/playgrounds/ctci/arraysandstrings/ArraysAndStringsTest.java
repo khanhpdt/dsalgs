@@ -16,16 +16,18 @@ public class ArraysAndStringsTest {
 	public void testStringUniqueCharacters() throws Exception {
 		String uniqueCharactersString = "abcdefgh";
 
-		assertThat(ArraysAndStrings.hasUniqueCharacters(uniqueCharactersString), is(true));
+		assertThat(ArraysAndStrings.hasUniqueCharacters_1(uniqueCharactersString), is(true));
 		assertThat(ArraysAndStrings.hasUniqueCharacters_2(uniqueCharactersString), is(true));
+		assertThat(ArraysAndStrings.hasUniqueCharacters_3(uniqueCharactersString), is(true));
 	}
 
 	@Test
 	public void testStringNonUniqueCharacters() throws Exception {
 		String nonUniqueCharactersString = "abcdefah";
 
-		assertThat(ArraysAndStrings.hasUniqueCharacters(nonUniqueCharactersString), is(false));
+		assertThat(ArraysAndStrings.hasUniqueCharacters_1(nonUniqueCharactersString), is(false));
 		assertThat(ArraysAndStrings.hasUniqueCharacters_2(nonUniqueCharactersString), is(false));
+		assertThat(ArraysAndStrings.hasUniqueCharacters_3(nonUniqueCharactersString), is(false));
 	}
 
 	@Test

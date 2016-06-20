@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author khanhpdt
@@ -15,7 +17,7 @@ public class ArraysAndStrings {
 	 *
 	 * <p>Complexity: O(n^2), where n = length of the string</p>
 	 */
-	public static boolean hasUniqueCharacters(String s) {
+	public static boolean hasUniqueCharacters_1(String s) {
 		for (int i = 0; i < s.length() - 1; i++) {
 			char c = s.charAt(i);
 			for (int j = i + 1; j < s.length(); j++) {
@@ -32,13 +34,43 @@ public class ArraysAndStrings {
 	 * Problem 1.1.
 	 *
 	 * <p>Complexity: O(n), where n = length of the string</p>
+	 * <p>Extra O(n) memory</p>
 	 */
 	public static boolean hasUniqueCharacters_2(String s) {
+		// O(n) memory needed
 		Set<Character> characters = new HashSet<>();
 		for (int i = 0; i < s.length(); i++) {
 			boolean firstTimeInserted = characters.add(s.charAt(i));
 			if (!firstTimeInserted) {
 				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Problem 1.1.
+	 * 
+	 * <p>Complexity: O(n), where n = length of the given string</p>
+	 */
+	public static boolean hasUniqueCharacters_3(String s) {
+		Pattern pattern = Pattern.compile("^[a-z]+$");
+		Matcher matcher = pattern.matcher(s);
+		if (!matcher.find()) {
+			throw new IllegalArgumentException("This algorithm only supports string with characters in range [a-z].");
+		}
+
+		int bitVector = 0;
+		for (int i = 0; i < s.length(); i++) {
+			// this limits this algorithm to apply only on [a-z] characters
+			int offset = s.charAt(i) - 'a';
+			// the bit at the position offset is already on -> the character was found before
+			if (((bitVector << offset) & (1 << offset)) == 1) {
+				return false;
+			}
+			else {
+				// turn on the bit at the position offset to mark the character
+				bitVector |= (1 << offset);
 			}
 		}
 		return true;
@@ -154,6 +186,7 @@ public class ArraysAndStrings {
 	 * Problem 1.6.
 	 *
 	 * <p>Complexity: O(m*n), where m and n are the number of rows and columns of the given matrix.</p>
+	 * <p>Extra O(n) memory</p>
 	 */
 	public static Integer[][] rotateRight_1(Integer[][] matrix) {
 		int nRows = matrix.length;
