@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class SortTest {
 
@@ -56,6 +57,24 @@ public class SortTest {
 		sorter.sort(randomlyPermuted);
 
 		assertThat("sorted in ascending order", randomlyPermuted, Matchers.arrayContaining(SORTED_ASCENDING));
+	}
+
+	@Test
+	public void testCountingSort_1() {
+		int[] numbers = {2, 5, 3, 0, 2, 3, 0, 3};
+
+		int[] sorted = CountingSort.sort(numbers);
+
+		assertThat(Arrays.equals(sorted, new int[]{0, 0, 2, 2, 3, 3, 3, 5}), is(true));
+	}
+
+	@Test
+	public void testCountingSort_2() {
+		int[] numbers = {4, 2, 5, 7, 3, 0, 9, 12, 7, 2, 3, 0, 3};
+
+		int[] sorted = CountingSort.sort(numbers);
+
+		assertThat(Arrays.equals(sorted, new int[]{0, 0, 2, 2, 3, 3, 3, 4, 5, 7, 7, 9, 12}), is(true));
 	}
 
 }
