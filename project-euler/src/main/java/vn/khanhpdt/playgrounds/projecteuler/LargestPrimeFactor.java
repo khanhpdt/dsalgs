@@ -24,7 +24,8 @@ public class LargestPrimeFactor {
 			if (n % factor == 0) {
 				lastFactor = factor;
 
-				// keep dividing to guarantee that every factor that we found here is a prime number.
+				// keep dividing to guarantee that every factor that we find here is a prime number.
+				// this is kind of similar to prime factorization.
 				do {
 					n = n / factor;
 				} while (n % factor == 0);
