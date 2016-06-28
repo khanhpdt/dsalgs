@@ -56,4 +56,40 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		}
 		return linkedList;
 	}
+
+	public N getKthToLast(int k) {
+		int size = size();
+		return getKthToLast(k, size);
+	}
+
+	private N getKthToLast(int k, int size) {
+		if (k < 0 || k > size - 1) {
+			throw new IndexOutOfBoundsException();
+		}
+		return get(size - 1 - k, size);
+	}
+
+	private N get(int k, int size) {
+		if (k < 0 || k > size - 1) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		N current = head;
+		for (int i = 1; i <= k; i++) {
+			current = current.getNext();
+		}
+		return current;
+	}
+
+	private int size() {
+		int result = 0;
+		N current = head;
+		while (current != null) {
+			result++;
+			current = current.getNext();
+		}
+		return result;
+	}
+
+
 }

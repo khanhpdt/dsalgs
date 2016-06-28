@@ -1,6 +1,5 @@
 package vn.khanhpdt.playgrounds.ctci.linkedlists;
 
-import vn.khanhpdt.playgrounds.datastructures.linkedlists.LinkedList;
 import vn.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
 import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
@@ -17,7 +16,7 @@ public class LinkedListsSolutions {
 	 *
 	 * <p>Worst-case complexity: O(n^2), where n is the length of the list.</p>
 	 */
-	public static void removeDuplicates(LinkedList<SinglyLinkedNode> list) {
+	public static void removeDuplicates(SinglyLinkedList<SinglyLinkedNode> list) {
 		SinglyLinkedNode current = list.getHead();
 		while (current != null) {
 			SinglyLinkedNode previous = current;
@@ -38,7 +37,10 @@ public class LinkedListsSolutions {
 	/**
 	 * Problem 2.1.
 	 *
-	 * <p>Worst-case complexity: O(n), where n is the length of the given list</p>
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
+	 *     <li>Needs extra memory for the set.</li>
+	 * </ul>
 	 */
 	public static void removeDuplicates_2(SinglyLinkedList<SinglyLinkedNode> list) {
 		// this set contains distinct list items
@@ -52,5 +54,15 @@ public class LinkedListsSolutions {
 			}
 			current = current.getNext();
 		}
+	}
+
+	/**
+	 * Problem 2.2.
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
+	 * </ul>
+	 */
+	public static SinglyLinkedNode getKthToLast(SinglyLinkedList<SinglyLinkedNode> list, int k) {
+		return list.getKthToLast(k);
 	}
 }
