@@ -66,7 +66,7 @@ public class SinglyLinkedListTest {
         SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
 
         SinglyLinkedNode nodeToRemove = nodes.get(7);
-		linkedList.remove(nodeToRemove.getKey());
+		linkedList.removeAll(nodeToRemove.getKey());
 		assertThat("node removed", linkedList.search(nodeToRemove.getKey()), nullValue());
     }
 
@@ -93,7 +93,7 @@ public class SinglyLinkedListTest {
 		}
 		SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
-		linkedList.remove(removeKey);
+		linkedList.removeAll(removeKey);
 
 		CollectionUtils.filter(nodes, n -> !n.getKey().equals(removeKey));
 		assertThat("duplicated key nodes are removed",
@@ -110,7 +110,7 @@ public class SinglyLinkedListTest {
 
         SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
 
-		linkedList.remove(removeKey);
+		linkedList.removeAll(removeKey);
 
         // remove the added nodes
 		CollectionUtils.filter(nodes, n -> !n.getKey().equals(removeKey));

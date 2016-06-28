@@ -36,7 +36,7 @@ public class DoubleEndedLinkedList<N extends LinkedNodeIntf<N>> implements Linke
 	}
 
 	public void remove(UUID removeKey) {
-		LinkedLists.remove(this, removeKey);
+		LinkedLists.removeAll(this, removeKey);
 		tail = getLastNode();
 	}
 

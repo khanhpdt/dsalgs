@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * @author khanhpdt
  */
-public class ArraysAndStrings {
+public class ArraysAndStringsSolutions {
 
 	/**
 	 * Problem 1.1.

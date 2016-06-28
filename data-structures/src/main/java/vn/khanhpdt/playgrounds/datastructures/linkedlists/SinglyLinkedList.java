@@ -31,6 +31,10 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return currentNode;
 	}
 
+	public void removeAll(UUID removeKey) {
+		LinkedLists.removeAll(this, removeKey);
+	}
+
 	public void remove(UUID removeKey) {
 		LinkedLists.remove(this, removeKey);
 	}
@@ -52,5 +56,4 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		}
 		return linkedList;
 	}
-
 }

@@ -23,7 +23,7 @@ public class LinkedLists {
 		return nodes;
 	}
 
-	public static <N extends LinkedNodeIntf<N>> void remove(LinkedList<N> linkedList, UUID removeKey) {
+	public static <N extends LinkedNodeIntf<N>> void removeAll(LinkedList<N> linkedList, UUID removeKey) {
 		// NOTE: duplicated nodes are allowed in the list and this method will remove
 		// all nodes with the same key as the given key
 
@@ -52,4 +52,30 @@ public class LinkedLists {
 	}
 
 
+	public static <N extends LinkedNodeIntf<N>> void remove(LinkedList<N> linkedList, UUID removeKey) {
+		// if the first nodes are to be removed, the head needs to be relocated
+		N head = linkedList.getHead();
+		if (head != null && head.getKey().equals(removeKey)) {
+			head = head.getNext();
+			linkedList.setHead(head);
+			return;
+		}
+
+		// no node left to process
+		if (head == null) {
+			return;
+		}
+
+		N previous = head;
+		N current = head.getNext();
+		while (current != null) {
+			if (current.getKey().equals(removeKey)) {
+				previous.setNext(current.getNext());
+				// remove once
+				break;
+			}
+			previous = current;
+			current = current.getNext();
+		}
+	}
 }

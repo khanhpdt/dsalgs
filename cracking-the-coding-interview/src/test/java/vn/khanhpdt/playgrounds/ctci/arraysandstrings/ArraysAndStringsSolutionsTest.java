@@ -10,31 +10,31 @@ import static org.junit.Assert.assertThat;
 /**
  * @author khanhpdt
  */
-public class ArraysAndStringsTest {
+public class ArraysAndStringsSolutionsTest {
 
 	@Test
 	public void testStringUniqueCharacters() throws Exception {
 		String uniqueCharactersString = "abcdefgh";
 
-		assertThat(ArraysAndStrings.hasUniqueCharacters_1(uniqueCharactersString), is(true));
-		assertThat(ArraysAndStrings.hasUniqueCharacters_2(uniqueCharactersString), is(true));
-		assertThat(ArraysAndStrings.hasUniqueCharacters_3(uniqueCharactersString), is(true));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_1(uniqueCharactersString), is(true));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_2(uniqueCharactersString), is(true));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_3(uniqueCharactersString), is(true));
 	}
 
 	@Test
 	public void testStringNonUniqueCharacters() throws Exception {
 		String nonUniqueCharactersString = "abcdefah";
 
-		assertThat(ArraysAndStrings.hasUniqueCharacters_1(nonUniqueCharactersString), is(false));
-		assertThat(ArraysAndStrings.hasUniqueCharacters_2(nonUniqueCharactersString), is(false));
-		assertThat(ArraysAndStrings.hasUniqueCharacters_3(nonUniqueCharactersString), is(false));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_1(nonUniqueCharactersString), is(false));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_2(nonUniqueCharactersString), is(false));
+		assertThat(ArraysAndStringsSolutions.hasUniqueCharacters_3(nonUniqueCharactersString), is(false));
 	}
 
 	@Test
 	public void testReverseString() throws Exception {
 		String s = "reverse this string";
 
-		String reversed = ArraysAndStrings.reverseString(s);
+		String reversed = ArraysAndStringsSolutions.reverseString(s);
 
 		assertThat(reversed, is("gnirts siht esrever"));
 		assertThat(reversed, is(StringUtils.reverse(s)));
@@ -45,7 +45,7 @@ public class ArraysAndStringsTest {
 		String s1 = "abcdefghi";
 		String s2 = "ighfedcab";
 
-		assertThat(ArraysAndStrings.checkPermutation(s1, s2), is(true));
+		assertThat(ArraysAndStringsSolutions.checkPermutation(s1, s2), is(true));
 	}
 
 	@Test
@@ -53,7 +53,7 @@ public class ArraysAndStringsTest {
 		String s1 = "abcdefghi";
 		String s2 = "ighfekcab";
 
-		assertThat(ArraysAndStrings.checkPermutation(s1, s2), is(false));
+		assertThat(ArraysAndStringsSolutions.checkPermutation(s1, s2), is(false));
 	}
 
 	@Test
@@ -61,14 +61,14 @@ public class ArraysAndStringsTest {
 		String s1 = "abcdefghifda";
 		String s2 = "ighfedcabadf";
 
-		assertThat(ArraysAndStrings.checkPermutation(s1, s2), is(true));
+		assertThat(ArraysAndStringsSolutions.checkPermutation(s1, s2), is(true));
 	}
 
 	@Test
 	public void testReplaceSpaces() throws Exception {
 		String s = "Mr John Smith    ";
 
-		String result = ArraysAndStrings.replaceSpaces(s);
+		String result = ArraysAndStringsSolutions.replaceSpaces(s);
 
 		assertThat(result, is("Mr%20John%20Smith"));
 	}
@@ -77,7 +77,7 @@ public class ArraysAndStringsTest {
 	public void testCompressString_1() throws Exception {
 		String s = "aabcccccaaa";
 
-		String compressed = ArraysAndStrings.compress(s);
+		String compressed = ArraysAndStringsSolutions.compress(s);
 
 		assertThat(compressed, is("a2b1c5a3"));
 	}
@@ -86,7 +86,7 @@ public class ArraysAndStringsTest {
 	public void testCompressString_2() throws Exception {
 		String s = "aabbcaaa";
 
-		String compressed = ArraysAndStrings.compress(s);
+		String compressed = ArraysAndStringsSolutions.compress(s);
 
 		assertThat("should be the original because length after the compression is not reduced",
 				compressed, is(s));
@@ -96,7 +96,7 @@ public class ArraysAndStringsTest {
 	public void testCompressString_3() throws Exception {
 		String s = "aabbccaa";
 
-		String compressed = ArraysAndStrings.compress(s);
+		String compressed = ArraysAndStringsSolutions.compress(s);
 
 		assertThat("should be the original because length after the compression is not reduced",
 				compressed, is(s));
@@ -106,7 +106,7 @@ public class ArraysAndStringsTest {
 	public void testRotateMatrix1_1() throws Exception {
 		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-		Integer[][] rotated = ArraysAndStrings.rotateRight_1(matrix);
+		Integer[][] rotated = ArraysAndStringsSolutions.rotateRight_1(matrix);
 
 		assertThat(rotated[0], IsArray.array(is(7), is(4), is(1)));
 		assertThat(rotated[1], IsArray.array(is(8), is(5), is(2)));
@@ -117,7 +117,7 @@ public class ArraysAndStringsTest {
 	public void testRotateMatrix1_2() throws Exception {
 		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
 
-		Integer[][] rotated = ArraysAndStrings.rotateRight_1(matrix);
+		Integer[][] rotated = ArraysAndStringsSolutions.rotateRight_1(matrix);
 
 		assertThat(rotated[0], IsArray.array(is(10), is(7), is(4), is(1)));
 		assertThat(rotated[1], IsArray.array(is(11), is(8), is(5), is(2)));
@@ -128,7 +128,7 @@ public class ArraysAndStringsTest {
 	public void testRotateMatrix2_1() throws Exception {
 		Integer[][] matrix = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
 
-		ArraysAndStrings.rotateRight_2(matrix);
+		ArraysAndStringsSolutions.rotateRight_2(matrix);
 
 		assertThat(matrix[0], IsArray.array(is(7), is(4), is(1)));
 		assertThat(matrix[1], IsArray.array(is(8), is(5), is(2)));
@@ -139,7 +139,7 @@ public class ArraysAndStringsTest {
 	public void testRotateMatrix2_2() throws Exception {
 		Integer[][] matrix = {{1, 2, 3, 10}, {4, 5, 6, 11}, {7, 8, 9, 12}, {13, 14, 15, 16}};
 
-		ArraysAndStrings.rotateRight_2(matrix);
+		ArraysAndStringsSolutions.rotateRight_2(matrix);
 
 		assertThat(matrix[0], IsArray.array(is(13), is(7), is(4), is(1)));
 		assertThat(matrix[1], IsArray.array(is(14), is(8), is(5), is(2)));
@@ -151,7 +151,7 @@ public class ArraysAndStringsTest {
 	public void testSetZeros_1() {
 		Integer[][] matrix = {{1, 0, 3}, {4, 5, 6}, {7, 8, 9}};
 
-		Integer[][] result = ArraysAndStrings.setZeros(matrix);
+		Integer[][] result = ArraysAndStringsSolutions.setZeros(matrix);
 
 		assertThat(result[0], IsArray.array(is(0), is(0), is(0)));
 		assertThat(result[1], IsArray.array(is(4), is(0), is(6)));
@@ -162,7 +162,7 @@ public class ArraysAndStringsTest {
 	public void testSetZeros_2() {
 		Integer[][] matrix = {{1, 0, 0, 4}, {0, 6, 7, 8}, {9, 10, 11, 0}};
 
-		Integer[][] result = ArraysAndStrings.setZeros(matrix);
+		Integer[][] result = ArraysAndStringsSolutions.setZeros(matrix);
 
 		assertThat(result[0], IsArray.array(is(0), is(0), is(0), is(0)));
 		assertThat(result[1], IsArray.array(is(0), is(0), is(0), is(0)));
@@ -174,7 +174,7 @@ public class ArraysAndStringsTest {
 		String s1 = "erbottlewat";
 		String s2 = "waterbottle";
 
-		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+		boolean isRotation = ArraysAndStringsSolutions.checkRotation(s1, s2);
 
 		assertThat(isRotation, is(true));
 	}
@@ -184,7 +184,7 @@ public class ArraysAndStringsTest {
 		String s1 = "waterbottle";
 		String s2 = "tlewaterbot";
 
-		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+		boolean isRotation = ArraysAndStringsSolutions.checkRotation(s1, s2);
 
 		assertThat(isRotation, is(true));
 	}
@@ -194,7 +194,7 @@ public class ArraysAndStringsTest {
 		String s1 = "waterbottle";
 		String s2 = "tleawterbot";
 
-		boolean isRotation = ArraysAndStrings.checkRotation(s1, s2);
+		boolean isRotation = ArraysAndStringsSolutions.checkRotation(s1, s2);
 
 		assertThat(isRotation, is(false));
 	}
