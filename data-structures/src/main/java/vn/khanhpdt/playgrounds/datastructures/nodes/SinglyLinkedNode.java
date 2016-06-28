@@ -62,4 +62,12 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 		SinglyLinkedNode otherNode = (SinglyLinkedNode) obj;
 		return this.getKey().equals(otherNode.getKey());
 	}
+
+	public void cloneContent(SinglyLinkedNode other) {
+		this.content = other.getContent();
+	}
+
+	public void removeContent() {
+		this.content = null;
+	}
 }

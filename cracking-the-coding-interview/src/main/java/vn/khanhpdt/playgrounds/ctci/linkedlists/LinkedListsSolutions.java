@@ -81,4 +81,25 @@ public class LinkedListsSolutions {
 	public static SinglyLinkedNode getKthToLast(SinglyLinkedList<SinglyLinkedNode> list, int k) {
 		return list.getKthToLast(k);
 	}
+
+	/**
+	 * Problem 2.3.
+	 *
+	 * <ul>
+	 *     <li>Worst-case complexity: O(1)</li>
+	 * </ul>
+	 */
+	public static void removeMiddleItem(SinglyLinkedNode removedItem) {
+		SinglyLinkedNode next = removedItem.getNext();
+
+		// this remove method should only apply to the middle items
+		assert next != null;
+
+		// fake the removed item as its next item -> the current item now acts like its next item
+		removedItem.cloneContent(next);
+		next.removeContent();
+
+		// cut the next item out from the list
+		removedItem.setNext(next.getNext());
+	}
 }

@@ -69,6 +69,10 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return get(size - 1 - k, size);
 	}
 
+	public N get(int k) {
+		return get(k, size());
+	}
+
 	private N get(int k, int size) {
 		if (k < 0 || k > size - 1) {
 			throw new IndexOutOfBoundsException();
