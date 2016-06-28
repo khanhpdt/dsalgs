@@ -43,16 +43,32 @@ public class LinkedListsSolutions {
 	 * </ul>
 	 */
 	public static void removeDuplicates_2(SinglyLinkedList<SinglyLinkedNode> list) {
-		// this set contains distinct list items
+		// This set contains distinct list items.
+		// To achieve O(n), it must take O(1) time to check if an item is in the set.
 		Set<SinglyLinkedNode> distinctItems = new HashSet<>();
+
+		SinglyLinkedNode previous = null;
 		SinglyLinkedNode current = list.getHead();
 		while (current != null) {
 			if (!distinctItems.contains(current)) {
 				distinctItems.add(current);
+
+				previous = current;
+				current = current.getNext();
 			} else {
-				list.remove(current.getKey());
+				remove(list, previous, current);
+
+				current = current.getNext();
 			}
-			current = current.getNext();
+		}
+	}
+
+	private static void remove(SinglyLinkedList<SinglyLinkedNode> list, SinglyLinkedNode previous, SinglyLinkedNode current) {
+		// head is being removed
+		if (previous == null) {
+			list.setHead(current.getNext());
+		} else {
+			previous.setNext(current.getNext());
 		}
 	}
 
