@@ -90,16 +90,48 @@ public class LinkedListsSolutions {
 	 * </ul>
 	 */
 	public static void removeMiddleItem(SinglyLinkedNode removedItem) {
-		SinglyLinkedNode next = removedItem.getNext();
+		SinglyLinkedNode nextItem = removedItem.getNext();
 
 		// this remove method should only apply to the middle items
-		assert next != null;
+		assert nextItem != null;
 
 		// fake the removed item as its next item -> the current item now acts like its next item
-		removedItem.cloneContent(next);
-		next.removeContent();
+		removedItem.cloneContent(nextItem);
+		nextItem.removeContent();
 
 		// cut the next item out from the list
-		removedItem.setNext(next.getNext());
+		removedItem.setNext(nextItem.getNext());
+	}
+
+	/**
+	 * Problem 2.4.
+	 *
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the given list. The worst case happens when all the
+	 *     items in the list are smaller than the given partitioning value, because in that case we have to move all the
+	 *     items to the head of the list.</li>
+	 * </ul>
+	 */
+	public static void partition(SinglyLinkedList<SinglyLinkedNode> linkedList, Integer partitioningValue) {
+		SinglyLinkedNode head = linkedList.getHead();
+
+		if (head == null) {
+			return;
+		}
+
+		SinglyLinkedNode previous = head;
+		SinglyLinkedNode current = head.getNext();
+		while (current != null) {
+			// move the smaller nodes to the head of the list
+			if (current.getValue() < partitioningValue) {
+				previous.setNext(current.getNext());
+				current.setNext(head);
+				linkedList.setHead(current);
+			} else {
+				previous = current;
+			}
+
+			current = previous.getNext();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 package vn.khanhpdt.playgrounds.ctci.linkedlists;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.datastructures.linkedlists.LinkedLists;
 import vn.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
@@ -8,6 +9,7 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -22,6 +24,8 @@ import static org.hamcrest.core.IsNot.not;
  * @author khanhpdt
  */
 public class LinkedListsSolutionsTest {
+
+	private static final Random RANDOM = new Random();
 
 	@Test
 	public void testRemoveDuplicates() {
@@ -74,7 +78,7 @@ public class LinkedListsSolutionsTest {
 
 	private List<SinglyLinkedNode> randomItems(int nItems) {
 		List<SinglyLinkedNode> items = new ArrayList<>();
-		IntStream.range(0, nItems).forEach(i -> items.add(new SinglyLinkedNode(new Node<>(UUID.randomUUID(), i))));
+		IntStream.range(0, nItems).forEach(i -> items.add(new SinglyLinkedNode(new Node<>(UUID.randomUUID(), RANDOM.nextInt()))));
 		return items;
 	}
 
@@ -101,5 +105,31 @@ public class LinkedListsSolutionsTest {
 
 	private SinglyLinkedList<SinglyLinkedNode> createSinglyLinkedList(int nItems) {
 		return createSinglyLinkedList(randomItems(nItems));
+	}
+
+	@Test
+	public void testPartition() throws Exception {
+		// given
+		SinglyLinkedList<SinglyLinkedNode> linkedList = createSinglyLinkedList(15);
+
+		// when
+		Integer partitioningValue = linkedList.get(5).getContent().getValue();
+		LinkedListsSolutions.partition(linkedList, partitioningValue);
+
+		// then
+		SinglyLinkedNode current = linkedList.getHead();
+		boolean smaller = current.getValue() < partitioningValue;
+		while (current != null) {
+			if (smaller && current.getValue() >= partitioningValue) {
+				smaller = false;
+			}
+			if (smaller) {
+				assertThat(current.getValue(), Matchers.lessThan(partitioningValue));
+			} else {
+				assertThat(current.getValue(), Matchers.greaterThanOrEqualTo(partitioningValue));
+			}
+
+			current = current.getNext();
+		}
 	}
 }

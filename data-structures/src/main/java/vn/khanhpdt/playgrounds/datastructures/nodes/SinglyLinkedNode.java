@@ -70,4 +70,9 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 	public void removeContent() {
 		this.content = null;
 	}
+
+	public Integer getValue() {
+		return getContent().getValue();
+	}
+
 }
