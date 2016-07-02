@@ -40,7 +40,7 @@ public class TopologicalSort {
 			// Because this traverse is depth-first, when a vertex is visited, all of its adjacents are already visited.
 			// Thus, we add the vertex to the front of the linked list to make sure that it is positioned before its adjacents.
 			vertex.markVisited();
-			sortedVertices.insert(vertex);
+			sortedVertices.insertFirst(vertex);
 		}
 	}
 

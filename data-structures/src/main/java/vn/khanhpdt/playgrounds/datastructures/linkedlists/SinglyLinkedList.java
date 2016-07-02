@@ -12,11 +12,30 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 
 	private N head;
 
-	public void insert(N node) {
+	public void insertFirst(N node) {
 		// new node is inserted at the beginning of the list
 		node.setNext(head);
 		// new node becomes the new head
 		head = node;
+	}
+
+	public void insertLast(N node) {
+		N current = head;
+
+		// list is currently empty
+		if (current == null) {
+			head = node;
+			head.setNext(null);
+			return;
+		}
+
+		// go to the last node
+		while (current.getNext() != null) {
+			current = current.getNext();
+		}
+		// current is the current last node. now make the new node the last one.
+		current.setNext(node);
+		node.setNext(null);
 	}
 
 	public N search(UUID nodeKey) {
@@ -52,7 +71,7 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 	public static <N extends LinkedNodeIntf<N>> SinglyLinkedList<N> from(List<N> nodes) {
 		SinglyLinkedList<N> linkedList = new SinglyLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
-			linkedList.insert(nodes.get(i));
+			linkedList.insertFirst(nodes.get(i));
 		}
 		return linkedList;
 	}
@@ -85,6 +104,7 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return current;
 	}
 
+
 	private int size() {
 		int result = 0;
 		N current = head;
@@ -95,5 +115,22 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return result;
 	}
 
+	/**
+	 * Note: this method changes the structure of the list.
+	 */
+	public SinglyLinkedList<N> reverse() {
+		// save the head before resetting the list
+		N current = head;
 
+		// reset this list
+		head = null;
+
+		// reverse in-place
+		while (current != null) {
+			N next = current.getNext();
+			insertFirst(current);
+			current = next;
+		}
+		return this;
+	}
 }

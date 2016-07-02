@@ -43,7 +43,7 @@ public class HashTableChaining extends HashTable {
 		}
 
 		// the new item is always inserted into the head of the chaining
-		slot.insert(new SinglyLinkedNode(item));
+		slot.insertFirst(new SinglyLinkedNode(item));
 
 		nItems++;
 	}

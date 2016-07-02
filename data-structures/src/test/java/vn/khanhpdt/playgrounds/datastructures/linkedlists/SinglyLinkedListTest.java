@@ -23,7 +23,7 @@ public class SinglyLinkedListTest {
         SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
 
         SinglyLinkedNode newNode = SinglyLinkedNode.random();
-        linkedList.insert(newNode);
+        linkedList.insertFirst(newNode);
 
         assertThat(linkedList.getHead(), is(newNode));
     }
@@ -32,10 +32,10 @@ public class SinglyLinkedListTest {
     public void testHeadPointsToTheFirstInsertedElement() throws Exception {
         // list already has an item
         SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
-        linkedList.insert(SinglyLinkedNode.random());
+        linkedList.insertFirst(SinglyLinkedNode.random());
 
         SinglyLinkedNode newNode = SinglyLinkedNode.random();
-        linkedList.insert(newNode);
+        linkedList.insertFirst(newNode);
 
         assertThat(linkedList.getHead(), is(newNode));
     }

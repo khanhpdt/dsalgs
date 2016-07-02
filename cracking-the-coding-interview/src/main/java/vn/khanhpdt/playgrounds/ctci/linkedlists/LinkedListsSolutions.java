@@ -1,10 +1,12 @@
 package vn.khanhpdt.playgrounds.ctci.linkedlists;
 
 import vn.khanhpdt.playgrounds.datastructures.linkedlists.SinglyLinkedList;
+import vn.khanhpdt.playgrounds.datastructures.nodes.Node;
 import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author khanhpdt
@@ -133,5 +135,84 @@ public class LinkedListsSolutions {
 
 			current = previous.getNext();
 		}
+	}
+
+	/**
+	 * Problem 2.5.1.
+	 * <p> The digits are stored in backward order, e.g., 617 is stored as 7 -> 1 -> 6.</p>
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n^2) if the result is a singly linked list, and O(n) if it is a double-ended list ,
+	 *     where n is the length of the longer among the given lists.</li>
+	 * </ul>
+	 */
+	public static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+																	   SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+
+		SinglyLinkedList<SinglyLinkedNode> result = new SinglyLinkedList<>();
+		SinglyLinkedNode current1 = firstNumber.getHead();
+		SinglyLinkedNode current2 = secondNumber.getHead();
+
+		int carry = 0;
+		while (current1 != null || current2 != null) {
+			int digit1 = current1 == null ? 0 : current1.getValue();
+			int digit2 = current2 == null ? 0 : current2.getValue();
+			int sum = digit1 + digit2 + carry;
+
+			int digitSum = sum % 10;
+			// this takes O(n). we can make it to O(1) by replacing singly linked list by the double-ended one.
+			result.insertLast(new SinglyLinkedNode(new Node<>(UUID.randomUUID(), digitSum)));
+
+			carry = sum / 10;
+
+			current1 = current1 == null ? null : current1.getNext();
+			current2 = current2 == null ? null : current2.getNext();
+		}
+
+		return result;
+	}
+
+	/**
+	 * Problem 2.5.1.
+	 * <p> The digits are stored in backward order, e.g., 617 is stored as 7 -> 1 -> 6.</p>
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</li>
+	 * </ul>
+	 */
+	public static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits_2(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+																	   SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+
+		SinglyLinkedList<SinglyLinkedNode> result = new SinglyLinkedList<>();
+		SinglyLinkedNode current1 = firstNumber.getHead();
+		SinglyLinkedNode current2 = secondNumber.getHead();
+
+		int carry = 0;
+		while (current1 != null || current2 != null) {
+			int digit1 = current1 == null ? 0 : current1.getValue();
+			int digit2 = current2 == null ? 0 : current2.getValue();
+			int sum = digit1 + digit2 + carry;
+
+			int digitSum = sum % 10;
+			// this takes O(1)
+			result.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID(), digitSum)));
+
+			carry = sum / 10;
+
+			current1 = current1 == null ? null : current1.getNext();
+			current2 = current2 == null ? null : current2.getNext();
+		}
+
+		return result.reverse();
+	}
+
+	/**
+	 * Problem 2.5.2.
+	 * <p> The digits are stored in forward order, e.g., 617 is stored as 6 -> 1 -> 7.</p>
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</li>
+	 * </ul>
+	 */
+	public static SinglyLinkedList<SinglyLinkedNode> sumForwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+																	  SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+		return sumBackwardDigits_2(firstNumber.reverse(), secondNumber.reverse()).reverse();
 	}
 }
