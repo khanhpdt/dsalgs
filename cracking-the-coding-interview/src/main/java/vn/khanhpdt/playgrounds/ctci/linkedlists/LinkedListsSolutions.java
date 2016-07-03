@@ -215,4 +215,28 @@ public class LinkedListsSolutions {
 																	  SinglyLinkedList<SinglyLinkedNode> secondNumber) {
 		return sumBackwardDigits_2(firstNumber.reverse(), secondNumber.reverse()).reverse();
 	}
+
+	/**
+	 * Problem 2.6.
+	 *
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
+	 *     <li>Need O(n) extra memory</li>
+	 * </ul>
+	 */
+	public static SinglyLinkedNode getFirstOfTheLoop(SinglyLinkedList<SinglyLinkedNode> linkedList) {
+		// this set needs O(n) memory
+		Set<SinglyLinkedNode> existingNodes = new HashSet<>();
+		SinglyLinkedNode current = linkedList.getHead();
+		while (current != null) {
+			boolean newNodeAdded = existingNodes.add(current);
+			// first duplicated node is the first node of the first loop in the list.
+			if (!newNodeAdded) {
+				return current;
+			}
+			current = current.getNext();
+		}
+		// list has no loop
+		return null;
+	}
 }
