@@ -104,8 +104,7 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return current;
 	}
 
-
-	private int size() {
+	public int size() {
 		int result = 0;
 		N current = head;
 		while (current != null) {
@@ -132,5 +131,15 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 			current = next;
 		}
 		return this;
+	}
+
+	public N removeFirst() {
+		// empty empty
+		if (head == null) {
+			return null;
+		}
+		N removed = head;
+		head = head.getNext();
+		return removed;
 	}
 }

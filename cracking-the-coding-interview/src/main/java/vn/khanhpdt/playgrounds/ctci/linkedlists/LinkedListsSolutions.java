@@ -239,4 +239,43 @@ public class LinkedListsSolutions {
 		// list has no loop
 		return null;
 	}
+
+	/**
+	 * Problem 2.7.
+	 *
+	 * <ul>
+	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
+	 * </ul>
+	 */
+	public static boolean checkPalindrome(SinglyLinkedList<SinglyLinkedNode> linkedList) {
+		int size = linkedList.size();
+		int firstHalfEndIndex = size / 2 - 1;
+
+		// move the items in the first half of the given list to the new list
+		SinglyLinkedList<SinglyLinkedNode> firstHalfList = new SinglyLinkedList<>();
+		for (int i = 0; i <= firstHalfEndIndex; i++) {
+			firstHalfList.insertFirst(linkedList.removeFirst());
+		}
+
+		// ignore the middle element as it does not involve in the palindrome check
+		if (size % 2 > 0) {
+			linkedList.removeFirst();
+		}
+
+		// compare the first and the second half of the list to see if the list is a palindrome.
+		// note that the first half has already been reversed when putting to the new list.
+		SinglyLinkedNode currentFirst = firstHalfList.getHead();
+		SinglyLinkedNode currentSecond = linkedList.getHead();
+		while (currentFirst != null && currentSecond != null) {
+			// not palindrome
+			if (!currentFirst.getValue().equals(currentSecond.getValue())) {
+				return false;
+			}
+
+			currentFirst = currentFirst.getNext();
+			currentSecond = currentSecond.getNext();
+		}
+
+		return true;
+	}
 }
