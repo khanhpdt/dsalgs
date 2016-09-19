@@ -146,14 +146,18 @@ class LinkedListsSolutions {
 		while (current != null) {
 			// move the smaller nodes to the head of the list
 			if (current.getValue() < partitioningValue) {
-				previous.setNext(current.getNext());
-				current.setNext(head);
+				SinglyLinkedNode next = current.getNext();
+
+				// move current to become the head of the list
+				previous.setNext(next);
 				linkedList.setHead(current);
+				current.setNext(head);
+
+				current = next;
 			} else {
 				previous = current;
+				current = current.getNext();
 			}
-
-			current = previous.getNext();
 		}
 	}
 
