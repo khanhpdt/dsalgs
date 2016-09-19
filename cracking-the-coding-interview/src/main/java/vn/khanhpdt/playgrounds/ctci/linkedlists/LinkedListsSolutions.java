@@ -11,14 +11,14 @@ import java.util.Set;
 /**
  * @author khanhpdt
  */
-public class LinkedListsSolutions {
+class LinkedListsSolutions {
 
 	/**
-	 * Problem 2.1.
-	 *
+	 * <p>Problem 2.1</p>
+	 * <p>Solution 1: two pointers</p>
 	 * <p>Worst-case complexity: O(n^2), where n is the length of the list.</p>
 	 */
-	public static void removeDuplicates(SinglyLinkedList<SinglyLinkedNode> list) {
+	static void removeDuplicates(SinglyLinkedList<SinglyLinkedNode> list) {
 		SinglyLinkedNode current = list.getHead();
 		while (current != null) {
 			SinglyLinkedNode previous = current;
@@ -37,14 +37,12 @@ public class LinkedListsSolutions {
 	}
 
 	/**
-	 * Problem 2.1.
-	 *
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
-	 *     <li>Needs extra memory for the set.</li>
-	 * </ul>
+	 * <p>Problem 2.1</p>
+	 * <p>Solution 2: use a hash table</p>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
+	 * <p>Needs extra memory for the set.</p>
 	 */
-	public static void removeDuplicates_2(SinglyLinkedList<SinglyLinkedNode> list) {
+	static void removeDuplicates_2(SinglyLinkedList<SinglyLinkedNode> list) {
 		// This set contains distinct list items.
 		// To achieve O(n), it must take O(1) time to check if an item is in the set.
 		Set<SinglyLinkedNode> distinctItems = new HashSet<>();
@@ -75,23 +73,48 @@ public class LinkedListsSolutions {
 	}
 
 	/**
-	 * Problem 2.2.
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
-	 * </ul>
+	 * Problem 2.2.1: Length is known.
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
 	 */
-	public static SinglyLinkedNode getKthToLast(SinglyLinkedList<SinglyLinkedNode> list, int k) {
+	static SinglyLinkedNode getKthToLastKnownLength(SinglyLinkedList<SinglyLinkedNode> list, int k) {
 		return list.getKthToLast(k);
 	}
 
 	/**
-	 * Problem 2.3.
-	 *
-	 * <ul>
-	 *     <li>Worst-case complexity: O(1)</li>
-	 * </ul>
+	 * <p>Problem 2.2.2: Length is unknown.<p>
+	 * <p>Solution: use two pointers</p>
+	 * <p>This solution demonstrates a creative way to use multiple pointers, but it is not straightforward.</p>
+	 * <p>Another simpler solution but with the same complexity is to find the size first and then use it to
+	 * find the kth-to-last node.</p>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
 	 */
-	public static void removeMiddleItem(SinglyLinkedNode removedItem) {
+	static SinglyLinkedNode getKthToLastUnknownLength(SinglyLinkedList<SinglyLinkedNode> list, int k) {
+		SinglyLinkedNode pointerToInterest = list.getHead();
+		SinglyLinkedNode pointerToLast = list.getHead();
+
+		// make the pointers k-position apart
+		for (int i = 0; i < k; i++) {
+			// not enough nodes
+			if (pointerToLast == null) {
+				return null;
+			}
+			pointerToLast = pointerToLast.getNext();
+		}
+
+		while (pointerToLast.getNext() != null) {
+			pointerToLast = pointerToLast.getNext();
+			pointerToInterest = pointerToInterest.getNext();
+		}
+
+		// when pointerToLast reaches the last one, pointerToInterest reaches the node k-position apart from the last node
+		return pointerToInterest;
+	}
+
+	/**
+	 * Problem 2.3.
+	 * <p>Worst-case complexity: O(1)</p>
+	 */
+	static void removeMiddleItem(SinglyLinkedNode removedItem) {
 		SinglyLinkedNode nextItem = removedItem.getNext();
 
 		// this remove method should only apply to the middle items
@@ -107,14 +130,11 @@ public class LinkedListsSolutions {
 
 	/**
 	 * Problem 2.4.
-	 *
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the given list. The worst case happens when all the
-	 *     items in the list are smaller than the given partitioning value, because in that case we have to move all the
-	 *     items to the head of the list.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list. The worst case happens when all the
+	 * items in the list are smaller than the given partitioning value, because in that case we have to move all the
+	 * items to the head of the list.</p>
 	 */
-	public static void partition(SinglyLinkedList<SinglyLinkedNode> linkedList, Integer partitioningValue) {
+	static void partition(SinglyLinkedList<SinglyLinkedNode> linkedList, Integer partitioningValue) {
 		SinglyLinkedNode head = linkedList.getHead();
 
 		if (head == null) {
@@ -139,13 +159,11 @@ public class LinkedListsSolutions {
 
 	/**
 	 * <p>Problem 2.5.1: The digits are stored in backward order, e.g., 617 is stored as 7 -> 1 -> 6.</p>
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n^2) if the result is a singly linked list, and O(n) if it is a double-ended list ,
-	 *     where n is the length of the longer among the given lists.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n^2) if the result is a singly linked list, and O(n) if it is a double-ended list,
+	 * where n is the length of the longer among the given lists.</p>
 	 */
-	public static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
-																	   SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+	static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+	                                                            SinglyLinkedList<SinglyLinkedNode> secondNumber) {
 
 		SinglyLinkedList<SinglyLinkedNode> result = new SinglyLinkedList<>();
 		SinglyLinkedNode current1 = firstNumber.getHead();
@@ -172,12 +190,10 @@ public class LinkedListsSolutions {
 
 	/**
 	 * <p>Problem 2.5.1: The digits are stored in backward order, e.g., 617 is stored as 7 -> 1 -> 6.</p>
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</p>
 	 */
-	public static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits_2(SinglyLinkedList<SinglyLinkedNode> firstNumber,
-																	   SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+	static SinglyLinkedList<SinglyLinkedNode> sumBackwardDigits_2(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+	                                                              SinglyLinkedList<SinglyLinkedNode> secondNumber) {
 
 		SinglyLinkedList<SinglyLinkedNode> result = new SinglyLinkedList<>();
 		SinglyLinkedNode current1 = firstNumber.getHead();
@@ -205,25 +221,21 @@ public class LinkedListsSolutions {
 	/**
 	 * <p>Problem 2.5.2: The digits are stored in forward order, e.g., 617 is stored as 6 -> 1 -> 7.</p>
 	 * <p>Solution 1: simply reuse {@link #sumBackwardDigits_2(SinglyLinkedList, SinglyLinkedList)}</p>
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n), where n is the length of the longer among the given lists.</p>
 	 */
-	public static SinglyLinkedList<SinglyLinkedNode> sumForwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
-																	  SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+	static SinglyLinkedList<SinglyLinkedNode> sumForwardDigits(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+	                                                           SinglyLinkedList<SinglyLinkedNode> secondNumber) {
 		return sumBackwardDigits_2(firstNumber.reverse(), secondNumber.reverse()).reverse();
 	}
 
 	/**
 	 * <p>Problem 2.5.2: The digits are stored in forward order, e.g., 617 is stored as 6 -> 1 -> 7.</p>
 	 * <p>Solution 2: use a doubly-linked list so that the carry can be propagated</p>
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n^2), where n is the length of the longer among the given lists. The worst case
-	 *     happens when the carry is propagated all the way back for every calculation.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n^2), where n is the length of the longer among the given lists. The worst case
+	 * happens when the carry is propagated all the way back for every calculation.</p>
 	 */
-	public static DoublyLinkedList sumForwardDigits_2(SinglyLinkedList<SinglyLinkedNode> firstNumber,
-	                                                                    SinglyLinkedList<SinglyLinkedNode> secondNumber) {
+	static DoublyLinkedList sumForwardDigits_2(SinglyLinkedList<SinglyLinkedNode> firstNumber,
+	                                           SinglyLinkedList<SinglyLinkedNode> secondNumber) {
 		DoublyLinkedList result = new DoublyLinkedList();
 
 		int firstLength = firstNumber.size();
@@ -258,7 +270,7 @@ public class LinkedListsSolutions {
 				DoublyLinkedNode resultCurrent = result.getHead();
 				DoublyLinkedNode resultPrevious = null;
 				while (carry > 0) {
-					// propagating value to the higher-order positions compared to the current sum-position
+					// propagating carry to the higher-order positions compared to the current sum-position
 					if (resultCurrent != null) {
 						int newValue = resultCurrent.getContent().getValue() + carry;
 						resultCurrent.getContent().setValue(newValue % 10);
@@ -291,13 +303,10 @@ public class LinkedListsSolutions {
 
 	/**
 	 * Problem 2.6.
-	 *
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
-	 *     <li>Need O(n) extra memory</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
+	 * <p>Need O(n) extra memory</p>
 	 */
-	public static SinglyLinkedNode getFirstOfTheLoop(SinglyLinkedList<SinglyLinkedNode> linkedList) {
+	static SinglyLinkedNode getFirstOfTheLoop(SinglyLinkedList<SinglyLinkedNode> linkedList) {
 		// this set needs O(n) memory
 		Set<SinglyLinkedNode> existingNodes = new HashSet<>();
 		SinglyLinkedNode current = linkedList.getHead();
@@ -316,15 +325,13 @@ public class LinkedListsSolutions {
 	/**
 	 * Problem 2.7.
 	 *
-	 * <ul>
-	 *     <li>Worst-case complexity: O(n), where n is the length of the given list.</li>
-	 * </ul>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
 	 */
-	public static boolean checkPalindrome(SinglyLinkedList<SinglyLinkedNode> linkedList) {
+	static boolean checkPalindrome(SinglyLinkedList<SinglyLinkedNode> linkedList) {
 		int size = linkedList.size();
 		int firstHalfEndIndex = size / 2 - 1;
 
-		// move the items in the first half of the given list to the new list
+		// cut the items in the first half of the given list and insert them into the new list in a reverse order
 		SinglyLinkedList<SinglyLinkedNode> firstHalfList = new SinglyLinkedList<>();
 		for (int i = 0; i <= firstHalfEndIndex; i++) {
 			firstHalfList.insertFirst(linkedList.removeFirst());

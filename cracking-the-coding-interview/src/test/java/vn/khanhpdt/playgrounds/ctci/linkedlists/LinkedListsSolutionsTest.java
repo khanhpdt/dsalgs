@@ -70,15 +70,28 @@ public class LinkedListsSolutionsTest {
 	}
 
 	@Test
-	public void testGetKthToLast() {
+	public void testGetKthToLastKnownLength() {
 		int nItems = 10;
 		List<SinglyLinkedNode> items = randomItems(nItems);
 
 		SinglyLinkedList<SinglyLinkedNode> list = createSinglyLinkedList(items);
 
 		for (int k = 0; k < nItems; k++) {
-			SinglyLinkedNode item = LinkedListsSolutions.getKthToLast(list, k);
-			assertThat(item, is(items.get(k)));
+			SinglyLinkedNode item = LinkedListsSolutions.getKthToLastKnownLength(list, k);
+			assertThat(item, is(items.get(nItems - 1 - k)));
+		}
+	}
+
+	@Test
+	public void testGetKthToLastUnknownLength() {
+		int nItems = 10;
+		List<SinglyLinkedNode> items = randomItems(nItems);
+
+		SinglyLinkedList<SinglyLinkedNode> list = createSinglyLinkedList(items);
+
+		for (int k = 0; k < nItems; k++) {
+			SinglyLinkedNode item = LinkedListsSolutions.getKthToLastUnknownLength(list, k);
+			assertThat("item " + k, item, is(items.get(nItems - 1 - k)));
 		}
 	}
 
@@ -90,7 +103,7 @@ public class LinkedListsSolutionsTest {
 
 	private SinglyLinkedList<SinglyLinkedNode> createSinglyLinkedList(List<SinglyLinkedNode> items) {
 		SinglyLinkedList<SinglyLinkedNode> list = new SinglyLinkedList<>();
-		items.forEach(list::insertFirst);
+		items.forEach(list::insertLast);
 		return list;
 	}
 
