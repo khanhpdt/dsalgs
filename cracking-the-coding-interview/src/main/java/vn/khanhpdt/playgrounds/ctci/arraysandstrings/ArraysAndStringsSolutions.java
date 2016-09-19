@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class ArraysAndStringsSolutions {
 
 	/**
-	 * Problem 1.1.
-	 *
+	 * <p>Problem 1.1</p>
+	 * <p>Solution 1: a straightforward solution</p>
 	 * <p>Complexity: O(n^2), where n = length of the string</p>
 	 */
 	public static boolean hasUniqueCharacters_1(String s) {
@@ -31,8 +31,8 @@ public class ArraysAndStringsSolutions {
 	}
 
 	/**
-	 * Problem 1.1.
-	 *
+	 * <p>Problem 1.1.</p>
+	 * <p>Solution 2: use a hash table</p>
 	 * <p>Complexity: O(n), where n = length of the string</p>
 	 * <p>Extra O(n) memory</p>
 	 */
@@ -49,8 +49,8 @@ public class ArraysAndStringsSolutions {
 	}
 
 	/**
-	 * Problem 1.1.
-	 * 
+	 * <p>Problem 1.1.</p>
+	 * <p>Solution 3: use a bit vector</p>
 	 * <p>Complexity: O(n), where n = length of the given string</p>
 	 */
 	public static boolean hasUniqueCharacters_3(String s) {
@@ -121,9 +121,8 @@ public class ArraysAndStringsSolutions {
 			else {
 				characterCounts.put(c, characterCounts.get(c) - 1);
 			}
-			// We don't need to check for the case when s1 has more of some character than s2.
-			// Because they are of same length, if this happens, s1 must have fewer of some other
-			// character than s2, and this case is already handled.
+			// We don't need to check for the case when s1 has more of a character than s2, because this is equivalent
+			// to the case when s1 has fewer of another character than s2 as they have the same length.
 		}
 
 		return true;

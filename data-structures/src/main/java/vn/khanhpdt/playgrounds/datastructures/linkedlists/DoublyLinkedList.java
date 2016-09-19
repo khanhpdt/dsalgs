@@ -3,6 +3,7 @@ package vn.khanhpdt.playgrounds.datastructures.linkedlists;
 import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,5 +80,36 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 		}
 
 		return result;
+	}
+
+	public DoublyLinkedList reverse() {
+		DoublyLinkedNode current = this.head;
+
+		// reset this list
+		this.head = null;
+
+		// reverse in-place
+		while (current != null) {
+			DoublyLinkedNode next = current.getNext();
+			insert(current);
+
+			current = next;
+		}
+
+		return this;
+	}
+
+	@Override
+	public String toString() {
+		return Arrays.toString(traverse().toArray());
+	}
+
+	public void insertNextTo(Integer value, DoublyLinkedNode node) {
+		DoublyLinkedNode newNode = new DoublyLinkedNode(value);
+
+		newNode.setPrevious(node);
+		newNode.setNext(node.getNext());
+
+		node.setNext(newNode);
 	}
 }

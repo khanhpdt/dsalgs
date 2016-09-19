@@ -15,6 +15,10 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 		this.content = new Node<>(key);
 	}
 
+	public SinglyLinkedNode(Integer value) {
+		this.content = new Node<>(UUID.randomUUID(), value);
+	}
+
 	public SinglyLinkedNode(Node<UUID, Integer> content) {
 		this.content = content;
 	}
@@ -75,4 +79,8 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 		return getContent().getValue();
 	}
 
+	@Override
+	public String toString() {
+		return "SinglyLinkedNode: {" + getKey().toString() + ", " + getValue() + "}";
+	}
 }

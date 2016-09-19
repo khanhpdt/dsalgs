@@ -2,6 +2,7 @@ package vn.khanhpdt.playgrounds.datastructures.linkedlists;
 
 import vn.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -142,4 +143,11 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		head = head.getNext();
 		return removed;
 	}
+
+	@Override
+	public String toString() {
+		List<N> nodes = LinkedLists.traverse(this);
+		return Arrays.toString(nodes.toArray());
+	}
+
 }

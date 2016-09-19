@@ -17,6 +17,10 @@ public class DoublyLinkedNode implements DoublyLinkedNodeIntf<DoublyLinkedNode> 
 		this.content = new Node<>(key);
 	}
 
+	public DoublyLinkedNode(Integer value) {
+		this.content = new Node<>(UUID.randomUUID(), value);
+	}
+
 	public static DoublyLinkedNode random() {
 		UUID randomUuid = UUID.randomUUID();
 		return new DoublyLinkedNode(randomUuid);
@@ -69,5 +73,10 @@ public class DoublyLinkedNode implements DoublyLinkedNodeIntf<DoublyLinkedNode> 
 
 		DoublyLinkedNode otherNode = (DoublyLinkedNode) obj;
 		return this.getKey().equals(otherNode.getKey());
+	}
+
+	@Override
+	public String toString() {
+		return "DoublyLinkedNode: {" + getKey().toString() + ", " + getContent().getValue().toString() + "}";
 	}
 }
