@@ -307,6 +307,7 @@ class LinkedListsSolutions {
 
 	/**
 	 * Problem 2.6.
+	 * <p>Solution 1: use a hash table</p>
 	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
 	 * <p>Need O(n) extra memory</p>
 	 */
@@ -324,6 +325,39 @@ class LinkedListsSolutions {
 		}
 		// list has no loop
 		return null;
+	}
+
+	/**
+	 * Problem 2.6.
+	 * <p>Solution 2: use two pointers</p>
+	 * <p>Worst-case complexity: O(n), where n is the length of the given list.</p>
+	 */
+	static SinglyLinkedNode getFirstOfTheLoop_2(SinglyLinkedList<SinglyLinkedNode> linkedList) {
+		SinglyLinkedNode slowPointer = linkedList.getHead();
+		SinglyLinkedNode fastPointer = linkedList.getHead();
+
+		// make them collide
+		// if they collide, they do at LOOP_SIZE - k, where k is the distance from the head to the loop start
+		do {
+			slowPointer = slowPointer.getNext();
+			fastPointer = fastPointer.getNext().getNext();
+		} while (slowPointer != null && fastPointer != null && !slowPointer.equals(fastPointer));
+
+		// no loop
+		if (slowPointer == null || fastPointer == null) {
+			return null;
+		}
+
+		// since k is the distance from head to the loop start and also the one from the collision spot to the loop start,
+		// two pointers moving from the head and from the collision spot with the same speed will collide at the loop start.
+		slowPointer = linkedList.getHead();
+		while (!slowPointer.equals(fastPointer)) {
+			slowPointer = slowPointer.getNext();
+			fastPointer = fastPointer.getNext();
+		}
+
+		// either slowPointer or fastPointer is ok
+		return slowPointer;
 	}
 
 	/**

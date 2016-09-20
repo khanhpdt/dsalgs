@@ -385,6 +385,54 @@ public class LinkedListsSolutionsTest {
 	}
 
 	@Test
+	public void testFirstOfTheLoop2_1() throws Exception {
+		SinglyLinkedNode theFirstOfTheLoop = new SinglyLinkedNode(new Node<>(UUID.randomUUID()));
+		SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
+		linkedList.insertFirst(theFirstOfTheLoop);
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(theFirstOfTheLoop);
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+
+		SinglyLinkedNode firstOfTheLoop = LinkedListsSolutions.getFirstOfTheLoop_2(linkedList);
+
+		assertThat(firstOfTheLoop, is(theFirstOfTheLoop));
+	}
+
+	@Test
+	public void testFirstOfTheLoop2_2() throws Exception {
+		SinglyLinkedNode theFirstOfTheFirstLoop = new SinglyLinkedNode(new Node<>(UUID.randomUUID()));
+		SinglyLinkedNode theFirstOfTheSecondLoop = new SinglyLinkedNode(new Node<>(UUID.randomUUID()));
+		SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
+		linkedList.insertFirst(theFirstOfTheSecondLoop);
+		linkedList.insertFirst(theFirstOfTheFirstLoop);
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(theFirstOfTheSecondLoop);
+		linkedList.insertFirst(theFirstOfTheFirstLoop);
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+
+		SinglyLinkedNode firstOfTheLoop = LinkedListsSolutions.getFirstOfTheLoop_2(linkedList);
+
+		assertThat(firstOfTheLoop, is(theFirstOfTheFirstLoop));
+	}
+
+	@Test
+	public void testFirstOfTheLoop2_3() throws Exception {
+		SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID())));
+
+		SinglyLinkedNode firstOfTheLoop = LinkedListsSolutions.getFirstOfTheLoop_2(linkedList);
+
+		assertThat(firstOfTheLoop, is(nullValue()));
+	}
+
+	@Test
 	public void testCheckPalindrome_1() throws Exception {
 		SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
 		linkedList.insertFirst(new SinglyLinkedNode(new Node<>(UUID.randomUUID(), 1)));
