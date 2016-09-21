@@ -23,9 +23,9 @@ public class MinimumSpanningTreeTest {
 
 	@Test
 	public void testKruskal() throws Exception {
-		Graph graph = createGraph();
+		Graph<UUID, Integer> graph = createGraph();
 
-		List<GraphEdge> mstEdges = new KruskalMST(graph).get();
+		List<GraphEdge<UUID, Integer>> mstEdges = new KruskalMST<>(graph).get();
 
 		assertThat(mstEdges, Matchers.hasSize(8));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{6, 7, 1})));
@@ -40,9 +40,9 @@ public class MinimumSpanningTreeTest {
 
 	@Test
 	public void testPrim() throws Exception {
-		Graph graph = createGraph();
+		Graph<UUID, Integer> graph = createGraph();
 
-		List<GraphEdge> mstEdges = new PrimMST(graph).get();
+		List<GraphEdge<UUID, Integer>> mstEdges = new PrimMST<>(graph).get();
 
 		assertThat(mstEdges, Matchers.hasSize(8));
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{0, 1, 4})));
@@ -57,8 +57,8 @@ public class MinimumSpanningTreeTest {
 		assertThat(mstEdges, Matchers.hasItem(isEdgeWith(graph, new int[]{3, 4, 9})));
 	}
 
-	private Graph createGraph() {
-		Graph graph = new Graph();
+	private Graph<UUID, Integer> createGraph() {
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 9).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addEdges(new int[][]{
 				{0, 1, 4}, {0, 7, 8}, {1, 2, 8}, {1, 7, 11}, {2, 3, 7},

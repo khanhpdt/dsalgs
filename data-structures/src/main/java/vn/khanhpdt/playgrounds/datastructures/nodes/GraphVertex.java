@@ -2,57 +2,58 @@ package vn.khanhpdt.playgrounds.datastructures.nodes;
 
 import vn.khanhpdt.playgrounds.datastructures.graphs.GraphEdge;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 /**
+ * @param <K>  type of vertex key
+ * @param <V>  type of vertex value
  * @author khanhpdt
  */
-public class GraphVertex implements DoublyLinked<GraphVertex> {
+public class GraphVertex<K, V> implements DoublyLinked<GraphVertex<K, V>> {
 
-	private Node<UUID, Integer> content;
+	private Node<K, V> content;
 
-	private List<GraphVertex> adjacents = new ArrayList<>();
+	private List<GraphVertex<K, V>> adjacents = new ArrayList<>();
 
 	// outgoing edges from this vertex
-	private Map<GraphVertex, GraphEdge> outgoingEdges = new HashMap<>();
+	private Map<GraphVertex<K, V>, GraphEdge<K, V>> outgoingEdges = new HashMap<>();
 
 	// for searching (BFS, DFS)
 	private int distance = Integer.MAX_VALUE;
 	private Color color = Color.WHITE;
-	private GraphVertex predecessor;
+	private GraphVertex<K, V> predecessor;
 	private int discoveredTime;
 	private int visitedTime;
 
 	// we need to put this vertex into queue during BFS
-	private GraphVertex next;
-	private GraphVertex previous;
+	private GraphVertex<K, V> next;
+	private GraphVertex<K, V> previous;
 
 	// for finding minimum spanning tree. this represents the minimum weight among the edges connecting
 	// this vertex to the vertices already in the MST
 	private double minWeightToMST;
 
-	public GraphVertex(UUID key) {
+	public GraphVertex(K key) {
 		this.content = new Node<>(key);
 	}
 
-	public GraphVertex(UUID key, int value) {
+	public GraphVertex(K key, V value) {
 		this.content = new Node<>(key, value);
 	}
 
-	public GraphVertex(GraphVertex other) {
+	public GraphVertex(GraphVertex<K, V> other) {
 		this.content = new Node<>(other.getContent().getKey(), other.getContent().getValue());
 	}
 
-	public Node<UUID, Integer> getContent() {
+	public Node<K, V> getContent() {
 		return this.content;
 	}
 
-	public UUID getKey() {
+	public K getKey() {
 		return content.getKey();
 	}
 
@@ -60,7 +61,7 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 		return color;
 	}
 
-	public List<GraphVertex> getAdjacents() {
+	public List<GraphVertex<K, V>> getAdjacents() {
 		return adjacents;
 	}
 
@@ -90,22 +91,22 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 	}
 
 	@Override
-	public GraphVertex getNext() {
+	public GraphVertex<K, V> getNext() {
 		return this.next;
 	}
 
 	@Override
-	public void setNext(GraphVertex next) {
+	public void setNext(GraphVertex<K, V> next) {
 		this.next = next;
 	}
 
 	@Override
-	public GraphVertex getPrevious() {
+	public GraphVertex<K, V> getPrevious() {
 		return this.previous;
 	}
 
 	@Override
-	public void setPrevious(GraphVertex previous) {
+	public void setPrevious(GraphVertex<K, V> previous) {
 		this.previous = previous;
 	}
 
@@ -130,7 +131,7 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 		this.color = Color.GRAY;
 	}
 
-	public void markDiscovered(GraphVertex predecessor, int time) {
+	public void markDiscovered(GraphVertex<K, V> predecessor, int time) {
 		setPredecessor(predecessor);
 		setDistance(predecessor == null ? 0 : predecessor.getDistance() + 1);
 		setColor(Color.GRAY);
@@ -145,7 +146,7 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 		return this.color != Color.BLACK;
 	}
 
-	public void setAdjacents(List<GraphVertex> adjacents) {
+	public void setAdjacents(List<GraphVertex<K, V>> adjacents) {
 		this.adjacents = adjacents;
 	}
 
@@ -157,24 +158,24 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 		this.visitedTime = visitedTime;
 	}
 
-	public List<GraphEdge> getOutgoingEdges() {
+	public List<GraphEdge<K, V>> getOutgoingEdges() {
 		return new ArrayList<>(outgoingEdges.values());
 	}
 
-	public void addEdge(GraphVertex toVertex) {
+	public void addEdge(GraphVertex<K, V> toVertex) {
 		addEdge(toVertex, 0);
 	}
 
-	public void addEdge(GraphVertex toVertex, int weight) {
+	public void addEdge(GraphVertex<K, V> toVertex, int weight) {
 		adjacents.add(toVertex);
-		outgoingEdges.put(toVertex, new GraphEdge(this, toVertex, weight));
+		outgoingEdges.put(toVertex, new GraphEdge<>(this, toVertex, weight));
 	}
 
-	public double getWeightOfEdgeTo(GraphVertex toVertex) {
+	public double getWeightOfEdgeTo(GraphVertex<K, V> toVertex) {
 		return outgoingEdges.get(toVertex).getWeight();
 	}
 
-	public GraphEdge getEdgeTo(GraphVertex toVertex) {
+	public GraphEdge<K, V> getEdgeTo(GraphVertex<K, V> toVertex) {
 		return outgoingEdges.get(toVertex);
 	}
 
@@ -186,11 +187,11 @@ public class GraphVertex implements DoublyLinked<GraphVertex> {
 		this.minWeightToMST = minWeightToMST;
 	}
 
-	public void setPredecessor(GraphVertex predecessor) {
+	public void setPredecessor(GraphVertex<K, V> predecessor) {
 		this.predecessor = predecessor;
 	}
 
-	public GraphVertex getPredecessor() {
+	public GraphVertex<K, V> getPredecessor() {
 		return predecessor;
 	}
 

@@ -5,25 +5,25 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 /**
  * @author khanhpdt
  */
-public class GraphEdge {
+public class GraphEdge<K, V> {
 
-	private GraphVertex fromVertex;
+	private GraphVertex<K, V> fromVertex;
 
-	private GraphVertex toVertex;
+	private GraphVertex<K, V> toVertex;
 
 	private double weight;
 
-	public GraphEdge(GraphVertex fromVertex, GraphVertex toVertex, double weight) {
+	public GraphEdge(GraphVertex<K, V> fromVertex, GraphVertex<K, V> toVertex, double weight) {
 		this.fromVertex = fromVertex;
 		this.toVertex = toVertex;
 		this.weight = weight;
 	}
 
-	public GraphVertex getFromVertex() {
+	public GraphVertex<K, V> getFromVertex() {
 		return fromVertex;
 	}
 
-	public GraphVertex getToVertex() {
+	public GraphVertex<K, V> getToVertex() {
 		return toVertex;
 	}
 

@@ -6,17 +6,17 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 /**
  * @author khanhpdt
  */
-public class DirectedCycle {
+public class DirectedCycle<K, V> {
 
 	private boolean exists;
 
-	private DirectedCycle(Graph graph) {
+	private DirectedCycle(Graph<K, V> graph) {
 		this.exists = check(graph);
 		graph.resetAfterTraverse();
 	}
 
-	private boolean check(Graph graph) {
-		for (GraphVertex vertex : graph.getVertices()) {
+	private boolean check(Graph<K, V> graph) {
+		for (GraphVertex<K, V> vertex : graph.getVertices()) {
 			if (vertex.isNotDiscovered() && checkDirectedCycleFrom(vertex)) {
 				return true;
 			}
@@ -24,14 +24,14 @@ public class DirectedCycle {
 		return false;
 	}
 
-	private boolean checkDirectedCycleFrom(GraphVertex vertex) {
+	private boolean checkDirectedCycleFrom(GraphVertex<K, V> vertex) {
 		// because the traverse is depth-first, a discovered vertex must be visited before the traverse can go back to
 		// the vertex
 		if (vertex.isDiscovered() && vertex.isNotVisited()) {
 			return true;
 		} else {
 			vertex.markDiscovered();
-			for (GraphVertex adjacent : vertex.getAdjacents()) {
+			for (GraphVertex<K, V> adjacent : vertex.getAdjacents()) {
 				if (checkDirectedCycleFrom(adjacent)) {
 					return true;
 				}
@@ -46,7 +46,7 @@ public class DirectedCycle {
 		return exists;
 	}
 
-	public static boolean checkExists(Graph graph) {
-		return new DirectedCycle(graph).exists();
+	public static <K, V> boolean checkExists(Graph<K, V> graph) {
+		return new DirectedCycle<>(graph).exists();
 	}
 }

@@ -7,9 +7,9 @@ import vn.khanhpdt.playgrounds.datastructures.queues.MinPriorityQueue;
 /**
  * @author khanhpdt
  */
-public class DijkstraShortestPath extends SingleSourceShortestPath {
+public class DijkstraShortestPath<K, V> extends SingleSourceShortestPath<K, V> {
 
-	public DijkstraShortestPath(Graph graph, GraphVertex source) {
+	public DijkstraShortestPath(Graph<K, V> graph, GraphVertex<K, V> source) {
 		super(graph, source);
 	}
 
@@ -20,12 +20,12 @@ public class DijkstraShortestPath extends SingleSourceShortestPath {
 		initialize();
 
 		// vertices whose shortest paths from the source have not been settled yet
-		MinPriorityQueue<GraphVertex> notSettledVertices = new MinPriorityQueue<>(graph.getVertices(),
+		MinPriorityQueue<GraphVertex<K, V>> notSettledVertices = new MinPriorityQueue<>(graph.getVertices(),
 				(v1, v2) -> Double.compare(distances.get(v1), distances.get(v2)));
 
 		while (notSettledVertices.isNotEmpty()) {
 			// greedy heuristic: select the vertex with the smallest shortest paths
-			GraphVertex settledVertex = notSettledVertices.extractMin();
+			GraphVertex<K, V> settledVertex = notSettledVertices.extractMin();
 
 			// update the shortest paths of the adjacents of the settled vertex, because the just-settled vertex can
 			// lead to shorter paths than the ones found so far.

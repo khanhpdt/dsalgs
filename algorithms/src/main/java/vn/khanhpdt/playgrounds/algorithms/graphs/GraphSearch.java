@@ -9,24 +9,24 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-public abstract class GraphSearch {
+public abstract class GraphSearch<K, V> {
 
 	protected int time = 1;
 
-	public List<GraphVertex> search(GraphVertex sourceVertex) {
+	public List<GraphVertex<K, V>> search(GraphVertex<K, V> sourceVertex) {
 		return doSearch(sourceVertex);
 	}
 
-	public List<Graph> search(Graph graph) {
-		List<Graph> graphs = new ArrayList<>();
+	public List<Graph<K, V>> search(Graph<K, V> graph) {
+		List<Graph<K, V>> graphs = new ArrayList<>();
 
 		graph.getVertices().stream()
 				.filter(GraphVertex::isNotDiscovered)
-				.forEach(v -> graphs.add(new Graph(this.search(v))));
+				.forEach(v -> graphs.add(new Graph<>(this.search(v))));
 
 		return graphs;
 	}
 
-	protected abstract List<GraphVertex> doSearch(GraphVertex sourceVertex);
+	protected abstract List<GraphVertex<K, V>> doSearch(GraphVertex<K, V> sourceVertex);
 
 }

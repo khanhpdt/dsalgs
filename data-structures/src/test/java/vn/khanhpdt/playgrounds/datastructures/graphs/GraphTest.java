@@ -17,22 +17,22 @@ public class GraphTest {
 
 	@Test
 	public void testAddVertex() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 
 		UUID vertexKey = UUID.randomUUID();
 		graph.addVertex(vertexKey);
 
-		GraphVertex vertex = graph.getVertex(vertexKey);
+		GraphVertex<UUID, Integer> vertex = graph.getVertex(vertexKey);
 		assertThat(vertex.getColor(), is(Color.WHITE));
 	}
 
 	@Test
 	public void testAddEdge() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		UUID vertex1Key = UUID.randomUUID();
-		GraphVertex vertex1 = graph.addVertex(vertex1Key);
+		GraphVertex<UUID, Integer> vertex1 = graph.addVertex(vertex1Key);
 		UUID vertex2Key = UUID.randomUUID();
-		GraphVertex vertex2 = graph.addVertex(vertex2Key);
+		GraphVertex<UUID, Integer> vertex2 = graph.addVertex(vertex2Key);
 
 		graph.addEdge(vertex1, vertex2);
 
@@ -42,11 +42,11 @@ public class GraphTest {
 
 	@Test
 	public void testAddEdgeByIndexes() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		UUID vertex1Key = UUID.randomUUID();
-		GraphVertex vertex1 = graph.addVertex(vertex1Key);
+		GraphVertex<UUID, Integer> vertex1 = graph.addVertex(vertex1Key);
 		UUID vertex2Key = UUID.randomUUID();
-		GraphVertex vertex2 = graph.addVertex(vertex2Key);
+		GraphVertex<UUID, Integer> vertex2 = graph.addVertex(vertex2Key);
 
 		graph.addEdge(0, 1);
 

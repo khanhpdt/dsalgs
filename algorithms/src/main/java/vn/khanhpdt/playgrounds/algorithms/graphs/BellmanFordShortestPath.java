@@ -8,9 +8,9 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
  *
  * @author khanhpdt
  */
-public class BellmanFordShortestPath extends SingleSourceShortestPath {
+public class BellmanFordShortestPath<K, V> extends SingleSourceShortestPath<K, V> {
 
-	public BellmanFordShortestPath(Graph graph, GraphVertex source) {
+	public BellmanFordShortestPath(Graph<K, V> graph, GraphVertex<K, V> source) {
 		super(graph, source);
 	}
 

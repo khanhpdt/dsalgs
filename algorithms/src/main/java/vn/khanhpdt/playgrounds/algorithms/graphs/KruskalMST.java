@@ -16,24 +16,24 @@ import java.util.stream.Collectors;
 /**
  * @author khanhpdt
  */
-public class KruskalMST extends MinimumSpanningTree {
+public class KruskalMST<K, V> extends MinimumSpanningTree<K, V> {
 
-	public KruskalMST(Graph graph) {
+	public KruskalMST(Graph<K, V> graph) {
 		super(graph);
 	}
 
 	@Override
-	public List<GraphEdge> get() {
-		Map<GraphVertex, DisjointSetNode> disjointSetNodes = getGraph().getVertices().stream()
+	public List<GraphEdge<K, V>> get() {
+		Map<GraphVertex<K, V>, DisjointSetNode<K, V>> disjointSetNodes = getGraph().getVertices().stream()
 				.collect(Collectors.toMap(Function.identity(), v -> new DisjointSetNode<>(v.getKey())));
 
 		disjointSetNodes.values().forEach(node -> DisjointSets.makeSet(Collections.singletonList(node)));
 
 		// sort the edges to make it easy to loop over them in ascending order
-		List<GraphEdge> edges = getGraph().getEdges();
+		List<GraphEdge<K, V>> edges = getGraph().getEdges();
 		Collections.sort(edges, (e1, e2) -> Double.compare(e1.getWeight(), e2.getWeight()));
 
-		List<GraphEdge> result = new ArrayList<>();
+		List<GraphEdge<K, V>> result = new ArrayList<>();
 		edges.forEach(e -> {
 			DisjointSetNode nodeForFromVertex = disjointSetNodes.get(e.getFromVertex());
 			DisjointSetNode nodeForToVertex = disjointSetNodes.get(e.getToVertex());

@@ -9,18 +9,18 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-public class DepthFirstSearchIterative extends GraphSearch {
+public class DepthFirstSearchIterative<K, V> extends GraphSearch<K, V> {
 
 	@Override
-	protected List<GraphVertex> doSearch(GraphVertex source) {
-		Stack<GraphVertex> discoveredStack = new Stack<>();
-		Stack<GraphVertex> visitedStack = new Stack<>();
+	protected List<GraphVertex<K, V>> doSearch(GraphVertex<K, V> source) {
+		Stack<GraphVertex<K, V>> discoveredStack = new Stack<>();
+		Stack<GraphVertex<K, V>> visitedStack = new Stack<>();
 
 		source.markDiscovered(null, time++);
 		discoveredStack.push(source);
 
 		while (!discoveredStack.isEmpty()) {
-			GraphVertex current = discoveredStack.pop();
+			GraphVertex<K, V> current = discoveredStack.pop();
 
 			current.getAdjacents().stream()
 					.filter(GraphVertex::isNotDiscovered)
@@ -34,9 +34,9 @@ public class DepthFirstSearchIterative extends GraphSearch {
 			visitedStack.push(current);
 		}
 
-		List<GraphVertex> reachableVertices = new ArrayList<>();
+		List<GraphVertex<K, V>> reachableVertices = new ArrayList<>();
 		while (!visitedStack.isEmpty()) {
-			GraphVertex current = visitedStack.pop();
+			GraphVertex<K, V> current = visitedStack.pop();
 
 			current.markVisited(time++);
 			reachableVertices.add(current);

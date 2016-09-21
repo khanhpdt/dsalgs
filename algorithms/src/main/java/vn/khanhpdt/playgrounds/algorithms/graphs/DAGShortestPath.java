@@ -8,9 +8,9 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
  *
  * @author khanhpdt
  */
-public class DAGShortestPath extends SingleSourceShortestPath {
+public class DAGShortestPath<K, V> extends SingleSourceShortestPath<K, V> {
 
-	public DAGShortestPath(Graph graph, GraphVertex source) {
+	public DAGShortestPath(Graph<K, V> graph, GraphVertex<K, V> source) {
 		super(graph, source);
 	}
 
@@ -19,7 +19,7 @@ public class DAGShortestPath extends SingleSourceShortestPath {
 		initialize();
 
 		// this will also check for cycles in the given graph, as topological sort cannot be applied on graphs with cycles
-		Graph topologicallySortedGraph = TopologicalSort.from(graph);
+		Graph<K, V> topologicallySortedGraph = TopologicalSort.from(graph);
 
 		topologicallySortedGraph.getVertices()
 				.forEach(v -> v.getOutgoingEdges()

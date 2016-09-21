@@ -11,28 +11,28 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-public class PrimMST extends MinimumSpanningTree {
+public class PrimMST<K, V> extends MinimumSpanningTree<K, V> {
 
-	public PrimMST(Graph graph) {
+	public PrimMST(Graph<K, V> graph) {
 		super(graph);
 	}
 
 	@Override
-	protected List<GraphEdge> get() {
+	protected List<GraphEdge<K, V>> get() {
 		// the value of each vertex will represent the minimum weight among the edges connecting the vertex
 		// to the vertices already in the MST
 		getGraph().getVertices().forEach(v -> v.setMinWeightToMST(Double.MAX_VALUE));
 
 		// use a min-priority queue to accelerate the process of finding the safe edge and also to hold
 		// the vertices not yet in the MST
-		MinPriorityQueue<GraphVertex> minPriorityQueue = new MinPriorityQueue<>(getGraph().getVertices(),
+		MinPriorityQueue<GraphVertex<K, V>> minPriorityQueue = new MinPriorityQueue<>(getGraph().getVertices(),
 				(v1, v2) -> Double.compare(v1.getMinWeightToMST(), v2.getMinWeightToMST()));
 
-		List<GraphEdge> result = new ArrayList<>();
+		List<GraphEdge<K, V>> result = new ArrayList<>();
 		while (minPriorityQueue.isNotEmpty()) {
 			// this vertex is not in the MST and the edge connecting it to a vertex in the MST is the minimum.
 			// in other words, it is the vertex in the safe edge.
-			GraphVertex v = minPriorityQueue.extractMin();
+			GraphVertex<K, V> v = minPriorityQueue.extractMin();
 
 			if (v.getPredecessor()!= null) {
 				// safe edge added

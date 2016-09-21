@@ -9,18 +9,18 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-public class BreadthFirstSearch extends GraphSearch {
+public class BreadthFirstSearch<K, V> extends GraphSearch<K, V> {
 
 	@Override
-	public List<GraphVertex> doSearch(GraphVertex sourceVertex) {
-		List<GraphVertex> reachableVertices = new ArrayList<>();
-		Queue<GraphVertex> queue = new Queue<>();
+	public List<GraphVertex<K, V>> doSearch(GraphVertex<K, V> sourceVertex) {
+		List<GraphVertex<K, V>> reachableVertices = new ArrayList<>();
+		Queue<GraphVertex<K, V>> queue = new Queue<>();
 
 		queue.enqueueRear(sourceVertex);
 		sourceVertex.markDiscovered(null, time++);
 
 		while (!queue.isEmpty()) {
-			GraphVertex current = queue.dequeueFront();
+			GraphVertex<K, V> current = queue.dequeueFront();
 
 			current.getAdjacents().stream()
 					.filter(GraphVertex::isNotDiscovered)

@@ -14,18 +14,18 @@ import java.util.List;
  *
  * @author khanhpdt
  */
-public abstract class MinimumSpanningTree {
+public abstract class MinimumSpanningTree<K, V> {
 
-	private Graph graph;
+	private Graph<K, V> graph;
 
-	protected MinimumSpanningTree(Graph graph) {
+	protected MinimumSpanningTree(Graph<K, V> graph) {
 		this.graph = graph;
 	}
 
-	public Graph getGraph() {
+	public Graph<K, V> getGraph() {
 		return graph;
 	}
 
-	protected abstract List<GraphEdge> get();
+	protected abstract List<GraphEdge<K, V>> get();
 
 }

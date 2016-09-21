@@ -27,13 +27,13 @@ public class ShortestPathTest {
 
 	@Test
 	public void testSingleSourceShortestPath_distance() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 5).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 6}, {0, 4, 7}, {1, 2, 5}, {1, 3, -4}, {1, 4, 8},
 				{2, 1, -2}, {3, 2, 7}, {3, 0, 2}, {4, 2, -3}, {4, 3, 9} });
 
-		BellmanFordShortestPath shortestPath = new BellmanFordShortestPath(graph, graph.getVertex(0));
+		BellmanFordShortestPath<UUID, Integer> shortestPath = new BellmanFordShortestPath<>(graph, graph.getVertex(0));
 
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(1)), closeTo(2, DOUBLE_ERROR));
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(2)), closeTo(4, DOUBLE_ERROR));
@@ -43,20 +43,20 @@ public class ShortestPathTest {
 
 	@Test
 	public void testSingleSourceShortestPath_path() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 5).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 6}, {0, 4, 7}, {1, 2, 5}, {1, 3, -4}, {1, 4, 8},
 				{2, 1, -2}, {3, 2, 7}, {3, 0, 2}, {4, 2, -3}, {4, 3, 9} });
 
-		BellmanFordShortestPath shortestPath = new BellmanFordShortestPath(graph, graph.getVertex(0));
+		BellmanFordShortestPath<UUID, Integer> shortestPath = new BellmanFordShortestPath<>(graph, graph.getVertex(0));
 
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(1)), Matchers.contains(getVertexMatchers(graph, 0, 4, 2, 1)));
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(2)), Matchers.contains(getVertexMatchers(graph, 0, 4, 2)));
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(3)), Matchers.contains(getVertexMatchers(graph, 0, 4, 2, 1, 3)));
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(4)), Matchers.contains(getVertexMatchers(graph, 0, 4)));
 	}
-	private static List<Matcher<? super GraphVertex>> getVertexMatchers(Graph graph, int... vertexIndices) {
+	private static List<Matcher<? super GraphVertex<UUID, Integer>>> getVertexMatchers(Graph<UUID, Integer> graph, int... vertexIndices) {
 		return Arrays.stream(vertexIndices).boxed()
 				.map(graph::getVertex)
 				.map(IsEqual::new)
@@ -65,13 +65,13 @@ public class ShortestPathTest {
 
 	@Test
 	public void testDAGShortestPath_distance() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 6).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 2}, {0, 2, 6}, {1, 2, 7}, {1, 3, 4}, {1, 4, 2},
 				{2, 3, -1}, {2, 4, 1}, {3, 4, -2}, {5, 0, 5}, {5, 1, 3} });
 
-		DAGShortestPath shortestPath = new DAGShortestPath(graph, graph.getVertex(0));
+		DAGShortestPath<UUID, Integer> shortestPath = new DAGShortestPath<>(graph, graph.getVertex(0));
 
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(1)), closeTo(2, DOUBLE_ERROR));
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(2)), closeTo(6, DOUBLE_ERROR));
@@ -82,13 +82,13 @@ public class ShortestPathTest {
 
 	@Test
 	public void testDAGShortestPath_path() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 6).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 2}, {0, 2, 6}, {1, 2, 7}, {1, 3, 4}, {1, 4, 2},
 				{2, 3, -1}, {2, 4, 1}, {3, 4, -2}, {5, 0, 5}, {5, 1, 3} });
 
-		DAGShortestPath shortestPath = new DAGShortestPath(graph, graph.getVertex(0));
+		DAGShortestPath<UUID, Integer> shortestPath = new DAGShortestPath<>(graph, graph.getVertex(0));
 
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(1)), Matchers.contains(getVertexMatchers(graph, 0, 1)));
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(2)), Matchers.contains(getVertexMatchers(graph, 0, 2)));
@@ -99,13 +99,13 @@ public class ShortestPathTest {
 
 	@Test
 	public void testDijkstraShortestPath_distance() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 5).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 10}, {0, 4, 5}, {1, 2, 1}, {1, 4, 2}, {2, 3, 4},
 				{3, 2, 6}, {3, 0, 7}, {4, 1, 3}, {4, 2, 9}, {4, 3, 2} });
 
-		DijkstraShortestPath shortestPath = new DijkstraShortestPath(graph, graph.getVertex(0));
+		DijkstraShortestPath<UUID, Integer> shortestPath = new DijkstraShortestPath<>(graph, graph.getVertex(0));
 
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(1)), closeTo(8, DOUBLE_ERROR));
 		assertThat(shortestPath.getDistanceTo(graph.getVertex(2)), closeTo(9, DOUBLE_ERROR));
@@ -115,13 +115,13 @@ public class ShortestPathTest {
 
 	@Test
 	public void testDijkstraShortestPath_path() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 5).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 10}, {0, 4, 5}, {1, 2, 1}, {1, 4, 2}, {2, 3, 4},
 				{3, 2, 6}, {3, 0, 7}, {4, 1, 3}, {4, 2, 9}, {4, 3, 2} });
 
-		DijkstraShortestPath shortestPath = new DijkstraShortestPath(graph, graph.getVertex(0));
+		DijkstraShortestPath<UUID, Integer> shortestPath = new DijkstraShortestPath<>(graph, graph.getVertex(0));
 
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(1)), Matchers.contains(getVertexMatchers(graph, 0, 4, 1)));
 		MatcherAssert.assertThat(shortestPath.getPathTo(graph.getVertex(2)), Matchers.contains(getVertexMatchers(graph, 0, 4, 1, 2)));
@@ -131,13 +131,13 @@ public class ShortestPathTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testDijkstraShortestPath_negativeWeightEdge() throws Exception {
-		Graph graph = new Graph();
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 5).forEach(i -> graph.addVertex(UUID.randomUUID(), i));
 		graph.addDirectedEdges(new int[][]{
 				{0, 1, 10}, {0, 4, 5}, {1, 2, -1}, {1, 4, 2}, {2, 3, 4},
 				{3, 2, 6}, {3, 0, 7}, {4, 1, 3}, {4, 2, 9}, {4, 3, 2} });
 
-		new DijkstraShortestPath(graph, graph.getVertex(0));
+		new DijkstraShortestPath<>(graph, graph.getVertex(0));
 	}
 
 }

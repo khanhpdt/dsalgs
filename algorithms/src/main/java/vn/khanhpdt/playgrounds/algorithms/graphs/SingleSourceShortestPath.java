@@ -13,17 +13,17 @@ import java.util.Map;
 /**
  * @author khanhpdt
  */
-public abstract class SingleSourceShortestPath {
+public abstract class SingleSourceShortestPath<K, V> {
 
-	protected final Graph graph;
+	protected final Graph<K, V> graph;
 
-	protected final GraphVertex source;
+	protected final GraphVertex<K, V> source;
 
-	protected final Map<GraphVertex, Double> distances;
+	protected final Map<GraphVertex<K, V>, Double> distances;
 
-	protected final Map<GraphVertex, List<GraphVertex>> paths;
+	protected final Map<GraphVertex<K, V>, List<GraphVertex<K, V>>> paths;
 
-	protected SingleSourceShortestPath(Graph graph, GraphVertex source) {
+	protected SingleSourceShortestPath(Graph<K, V> graph, GraphVertex<K, V> source) {
 		this.graph = graph;
 		this.source = source;
 		this.distances = new HashMap<>();
@@ -34,19 +34,19 @@ public abstract class SingleSourceShortestPath {
 
 	protected abstract void build();
 
-	public double getDistanceTo(GraphVertex vertex) {
+	public double getDistanceTo(GraphVertex<K, V> vertex) {
 		return distances.get(vertex);
 	}
 
-	public List<GraphVertex> getPathTo(GraphVertex vertex) {
+	public List<GraphVertex<K, V>> getPathTo(GraphVertex<K, V> vertex) {
 		paths.putIfAbsent(vertex, getPath(vertex));
 		return paths.get(vertex);
 	}
 
-	private List<GraphVertex> getPath(GraphVertex vertex) {
-		List<GraphVertex> result = new ArrayList<>();
+	private List<GraphVertex<K, V>> getPath(GraphVertex<K, V> vertex) {
+		List<GraphVertex<K, V>> result = new ArrayList<>();
 
-		GraphVertex current = vertex;
+		GraphVertex<K, V> current = vertex;
 		while (current != null) {
 			result.add(current);
 			current = current.getPredecessor();
@@ -71,9 +71,9 @@ public abstract class SingleSourceShortestPath {
 		distances.put(source, 0d);
 	}
 
-	protected void relax(GraphEdge edge) {
-		GraphVertex vertexTo = edge.getToVertex();
-		GraphVertex vertexFrom = edge.getFromVertex();
+	protected void relax(GraphEdge<K, V> edge) {
+		GraphVertex<K, V> vertexTo = edge.getToVertex();
+		GraphVertex<K, V> vertexFrom = edge.getFromVertex();
 
 		Double distanceVertexTo = distances.get(vertexTo);
 		Double distanceVertexFrom = distances.get(vertexFrom);

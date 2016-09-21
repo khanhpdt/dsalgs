@@ -5,54 +5,55 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.GraphVertex;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
+ * @param <K>  type of vertex key
+ * @param <V>  type of vertex value
  * @author khanhpdt
  */
-public class Graph {
+public class Graph<K, V> {
 
-	private List<GraphVertex> vertices;
+	private List<GraphVertex<K, V>> vertices;
 
 	public Graph() {
 		this.vertices = new ArrayList<>();
 	}
 
-	public Graph(List<GraphVertex> vertices) {
+	public Graph(List<GraphVertex<K, V>> vertices) {
 		this.vertices = vertices;
 	}
 
-	public GraphVertex addVertex(UUID vertexKey) {
-		GraphVertex vertex = new GraphVertex(vertexKey);
+	public GraphVertex<K, V> addVertex(K vertexKey) {
+		GraphVertex<K, V> vertex = new GraphVertex<>(vertexKey);
 		vertices.add(vertex);
 		return vertex;
 	}
 
-	public GraphVertex addVertex(UUID key, int value) {
-		GraphVertex vertex = new GraphVertex(key, value);
+	public GraphVertex<K, V> addVertex(K key, V value) {
+		GraphVertex<K, V> vertex = new GraphVertex<>(key, value);
 		vertices.add(vertex);
 		return vertex;
 	}
 
-	public GraphVertex getVertex(UUID vertexKey) {
+	public GraphVertex<K, V> getVertex(K vertexKey) {
 		return vertices.stream().filter(v -> v.getKey().equals(vertexKey)).findFirst().orElseGet(null);
 	}
 
-	public GraphVertex getVertex(int vertexIndex) {
+	public GraphVertex<K, V> getVertex(int vertexIndex) {
 		return vertices.get(vertexIndex);
 	}
 
-	public List<GraphVertex> getVertices(int[] vertexIndices) {
-		List<GraphVertex> result = new ArrayList<>();
+	public List<GraphVertex<K, V>> getVertices(int[] vertexIndices) {
+		List<GraphVertex<K, V>> result = new ArrayList<>();
 		Arrays.stream(vertexIndices).forEach(i -> result.add(vertices.get(i)));
 		return result;
 	}
 
-	public void addEdge(GraphVertex vertex1, GraphVertex vertex2) {
+	public void addEdge(GraphVertex<K, V> vertex1, GraphVertex<K, V> vertex2) {
 		addEdge(vertex1, vertex2, 0);
 	}
 
-	private void addEdge(GraphVertex vertex1, GraphVertex vertex2, int weight) {
+	private void addEdge(GraphVertex<K, V> vertex1, GraphVertex<K, V> vertex2, int weight) {
 		vertex1.addEdge(vertex2, weight);
 		vertex2.addEdge(vertex1, weight);
 	}
@@ -93,7 +94,7 @@ public class Graph {
 		addDirectedEdge(getVertex(vertexIndex), getVertex(adjacentVertexIndex));
 	}
 
-	private void addDirectedEdge(GraphVertex from, GraphVertex to) {
+	private void addDirectedEdge(GraphVertex<K, V> from, GraphVertex<K, V> to) {
 		from.addEdge(to);
 	}
 
@@ -101,20 +102,20 @@ public class Graph {
 		addDirectedEdge(getVertex(vertexIndex), getVertex(adjacentVertexIndex), weight);
 	}
 
-	private void addDirectedEdge(GraphVertex from, GraphVertex to, int weight) {
+	private void addDirectedEdge(GraphVertex<K, V> from, GraphVertex<K, V> to, int weight) {
 		from.addEdge(to, weight);
 	}
 
-	public List<GraphVertex> getVertices() {
+	public List<GraphVertex<K, V>> getVertices() {
 		return vertices;
 	}
 
-	public boolean hasVertex(GraphVertex vertex) {
+	public boolean hasVertex(GraphVertex<K, V> vertex) {
 		return vertices.stream().anyMatch(v -> v.equals(vertex));
 	}
 
-	public List<GraphEdge> getEdges() {
-		List<GraphEdge> edges = new ArrayList<>();
+	public List<GraphEdge<K, V>> getEdges() {
+		List<GraphEdge<K, V>> edges = new ArrayList<>();
 		vertices.forEach(v -> edges.addAll(v.getOutgoingEdges()));
 		return edges;
 	}

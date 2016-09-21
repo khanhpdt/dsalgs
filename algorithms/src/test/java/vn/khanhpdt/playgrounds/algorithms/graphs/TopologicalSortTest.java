@@ -16,15 +16,15 @@ public class TopologicalSortTest {
 
 	@Test
 	public void testTopologicalSort() throws Exception {
-		Graph dag = createDefaultDAG();
+		Graph<UUID, Integer> dag = createDefaultDAG();
 
-		Graph sortedGraph = TopologicalSort.from(dag);
+		Graph<UUID, Integer> sortedGraph = TopologicalSort.from(dag);
 
 		assertThat("topological sorted", TopologicalSort.verify(sortedGraph), is(true));
 	}
 
-	private Graph createDefaultDAG() {
-		Graph graph = new Graph();
+	private Graph<UUID, Integer> createDefaultDAG() {
+		Graph<UUID, Integer> graph = new Graph<>();
 		IntStream.range(0, 8).forEach(i -> graph.addVertex(UUID.randomUUID()));
 		graph.addDirectedEdges(new int[][]{ {0, 1}, {0, 2}, {0, 3}, {3, 2}, {2, 6}, {6, 4}, {6, 5}, {5, 7}, {7, 4} });
 		return graph;
