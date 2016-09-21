@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 
 /**
+ * Problem 3.3
+ *
  * @author khanhpdt
  */
 public class SetOfStacks {
@@ -24,7 +26,7 @@ public class SetOfStacks {
 		ensureStackAvailable();
 	}
 
-	public void push(SinglyLinkedNode node) {
+	public void push(SinglyLinkedNode<UUID, Integer> node) {
 		Stack<SinglyLinkedNode<UUID, Integer>> currentStack = getCurrentStack();
 		if (currentStack.size() < stackCapacity) {
 			currentStack.push(node);
