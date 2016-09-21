@@ -1,17 +1,16 @@
 package vn.khanhpdt.playgrounds.datastructures.linkedlists;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
+import vn.khanhpdt.playgrounds.datastructures.nodes.ForwardLinked;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
 public class LinkedLists {
 
-	public static <N extends LinkedNodeIntf<N>> List<N> traverse(LinkedList<N> linkedList) {
+	public static <N extends ForwardLinked<N>> List<N> traverse(LinkedList<N> linkedList) {
 		List<N> nodes = new ArrayList<>();
 
 		N currentNode = linkedList.getHead();
@@ -23,13 +22,13 @@ public class LinkedLists {
 		return nodes;
 	}
 
-	public static <N extends LinkedNodeIntf<N>> void removeAll(LinkedList<N> linkedList, UUID removeKey) {
+	public static <N extends ForwardLinked<N>> void removeAll(LinkedList<N> linkedList, N removeNode) {
 		// NOTE: duplicated nodes are allowed in the list and this method will remove
 		// all nodes with the same key as the given key
 
 		// if the first nodes are to be removed, the head needs to be relocated
 		N head = linkedList.getHead();
-		while (head != null && head.getKey().equals(removeKey)) {
+		while (head != null && head.equals(removeNode)) {
 			head = head.getNext();
 			linkedList.setHead(head);
 		}
@@ -38,7 +37,7 @@ public class LinkedLists {
 		N currentNode = head == null ? null : head.getNext();
 		N previousNode = head;
 		while (currentNode != null) {
-			if (currentNode.getKey().equals(removeKey)) {
+			if (currentNode.equals(removeNode)) {
 				// no link to deleted node
 				previousNode.setNext(currentNode.getNext());
 				// move the currentNode. the previousNode stays where it is, as it still is the previous
@@ -52,10 +51,10 @@ public class LinkedLists {
 	}
 
 
-	public static <N extends LinkedNodeIntf<N>> void remove(LinkedList<N> linkedList, UUID removeKey) {
+	public static <N extends ForwardLinked<N>> void remove(LinkedList<N> linkedList, N removeNode) {
 		// if the first nodes are to be removed, the head needs to be relocated
 		N head = linkedList.getHead();
-		if (head != null && head.getKey().equals(removeKey)) {
+		if (head != null && head.equals(removeNode)) {
 			head = head.getNext();
 			linkedList.setHead(head);
 			return;
@@ -69,7 +68,7 @@ public class LinkedLists {
 		N previous = head;
 		N current = head.getNext();
 		while (current != null) {
-			if (current.getKey().equals(removeKey)) {
+			if (current.equals(removeNode)) {
 				previous.setNext(current.getNext());
 				// remove once
 				break;

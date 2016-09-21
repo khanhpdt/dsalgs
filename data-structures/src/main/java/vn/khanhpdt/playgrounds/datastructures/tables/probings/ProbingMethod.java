@@ -1,12 +1,10 @@
 package vn.khanhpdt.playgrounds.datastructures.tables.probings;
 
-import java.util.UUID;
-
 /**
  * @author khanhpdt
  */
-public interface ProbingMethod {
+public interface ProbingMethod<K> {
 
-	int probe(UUID key);
+	int probe(K key);
 
 }

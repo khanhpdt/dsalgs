@@ -1,15 +1,14 @@
 package vn.khanhpdt.playgrounds.datastructures.linkedlists;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
+import vn.khanhpdt.playgrounds.datastructures.nodes.ForwardLinked;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
-public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList<N> {
+public class SinglyLinkedList<N extends ForwardLinked<N>> implements LinkedList<N> {
 
 	private N head;
 
@@ -39,11 +38,11 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		node.setNext(null);
 	}
 
-	public N search(UUID nodeKey) {
+	public N search(N node) {
 		N currentNode = this.head;
 		while (currentNode != null) {
 			// found
-			if (currentNode.getKey().equals(nodeKey)) {
+			if (currentNode.equals(node)) {
 				break;
 			}
 			currentNode = currentNode.getNext();
@@ -51,12 +50,12 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		return currentNode;
 	}
 
-	public void removeAll(UUID removeKey) {
-		LinkedLists.removeAll(this, removeKey);
+	public void removeAll(N removeNode) {
+		LinkedLists.removeAll(this, removeNode);
 	}
 
-	public void remove(UUID removeKey) {
-		LinkedLists.remove(this, removeKey);
+	public void remove(N removeNode) {
+		LinkedLists.remove(this, removeNode);
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class SinglyLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList
 		this.head = head;
 	}
 
-	public static <N extends LinkedNodeIntf<N>> SinglyLinkedList<N> from(List<N> nodes) {
+	public static <N extends ForwardLinked<N>> SinglyLinkedList<N> from(List<N> nodes) {
 		SinglyLinkedList<N> linkedList = new SinglyLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			linkedList.insertFirst(nodes.get(i));

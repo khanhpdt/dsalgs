@@ -1,15 +1,14 @@
 package vn.khanhpdt.playgrounds.datastructures.linkedlists;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
+import vn.khanhpdt.playgrounds.datastructures.nodes.ForwardLinked;
 import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
-public class DoubleEndedLinkedList<N extends LinkedNodeIntf<N>> implements LinkedList<N> {
+public class DoubleEndedLinkedList<N extends ForwardLinked<N>> implements LinkedList<N> {
 
 	private N head;
 
@@ -35,8 +34,8 @@ public class DoubleEndedLinkedList<N extends LinkedNodeIntf<N>> implements Linke
 		}
 	}
 
-	public void remove(UUID removeKey) {
-		LinkedLists.removeAll(this, removeKey);
+	public void remove(N removeNode) {
+		LinkedLists.removeAll(this, removeNode);
 		tail = getLastNode();
 	}
 
@@ -67,8 +66,8 @@ public class DoubleEndedLinkedList<N extends LinkedNodeIntf<N>> implements Linke
 		return tail;
 	}
 
-	public static DoubleEndedLinkedList<SinglyLinkedNode> from(List<SinglyLinkedNode> nodes) {
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
+	public static <K, V> DoubleEndedLinkedList<SinglyLinkedNode<K, V>> from(List<SinglyLinkedNode<K, V>> nodes) {
+		DoubleEndedLinkedList<SinglyLinkedNode<K, V>> linkedList = new DoubleEndedLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			linkedList.insertFirst(nodes.get(i));
 		}

@@ -1,47 +1,46 @@
 package vn.khanhpdt.playgrounds.datastructures.nodes;
 
-import java.util.Random;
-import java.util.UUID;
-
 /**
+ * @param <K>  type of node key
+ * @param <V>  type of node value
  * @author khanhpdt
  */
-public class BinaryTreeNode implements Comparable<BinaryTreeNode>, LinkedNodeIntf<BinaryTreeNode> {
+public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<BinaryTreeNode<K, V>>, ForwardLinked<BinaryTreeNode<K, V>> {
 
-	private Node<UUID, Integer> content;
+	private Node<K, V> content;
 
-	private BinaryTreeNode left;
+	private BinaryTreeNode<K, V> left;
 
-	private BinaryTreeNode right;
+	private BinaryTreeNode<K, V> right;
 
-	private BinaryTreeNode next;
+	private BinaryTreeNode<K, V> next;
 
-	public BinaryTreeNode(Integer value) {
-		this.content = new Node<>(UUID.randomUUID(), value);
+	private BinaryTreeNode(Node<K, V> nodeContent) {
+		this.content = nodeContent;
 	}
 
-	public Integer getValue() {
+	public V getValue() {
 		return content.getValue();
 	}
 
-	public BinaryTreeNode getLeft() {
+	public BinaryTreeNode<K, V> getLeft() {
 		return left;
 	}
 
-	public void setLeft(BinaryTreeNode left) {
+	public void setLeft(BinaryTreeNode<K, V> left) {
 		this.left = left;
 	}
 
-	public BinaryTreeNode getRight() {
+	public BinaryTreeNode<K, V> getRight() {
 		return right;
 	}
 
-	public void setRight(BinaryTreeNode right) {
+	public void setRight(BinaryTreeNode<K, V> right) {
 		this.right = right;
 	}
 
 	@Override
-	public int compareTo(BinaryTreeNode o) {
+	public int compareTo(BinaryTreeNode<K, V> o) {
 		return getValue().compareTo(o.getValue());
 	}
 
@@ -55,7 +54,8 @@ public class BinaryTreeNode implements Comparable<BinaryTreeNode>, LinkedNodeInt
 			return false;
 		}
 
-		BinaryTreeNode that = (BinaryTreeNode) o;
+		@SuppressWarnings("unchecked")
+		BinaryTreeNode<K, V> that = (BinaryTreeNode<K, V>) o;
 		return getKey().equals(that.getKey());
 
 	}
@@ -67,28 +67,22 @@ public class BinaryTreeNode implements Comparable<BinaryTreeNode>, LinkedNodeInt
 		return 31 + result * c;
 	}
 
-	public static BinaryTreeNode random() {
-		return new BinaryTreeNode(new Random().nextInt());
-	}
-
-	@Override
-	public Node<UUID, Integer> getContent() {
-		return content;
-	}
-
-	@Override
-	public UUID getKey() {
+	public K getKey() {
 		return content.getKey();
 	}
 
 	@Override
-	public BinaryTreeNode getNext() {
+	public BinaryTreeNode<K, V> getNext() {
 		return this.next;
 	}
 
 	@Override
-	public void setNext(BinaryTreeNode next) {
+	public void setNext(BinaryTreeNode<K, V> next) {
 		this.next = next;
+	}
+
+	public static <K, V extends Comparable<V>> BinaryTreeNode<K, V> from(K key, V value) {
+		return new BinaryTreeNode<>(new Node<>(key, value));
 	}
 
 }

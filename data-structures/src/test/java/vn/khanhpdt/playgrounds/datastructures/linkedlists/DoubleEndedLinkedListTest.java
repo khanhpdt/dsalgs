@@ -19,9 +19,9 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertFirstToEmptyList() throws Exception {
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
+		DoubleEndedLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new DoubleEndedLinkedList<>();
 
-		SinglyLinkedNode newNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> newNode = TestUtils.randomSinglyNode();
 		linkedList.insertFirst(newNode);
 
 		assertThat("head points to the first item", linkedList.getHead(), is(newNode));
@@ -30,12 +30,12 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertFirstToNonEmptyList() throws Exception {
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
+		DoubleEndedLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new DoubleEndedLinkedList<>();
 
-		SinglyLinkedNode firstNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> firstNode = TestUtils.randomSinglyNode();
 		linkedList.insertFirst(firstNode);
 
-		SinglyLinkedNode secondNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> secondNode = TestUtils.randomSinglyNode();
 		linkedList.insertFirst(secondNode);
 
 		assertThat(linkedList.getHead(), is(secondNode));
@@ -44,9 +44,9 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertLastToEmptyList() throws Exception {
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
+		DoubleEndedLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new DoubleEndedLinkedList<>();
 
-		SinglyLinkedNode newNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> newNode = TestUtils.randomSinglyNode();
 		linkedList.insertLast(newNode);
 
 		assertThat("head points to the first item", linkedList.getHead(), is(newNode));
@@ -55,12 +55,12 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testInsertLastToNonEmptyList() throws Exception {
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = new DoubleEndedLinkedList<>();
+		DoubleEndedLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new DoubleEndedLinkedList<>();
 
-		SinglyLinkedNode firstNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> firstNode = TestUtils.randomSinglyNode();
 		linkedList.insertFirst(firstNode);
 
-		SinglyLinkedNode secondNode = SinglyLinkedNode.random();
+		SinglyLinkedNode<UUID, Integer> secondNode = TestUtils.randomSinglyNode();
 		linkedList.insertLast(secondNode);
 
 		assertThat(linkedList.getHead(), is(firstNode));
@@ -69,16 +69,16 @@ public class DoubleEndedLinkedListTest {
 
 	@Test
 	public void testRemove() throws Exception {
-		List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
+		List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(10);
 
 		UUID removeKey = UUID.randomUUID();
-		nodes.add(0, new SinglyLinkedNode(removeKey));
-		nodes.add(7, new SinglyLinkedNode(removeKey));
-		nodes.add(new SinglyLinkedNode(removeKey));
+		nodes.add(0, SinglyLinkedNode.fromKey(removeKey));
+		nodes.add(7, SinglyLinkedNode.fromKey(removeKey));
+		nodes.add(SinglyLinkedNode.fromKey(removeKey));
 
-		DoubleEndedLinkedList<SinglyLinkedNode> linkedList = DoubleEndedLinkedList.from(nodes);
+		DoubleEndedLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = DoubleEndedLinkedList.from(nodes);
 
-		linkedList.remove(removeKey);
+		linkedList.remove(SinglyLinkedNode.fromKey(removeKey));
 
 		CollectionUtils.filter(nodes, n -> !n.getKey().equals(removeKey));
 

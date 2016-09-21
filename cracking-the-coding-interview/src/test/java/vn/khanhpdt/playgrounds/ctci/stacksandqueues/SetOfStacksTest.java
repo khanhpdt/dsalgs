@@ -3,6 +3,8 @@ package vn.khanhpdt.playgrounds.ctci.stacksandqueues;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
+import java.util.UUID;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -19,7 +21,7 @@ public class SetOfStacksTest {
 		// given
 		SetOfStacks stackSet = new SetOfStacks(stackCapacity);
 		for (int i = 0; i < nNodes; i++) {
-			stackSet.push(new SinglyLinkedNode(i));
+			stackSet.push(SinglyLinkedNode.from(UUID.randomUUID(), i));
 		}
 
 		// then
@@ -36,7 +38,7 @@ public class SetOfStacksTest {
 		// given
 		SetOfStacks stackSet = new SetOfStacks(stackCapacity);
 		for (int i = 0; i < nNodes; i++) {
-			stackSet.push(new SinglyLinkedNode(i));
+			stackSet.push(SinglyLinkedNode.from(UUID.randomUUID(), i));
 		}
 
 		// then

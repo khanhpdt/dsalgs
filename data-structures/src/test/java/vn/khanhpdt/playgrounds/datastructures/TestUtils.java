@@ -1,10 +1,13 @@
 package vn.khanhpdt.playgrounds.datastructures;
 
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 /**
@@ -12,15 +15,23 @@ import java.util.stream.IntStream;
  */
 public class TestUtils {
 
-	public static List<SinglyLinkedNode> randomSinglyNodes(int size) {
-		List<SinglyLinkedNode> nodes = new ArrayList<>();
-		IntStream.rangeClosed(0, size).forEach(i -> nodes.add(SinglyLinkedNode.random()));
+	public static List<SinglyLinkedNode<UUID, Integer>> randomSinglyNodes(int size) {
+		List<SinglyLinkedNode<UUID, Integer>> nodes = new ArrayList<>();
+		IntStream.rangeClosed(0, size).forEach(i -> nodes.add(SinglyLinkedNode.fromKey(UUID.randomUUID())));
 		return nodes;
+	}
+
+	public static SinglyLinkedNode<UUID, Integer> randomSinglyNode() {
+		return SinglyLinkedNode.fromKey(UUID.randomUUID());
 	}
 
 	public static List<DoublyLinkedNode> randomDoublyNodes(int size) {
 		List<DoublyLinkedNode> nodes = new ArrayList<>();
 		IntStream.rangeClosed(0, size).forEach(i -> nodes.add(DoublyLinkedNode.random()));
 		return nodes;
+	}
+
+	public static BinaryTreeNode<UUID, Integer> randomBinaryTreeNode() {
+		return BinaryTreeNode.from(UUID.randomUUID(), new Random().nextInt());
 	}
 }

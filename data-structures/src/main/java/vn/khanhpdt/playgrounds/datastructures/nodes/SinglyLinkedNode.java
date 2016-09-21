@@ -1,50 +1,53 @@
 package vn.khanhpdt.playgrounds.datastructures.nodes;
 
-import java.util.UUID;
-
 /**
  * @author khanhpdt
  */
-public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
+public class SinglyLinkedNode<K, V> implements ForwardLinked<SinglyLinkedNode<K, V>> {
 
-	private Node<UUID, Integer> content;
+	private Node<K, V> content;
 
-	private SinglyLinkedNode next;
+	private SinglyLinkedNode<K, V> next;
 
-	public SinglyLinkedNode(UUID key) {
-		this.content = new Node<>(key);
-	}
-
-	public SinglyLinkedNode(Integer value) {
-		this.content = new Node<>(UUID.randomUUID(), value);
-	}
-
-	public SinglyLinkedNode(Node<UUID, Integer> content) {
+	public SinglyLinkedNode(Node<K, V> content) {
 		this.content = content;
 	}
 
-	public static SinglyLinkedNode random() {
-		UUID randomUuid = UUID.randomUUID();
-		return new SinglyLinkedNode(randomUuid);
+	public static <K, V> SinglyLinkedNode<K, V> fromKey(K key) {
+		return new SinglyLinkedNode<>(new Node<>(key, null));
 	}
 
-	@Override
-	public Node<UUID, Integer> getContent() {
+	public static <K, V> SinglyLinkedNode<K, V> from(K key, V value) {
+		return new SinglyLinkedNode<>(new Node<>(key, value));
+	}
+
+	public Node<K, V> getContent() {
 		return content;
 	}
 
-	@Override
-	public UUID getKey() {
+	public K getKey() {
 		return content.getKey();
 	}
 
+	public V getValue() {
+		return getContent().getValue();
+	}
+
+	public void cloneContent(SinglyLinkedNode<K, V> other) {
+		this.content = other.getContent();
+	}
+
+	public void removeContent() {
+		this.content = null;
+	}
+
 	@Override
-	public SinglyLinkedNode getNext() {
+	public SinglyLinkedNode<K, V> getNext() {
 		return next;
 	}
 
 	@Override
-	public void setNext(SinglyLinkedNode next) {
+	public void setNext(SinglyLinkedNode<K, V> next) {
 		this.next = next;
 	}
 
@@ -67,20 +70,8 @@ public class SinglyLinkedNode implements LinkedNodeIntf<SinglyLinkedNode> {
 		return this.getKey().equals(otherNode.getKey());
 	}
 
-	public void cloneContent(SinglyLinkedNode other) {
-		this.content = other.getContent();
-	}
-
-	public void removeContent() {
-		this.content = null;
-	}
-
-	public Integer getValue() {
-		return getContent().getValue();
-	}
-
 	@Override
 	public String toString() {
-		return "SinglyLinkedNode: {" + getKey().toString() + ", " + getValue() + "}";
+		return "SinglyLinkedNode: {" + getKey().toString() + ", " + getValue().toString() + "}";
 	}
 }

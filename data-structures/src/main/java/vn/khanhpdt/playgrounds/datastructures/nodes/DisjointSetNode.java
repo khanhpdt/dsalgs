@@ -7,7 +7,7 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class DisjointSetNode implements LinkedNodeIntf<DisjointSetNode> {
+public class DisjointSetNode implements ForwardLinked<DisjointSetNode> {
 	
 	private Node<UUID, Integer> content;
 
@@ -23,17 +23,6 @@ public class DisjointSetNode implements LinkedNodeIntf<DisjointSetNode> {
 		this.content = new Node<>(key);
 	}
 
-	public static DisjointSetNode random() {
-		UUID randomUuid = UUID.randomUUID();
-		return new DisjointSetNode(randomUuid);
-	}
-
-	@Override
-	public Node<UUID, Integer> getContent() {
-		return content;
-	}
-
-	@Override
 	public UUID getKey() {
 		return content.getKey();
 	}

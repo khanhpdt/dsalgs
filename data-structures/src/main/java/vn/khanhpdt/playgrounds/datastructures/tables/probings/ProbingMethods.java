@@ -5,12 +5,12 @@ package vn.khanhpdt.playgrounds.datastructures.tables.probings;
  */
 public class ProbingMethods {
 
-	public static ProbingMethod create(ProbingMethodName probingMethodName, int nSlots) {
+	public static <K> ProbingMethod<K> create(ProbingMethodName probingMethodName, int nSlots) {
 		switch (probingMethodName) {
 			case LINEAR_PROBING:
-				return new LinearProbing(nSlots);
+				return new LinearProbing<>(nSlots);
 			case QUADRATIC_PROBING:
-				return new QuadraticProbing(nSlots);
+				return new QuadraticProbing<>(nSlots);
 			default:
 				throw new UnsupportedOperationException("Not supported yet.");
 		}

@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class DoublyLinkedNode implements DoublyLinkedNodeIntf<DoublyLinkedNode> {
+public class DoublyLinkedNode implements DoublyLinked<DoublyLinkedNode> {
 
 	private Node<UUID, Integer> content;
 
@@ -36,12 +36,10 @@ public class DoublyLinkedNode implements DoublyLinkedNodeIntf<DoublyLinkedNode> 
 		this.previous = previous;
 	}
 
-	@Override
 	public Node<UUID, Integer> getContent() {
 		return this.content;
 	}
 
-	@Override
 	public UUID getKey() {
 		return getContent().getKey();
 	}

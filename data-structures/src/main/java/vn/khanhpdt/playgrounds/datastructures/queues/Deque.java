@@ -1,13 +1,13 @@
 package vn.khanhpdt.playgrounds.datastructures.queues;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNodeIntf;
+import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinked;
 
 import java.util.List;
 
 /**
  * @author khanhpdt
  */
-public class Deque<N extends DoublyLinkedNodeIntf<N>> extends Queue<N> {
+public class Deque<N extends DoublyLinked<N>> extends Queue<N> {
 
 	public void enqueueFront(N node) {
 		N currentFront = getFront();
@@ -42,7 +42,7 @@ public class Deque<N extends DoublyLinkedNodeIntf<N>> extends Queue<N> {
 		return currentRear;
 	}
 
-	public static <N extends DoublyLinkedNodeIntf<N>> Deque<N> from(List<N> nodes) {
+	public static <N extends DoublyLinked<N>> Deque<N> from(List<N> nodes) {
 		Deque<N> deque = new Deque<>();
 		nodes.forEach(deque::enqueueRear);
 		return deque;

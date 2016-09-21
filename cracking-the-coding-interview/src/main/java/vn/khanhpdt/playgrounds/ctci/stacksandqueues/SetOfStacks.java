@@ -5,6 +5,7 @@ import vn.khanhpdt.playgrounds.datastructures.stacks.Stack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author khanhpdt
@@ -14,7 +15,7 @@ public class SetOfStacks {
 	private final int stackCapacity;
 
 	// it is more memory-efficient if we use a stack or linked list to implement the set of stacks, instead of using array here
-	private List<Stack<SinglyLinkedNode>> stacks;
+	private List<Stack<SinglyLinkedNode<UUID, Integer>>> stacks;
 
 	public SetOfStacks(int stackCapacity) {
 		this.stackCapacity = stackCapacity;
@@ -24,7 +25,7 @@ public class SetOfStacks {
 	}
 
 	public void push(SinglyLinkedNode node) {
-		Stack<SinglyLinkedNode> currentStack = getCurrentStack();
+		Stack<SinglyLinkedNode<UUID, Integer>> currentStack = getCurrentStack();
 		if (currentStack.size() < stackCapacity) {
 			currentStack.push(node);
 		} else {
@@ -33,13 +34,13 @@ public class SetOfStacks {
 		}
 	}
 
-	private Stack<SinglyLinkedNode> addStack() {
-		Stack<SinglyLinkedNode> newStack = new Stack<>();
+	private Stack<SinglyLinkedNode<UUID, Integer>> addStack() {
+		Stack<SinglyLinkedNode<UUID, Integer>> newStack = new Stack<>();
 		stacks.add(newStack);
 		return newStack;
 	}
 
-	private Stack<SinglyLinkedNode> getCurrentStack() {
+	private Stack<SinglyLinkedNode<UUID, Integer>> getCurrentStack() {
 		return stacks.get(stacks.size() - 1);
 	}
 
@@ -69,7 +70,7 @@ public class SetOfStacks {
 			return null;
 		}
 
-		Stack<SinglyLinkedNode> stack = stacks.get(stackIndex);
+		Stack<SinglyLinkedNode<UUID, Integer>> stack = stacks.get(stackIndex);
 		int stackSizeBeforePop = stack.size();
 		SinglyLinkedNode result = stack.pop();
 		// remove stack if it becomes empty after pop

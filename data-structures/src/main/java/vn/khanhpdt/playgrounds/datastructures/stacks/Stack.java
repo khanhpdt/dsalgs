@@ -1,12 +1,12 @@
 package vn.khanhpdt.playgrounds.datastructures.stacks;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.LinkedNodeIntf;
+import vn.khanhpdt.playgrounds.datastructures.nodes.ForwardLinked;
 
 /**
  * @param <N> type of node
  * @author khanhpdt
  */
-public class Stack<N extends LinkedNodeIntf<N>> {
+public class Stack<N extends ForwardLinked<N>> {
 
 	private N head;
 

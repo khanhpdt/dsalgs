@@ -34,9 +34,13 @@ public class Node<K, V> {
 	public int hashCode() {
 		int result = 17;
 
-		int c = this.getKey().hashCode();
+		int c = getIdentity().hashCode();
 
 		return 31 + result * c;
+	}
+
+	private Object getIdentity() {
+		return key != null ? key : value;
 	}
 
 	@Override
@@ -46,6 +50,6 @@ public class Node<K, V> {
 		}
 
 		Node otherNode = (Node) obj;
-		return this.getKey().equals(otherNode.getKey());
+		return getIdentity().equals(otherNode.getIdentity());
 	}
 }

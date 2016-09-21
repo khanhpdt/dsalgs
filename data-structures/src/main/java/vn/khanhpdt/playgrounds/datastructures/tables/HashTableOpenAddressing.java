@@ -6,14 +6,13 @@ import vn.khanhpdt.playgrounds.datastructures.tables.probings.ProbingMethodName;
 import vn.khanhpdt.playgrounds.datastructures.tables.probings.ProbingMethods;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
-public class HashTableOpenAddressing extends HashTable {
+public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 
-	private Node<UUID, Integer>[] slots;
+	private Node<K, V>[] slots;
 
 	private ProbingMethodName probingMethodName;
 
@@ -27,7 +26,7 @@ public class HashTableOpenAddressing extends HashTable {
 	@SuppressWarnings("unchecked")
 	private void init(ProbingMethodName probingMethodName) {
 		this.probingMethodName = probingMethodName;
-		this.slots = (Node<UUID, Integer>[]) new Node[nSlots];
+		this.slots = (Node<K, V>[]) new Node[nSlots];
 		this.slotStatuses = new SlotStatus[nSlots];
 		Arrays.fill(slotStatuses, SlotStatus.AVAILABLE);
 	}
@@ -39,12 +38,12 @@ public class HashTableOpenAddressing extends HashTable {
 	}
 
 	@Override
-	public void insert(Node<UUID, Integer> item) {
+	public void insert(Node<K, V> item) {
 		if (nItems == nSlots) {
 			throw new IllegalStateException("The hash table is already full.");
 		}
 
-		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, nSlots);
+		final ProbingMethod<K> probingMethod = ProbingMethods.create(probingMethodName, nSlots);
 
 		// keep searching until either finding an available slot or all the slots are probed
 		int slotIndex = probingMethod.probe(item.getKey());
@@ -62,14 +61,14 @@ public class HashTableOpenAddressing extends HashTable {
 		}
 	}
 
-	private void insertItem(Node<UUID, Integer> item, int slotIndex) {
+	private void insertItem(Node<K, V> item, int slotIndex) {
 		slots[slotIndex] = item;
 		slotStatuses[slotIndex] = SlotStatus.ALLOCATED;
 		nItems++;
 	}
 
 	@Override
-	public Node<UUID, Integer> search(UUID itemKey) {
+	public Node<K, V> search(K itemKey) {
 		int slotIndex = searchSlot(itemKey);
 
 		if (slotIndex == -1) {
@@ -78,8 +77,8 @@ public class HashTableOpenAddressing extends HashTable {
 		return slots[slotIndex];
 	}
 
-	private int searchSlot(UUID itemKey) {
-		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, nSlots);
+	private int searchSlot(K itemKey) {
+		final ProbingMethod<K> probingMethod = ProbingMethods.create(probingMethodName, nSlots);
 
 		int slotIndex = probingMethod.probe(itemKey);
 		int nProbes = 1;
@@ -99,12 +98,12 @@ public class HashTableOpenAddressing extends HashTable {
 		return -1;
 	}
 
-	private boolean isSlotWithKey(int slotIndex, UUID key) {
+	private boolean isSlotWithKey(int slotIndex, K key) {
 		return slots[slotIndex] != null && slots[slotIndex].getKey().equals(key);
 	}
 
 	@Override
-	public void remove(UUID itemKey) {
+	public void remove(K itemKey) {
 		int slotIndex = searchSlot(itemKey);
 		// item found
 		if (slotIndex >= 0) {

@@ -5,9 +5,11 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.Node;
 import java.util.UUID;
 
 /**
+ * @param <K>  type of item key
+ * @param <V>  type of item value
  * @author khanhpdt
  */
-public abstract class HashTable {
+public abstract class HashTable<K, V> {
 
 	private static final int DEFAULT_NUMBER_OF_SLOTS = 11;
 
@@ -30,10 +32,10 @@ public abstract class HashTable {
 		return nItems;
 	}
 
-	public abstract void insert(Node<UUID, Integer> item);
+	public abstract void insert(Node<K, V> item);
 
-	public abstract Node<UUID, Integer> search(UUID itemKey);
+	public abstract Node<K, V> search(K itemKey);
 
-	public abstract void remove(UUID itemKey);
+	public abstract void remove(K itemKey);
 
 }

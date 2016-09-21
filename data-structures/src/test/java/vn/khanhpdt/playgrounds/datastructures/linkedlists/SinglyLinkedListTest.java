@@ -20,9 +20,9 @@ public class SinglyLinkedListTest {
 
     @Test
     public void testHeadOfNewListPointsToTheFirstInsertedElement() throws Exception {
-        SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new SinglyLinkedList<>();
 
-        SinglyLinkedNode newNode = SinglyLinkedNode.random();
+        SinglyLinkedNode<UUID, Integer> newNode = TestUtils.randomSinglyNode();
         linkedList.insertFirst(newNode);
 
         assertThat(linkedList.getHead(), is(newNode));
@@ -31,10 +31,10 @@ public class SinglyLinkedListTest {
     @Test
     public void testHeadPointsToTheFirstInsertedElement() throws Exception {
         // list already has an item
-        SinglyLinkedList<SinglyLinkedNode> linkedList = new SinglyLinkedList<>();
-        linkedList.insertFirst(SinglyLinkedNode.random());
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = new SinglyLinkedList<>();
+        linkedList.insertFirst(TestUtils.randomSinglyNode());
 
-        SinglyLinkedNode newNode = SinglyLinkedNode.random();
+        SinglyLinkedNode<UUID, Integer> newNode = TestUtils.randomSinglyNode();
         linkedList.insertFirst(newNode);
 
         assertThat(linkedList.getHead(), is(newNode));
@@ -42,32 +42,32 @@ public class SinglyLinkedListTest {
 
     @Test
     public void testCreateList() throws Exception {
-        List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(3);
+        List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(3);
 
-        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = SinglyLinkedList.from(nodes);
 
-		List<SinglyLinkedNode> linkedNodes = LinkedLists.traverse(linkedList);
-		assertThat(linkedNodes, contains(nodes.toArray(new SinglyLinkedNode[nodes.size()])));
+		List<SinglyLinkedNode<UUID, Integer>> linkedNodes = LinkedLists.traverse(linkedList);
+	    assertThat(linkedNodes, contains(nodes.toArray()));
     }
 
     @Test
     public void testSearchNode() throws Exception {
-        List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
-        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
+        List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(10);
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = SinglyLinkedList.from(nodes);
 
-        SinglyLinkedNode nodeToFind = nodes.get(4);
-        SinglyLinkedNode foundNode = linkedList.search(nodeToFind.getKey());
+        SinglyLinkedNode<UUID, Integer> nodeToFind = nodes.get(4);
+        SinglyLinkedNode<UUID, Integer> foundNode = linkedList.search(nodeToFind);
         assertThat("node found", foundNode, is(nodeToFind));
     }
 
     @Test
     public void testRemoveNode() throws Exception {
-        List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
-        SinglyLinkedList linkedList = SinglyLinkedList.from(nodes);
+        List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(10);
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = SinglyLinkedList.from(nodes);
 
-        SinglyLinkedNode nodeToRemove = nodes.get(7);
-		linkedList.removeAll(nodeToRemove.getKey());
-		assertThat("node removed", linkedList.search(nodeToRemove.getKey()), nullValue());
+        SinglyLinkedNode<UUID, Integer> nodeToRemove = nodes.get(7);
+		linkedList.removeAll(nodeToRemove);
+		assertThat("node removed", linkedList.search(nodeToRemove), nullValue());
     }
 
     @Test
@@ -86,14 +86,14 @@ public class SinglyLinkedListTest {
 	}
 
 	private void testRemoveNodesAt(int... indexes) throws Exception {
-		List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
+		List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(10);
 		UUID removeKey = UUID.randomUUID();
 		for (int index : indexes) {
-			nodes.add(index, new SinglyLinkedNode(removeKey));
+			nodes.add(index, SinglyLinkedNode.fromKey(removeKey));
 		}
-		SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
+		SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = SinglyLinkedList.from(nodes);
 
-		linkedList.removeAll(removeKey);
+		linkedList.removeAll(SinglyLinkedNode.fromKey(removeKey));
 
 		CollectionUtils.filter(nodes, n -> !n.getKey().equals(removeKey));
 		assertThat("duplicated key nodes are removed",
@@ -102,15 +102,15 @@ public class SinglyLinkedListTest {
 
     @Test
     public void testRemoveLastNodes() throws Exception {
-        List<SinglyLinkedNode> nodes = TestUtils.randomSinglyNodes(10);
+        List<SinglyLinkedNode<UUID, Integer>> nodes = TestUtils.randomSinglyNodes(10);
 
         UUID removeKey = UUID.randomUUID();
-        nodes.add(new SinglyLinkedNode(removeKey));
-        nodes.add(new SinglyLinkedNode(removeKey));
+        nodes.add(SinglyLinkedNode.fromKey(removeKey));
+        nodes.add(SinglyLinkedNode.fromKey(removeKey));
 
-        SinglyLinkedList<SinglyLinkedNode> linkedList = SinglyLinkedList.from(nodes);
+        SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> linkedList = SinglyLinkedList.from(nodes);
 
-		linkedList.removeAll(removeKey);
+		linkedList.removeAll(SinglyLinkedNode.fromKey(removeKey));
 
         // remove the added nodes
 		CollectionUtils.filter(nodes, n -> !n.getKey().equals(removeKey));

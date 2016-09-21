@@ -12,7 +12,7 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
+public class GraphVertex implements DoublyLinked<GraphVertex> {
 
 	private Node<UUID, Integer> content;
 
@@ -47,12 +47,11 @@ public class GraphVertex implements DoublyLinkedNodeIntf<GraphVertex> {
 	public GraphVertex(GraphVertex other) {
 		this.content = new Node<>(other.getContent().getKey(), other.getContent().getValue());
 	}
-	@Override
+
 	public Node<UUID, Integer> getContent() {
 		return this.content;
 	}
 
-	@Override
 	public UUID getKey() {
 		return content.getKey();
 	}

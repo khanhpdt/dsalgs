@@ -1,14 +1,13 @@
 package vn.khanhpdt.playgrounds.datastructures.tables.probings;
 
-import java.util.UUID;
 import java.util.function.Function;
 
 /**
  * @author khanhpdt
  */
-public class QuadraticProbing implements ProbingMethod {
+public class QuadraticProbing<K> implements ProbingMethod<K> {
 
-	private final Function<UUID, Integer> auxiliaryHashFunction;
+	private final Function<K, Integer> auxiliaryHashFunction;
 
 	private final int nSlots;
 
@@ -33,18 +32,18 @@ public class QuadraticProbing implements ProbingMethod {
 		return power == n;
 	}
 
-	private Integer defaultAuxiliaryHashFunction(UUID key) {
+	private Integer defaultAuxiliaryHashFunction(K key) {
 		return Math.abs(key.hashCode() % nSlots);
 	}
 
 	@Override
-	public int probe(UUID key) {
+	public int probe(K key) {
 		int result = hash(key);
 		sequenceNumber++;
 		return result;
 	}
 
-	private Integer hash(UUID key) {
+	private Integer hash(K key) {
 		// quadratic probing: the hash value is quadratic to the sequence number. However, this implementation can only
 		// be guaranteed to work if the number of slots is a power of two.
 		int probingOffset = ((sequenceNumber * sequenceNumber + sequenceNumber) / 2) % nSlots;
