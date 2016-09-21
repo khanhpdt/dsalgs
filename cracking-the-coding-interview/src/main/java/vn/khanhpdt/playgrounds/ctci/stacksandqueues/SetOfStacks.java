@@ -13,6 +13,7 @@ public class SetOfStacks {
 
 	private final int stackCapacity;
 
+	// it is more memory-efficient if we use a stack or linked list to implement the set of stacks, instead of using array here
 	private List<Stack<SinglyLinkedNode>> stacks;
 
 	public SetOfStacks(int stackCapacity) {
