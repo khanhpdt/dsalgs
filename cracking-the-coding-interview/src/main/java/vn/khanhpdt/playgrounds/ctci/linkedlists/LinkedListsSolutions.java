@@ -244,7 +244,7 @@ class LinkedListsSolutions {
 	 */
 	static DoublyLinkedList sumForwardDigits_2(SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> firstNumber,
 	                                           SinglyLinkedList<SinglyLinkedNode<UUID, Integer>> secondNumber) {
-		DoublyLinkedList result = new DoublyLinkedList();
+		DoublyLinkedList<UUID, Integer> result = new DoublyLinkedList<>();
 
 		int firstLength = firstNumber.size();
 		int secondLength = secondNumber.size();
@@ -263,7 +263,7 @@ class LinkedListsSolutions {
 		// handle the length difference
 		SinglyLinkedNode<UUID, Integer> longNumberCurrent = longNumber.getHead();
 		for (int i = 0; i < firstLength - secondLength; i++) {
-			result.insert(new DoublyLinkedNode(longNumberCurrent.getValue()));
+			result.insert(DoublyLinkedNode.from(UUID.randomUUID(), longNumberCurrent.getValue()));
 			longNumberCurrent = longNumberCurrent.getNext();
 		}
 		SinglyLinkedNode<UUID, Integer> shortNumberCurrent = shortNumber.getHead();
@@ -275,8 +275,8 @@ class LinkedListsSolutions {
 			int carry = sum / 10;
 			if (carry > 0) {
 				// propagate carry to higher-order positions in the result
-				DoublyLinkedNode resultCurrent = result.getHead();
-				DoublyLinkedNode resultPrevious = null;
+				DoublyLinkedNode<UUID, Integer> resultCurrent = result.getHead();
+				DoublyLinkedNode<UUID, Integer> resultPrevious = null;
 				while (carry > 0) {
 					// propagating carry to the higher-order positions compared to the current sum-position
 					if (resultCurrent != null) {
@@ -289,18 +289,18 @@ class LinkedListsSolutions {
 					}
 					// when applying the carry to the highest-order position produces a new carry
 					else if (resultPrevious != null){
-						result.insertNextTo(carry, resultPrevious);
+						result.insertNextTo(UUID.randomUUID(), carry, resultPrevious);
 						break;
 					}
 					// when the first sum produces carry
 					else {
-						result.insert(new DoublyLinkedNode(carry));
+						result.insert(DoublyLinkedNode.from(UUID.randomUUID(), carry));
 						break;
 					}
 				}
 			}
 
-			result.insert(new DoublyLinkedNode(sum % 10));
+			result.insert(DoublyLinkedNode.from(UUID.randomUUID(), sum % 10));
 
 			longNumberCurrent = longNumberCurrent.getNext();
 			shortNumberCurrent = shortNumberCurrent.getNext();

@@ -5,16 +5,15 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author khanhpdt
  */
-public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
+public class DoublyLinkedList<K, V> implements LinkedList<DoublyLinkedNode<K, V>> {
 
-	private DoublyLinkedNode head;
+	private DoublyLinkedNode<K, V> head;
 
-	public void insert(DoublyLinkedNode node) {
+	public void insert(DoublyLinkedNode<K, V> node) {
 		// link nodes together
 		if (head != null) {
 			head.setPrevious(node);
@@ -27,24 +26,24 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 	}
 
 	@Override
-	public DoublyLinkedNode getHead() {
+	public DoublyLinkedNode<K, V> getHead() {
 		return head;
 	}
 
 	@Override
-	public void setHead(DoublyLinkedNode head) {
+	public void setHead(DoublyLinkedNode<K, V> head) {
 		this.head = head;
 	}
 
-	public static DoublyLinkedList from(List<DoublyLinkedNode> nodes) {
-		DoublyLinkedList linkedList = new DoublyLinkedList();
+	public static <K, V> DoublyLinkedList<K, V> from(List<DoublyLinkedNode<K, V>> nodes) {
+		DoublyLinkedList<K, V> linkedList = new DoublyLinkedList<>();
 		for (int i = nodes.size() - 1; i >= 0; i--) {
 			linkedList.insert(nodes.get(i));
 		}
 		return linkedList;
 	}
 
-	public void remove(UUID removeKey) {
+	public void remove(K removeKey) {
 		while (head != null && head.getKey().equals(removeKey)) {
 			head = head.getNext();
 			if (head != null) {
@@ -52,7 +51,7 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 			}
 		}
 
-		DoublyLinkedNode currentNode = head;
+		DoublyLinkedNode<K, V> currentNode = head;
 		while (currentNode != null) {
 			if (currentNode.getKey().equals(removeKey)) {
 				currentNode.getPrevious().setNext(currentNode.getNext());
@@ -64,16 +63,16 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 		}
 	}
 
-	public List<DoublyLinkedNode> traverse() {
+	public List<DoublyLinkedNode<K, V>> traverse() {
 		return LinkedLists.traverse(this);
 	}
 
-	public List<DoublyLinkedNode> traverseBackward() {
-		List<DoublyLinkedNode> result = new ArrayList<>();
+	public List<DoublyLinkedNode<K, V>> traverseBackward() {
+		List<DoublyLinkedNode<K, V>> result = new ArrayList<>();
 
 		// let the current node the last node and we traverse from there using the backward link
-		List<DoublyLinkedNode> linkedNodes = traverse();
-		DoublyLinkedNode currentNode = linkedNodes.get(linkedNodes.size() - 1);
+		List<DoublyLinkedNode<K, V>> linkedNodes = traverse();
+		DoublyLinkedNode<K, V> currentNode = linkedNodes.get(linkedNodes.size() - 1);
 		while (currentNode != null) {
 			result.add(currentNode);
 			currentNode = currentNode.getPrevious();
@@ -83,14 +82,14 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 	}
 
 	public DoublyLinkedList reverse() {
-		DoublyLinkedNode current = this.head;
+		DoublyLinkedNode<K, V> current = this.head;
 
 		// reset this list
 		this.head = null;
 
 		// reverse in-place
 		while (current != null) {
-			DoublyLinkedNode next = current.getNext();
+			DoublyLinkedNode<K, V> next = current.getNext();
 			insert(current);
 
 			current = next;
@@ -104,8 +103,8 @@ public class DoublyLinkedList implements LinkedList<DoublyLinkedNode> {
 		return Arrays.toString(traverse().toArray());
 	}
 
-	public void insertNextTo(Integer value, DoublyLinkedNode node) {
-		DoublyLinkedNode newNode = new DoublyLinkedNode(value);
+	public void insertNextTo(K key, V value, DoublyLinkedNode<K, V> node) {
+		DoublyLinkedNode<K, V> newNode = DoublyLinkedNode.from(key, value);
 
 		newNode.setPrevious(node);
 		newNode.setNext(node.getNext());

@@ -25,13 +25,17 @@ public class TestUtils {
 		return SinglyLinkedNode.fromKey(UUID.randomUUID());
 	}
 
-	public static List<DoublyLinkedNode> randomDoublyNodes(int size) {
-		List<DoublyLinkedNode> nodes = new ArrayList<>();
-		IntStream.rangeClosed(0, size).forEach(i -> nodes.add(DoublyLinkedNode.random()));
+	public static List<DoublyLinkedNode<UUID, Integer>> randomDoublyNodes(int size) {
+		List<DoublyLinkedNode<UUID, Integer>> nodes = new ArrayList<>();
+		IntStream.rangeClosed(0, size).forEach(i -> nodes.add(randomDoublyLinkedNode()));
 		return nodes;
 	}
 
 	public static BinaryTreeNode<UUID, Integer> randomBinaryTreeNode() {
 		return BinaryTreeNode.from(UUID.randomUUID(), new Random().nextInt());
+	}
+
+	public static DoublyLinkedNode<UUID, Integer> randomDoublyLinkedNode() {
+		return DoublyLinkedNode.from(UUID.randomUUID(), new Random().nextInt());
 	}
 }

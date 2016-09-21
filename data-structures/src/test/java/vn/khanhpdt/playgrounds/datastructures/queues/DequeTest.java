@@ -5,6 +5,7 @@ import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -16,9 +17,9 @@ public class DequeTest {
 
 	@Test
 	public void testEnqueueFrontToEmptyQueue() throws Exception {
-		Deque queue = new Deque();
+		Deque<DoublyLinkedNode<UUID, Integer>> queue = new Deque<>();
 
-		DoublyLinkedNode newNode = DoublyLinkedNode.random();
+		DoublyLinkedNode<UUID, Integer> newNode = TestUtils.randomDoublyLinkedNode();
 		queue.enqueueFront(newNode);
 
 		assertThat(queue.getRear(), is(newNode));
@@ -27,12 +28,12 @@ public class DequeTest {
 
 	@Test
 	public void testEnqueueFrontToNonEmptyQueue() throws Exception {
-		Deque queue = new Deque();
+		Deque<DoublyLinkedNode<UUID, Integer>> queue = new Deque<>();
 
-		DoublyLinkedNode firstInsertedNode = DoublyLinkedNode.random();
+		DoublyLinkedNode<UUID, Integer> firstInsertedNode = TestUtils.randomDoublyLinkedNode();
 		queue.enqueueFront(firstInsertedNode);
 
-		DoublyLinkedNode secondInsertedNode = DoublyLinkedNode.random();
+		DoublyLinkedNode<UUID, Integer> secondInsertedNode = TestUtils.randomDoublyLinkedNode();
 		queue.enqueueFront(secondInsertedNode);
 
 		assertThat(queue.getFront(), is(secondInsertedNode));
@@ -40,16 +41,16 @@ public class DequeTest {
 
 	@Test
 	public void testDequeueRear() throws Exception {
-		List<DoublyLinkedNode> nodes = TestUtils.randomDoublyNodes(10);
-		Deque queue = Deque.from(nodes);
+		List<DoublyLinkedNode<UUID, Integer>> nodes = TestUtils.randomDoublyNodes(10);
+		Deque<DoublyLinkedNode<UUID, Integer>> queue = Deque.from(nodes);
 		assertThat(queue.dequeueRear(), is(nodes.get(nodes.size() - 1)));
 	}
 
 	@Test
 	public void testEnqueueFrontAndDequeueRear() throws Exception {
-		List<DoublyLinkedNode> nodes = TestUtils.randomDoublyNodes(10);
+		List<DoublyLinkedNode<UUID, Integer>> nodes = TestUtils.randomDoublyNodes(10);
 
-		Deque queue = new Deque();
+		Deque<DoublyLinkedNode<UUID, Integer>> queue = new Deque<>();
 		nodes.forEach(queue::enqueueFront);
 
 		nodes.forEach(n -> assertThat(queue.dequeueRear(), is(n)));

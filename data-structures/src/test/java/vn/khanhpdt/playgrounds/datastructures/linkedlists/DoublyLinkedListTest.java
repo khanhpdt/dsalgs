@@ -7,6 +7,7 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,12 +22,12 @@ public class DoublyLinkedListTest {
 
 	@Test
 	public void testInsert() throws Exception {
-		DoublyLinkedList linkedList = new DoublyLinkedList();
+		DoublyLinkedList<UUID, Integer> linkedList = new DoublyLinkedList<>();
 
-		DoublyLinkedNode firstInsertedNode = DoublyLinkedNode.random();
+		DoublyLinkedNode<UUID, Integer> firstInsertedNode = TestUtils.randomDoublyLinkedNode();
 		linkedList.insert(firstInsertedNode);
 
-		DoublyLinkedNode secondInsertedNode = DoublyLinkedNode.random();
+		DoublyLinkedNode<UUID, Integer> secondInsertedNode = TestUtils.randomDoublyLinkedNode();
 		linkedList.insert(secondInsertedNode);
 
 		assertThat("last inserted node becomes the head", linkedList.getHead(), is(secondInsertedNode));
@@ -47,12 +48,13 @@ public class DoublyLinkedListTest {
 	}
 
 	private void testRemoveAt(int... indexes) throws Exception {
-		List<DoublyLinkedNode> nodes = TestUtils.randomDoublyNodes(10);
+		List<DoublyLinkedNode<UUID, Integer>> nodes = TestUtils.randomDoublyNodes(10);
 		UUID removeKey = UUID.randomUUID();
+		Random random = new Random();
 		for (int index : indexes) {
-			nodes.add(index, new DoublyLinkedNode(removeKey));
+			nodes.add(index, DoublyLinkedNode.from(removeKey, random.nextInt()));
 		}
-		DoublyLinkedList linkedList = DoublyLinkedList.from(nodes);
+		DoublyLinkedList<UUID, Integer> linkedList = DoublyLinkedList.from(nodes);
 
 		linkedList.remove(removeKey);
 
@@ -67,14 +69,15 @@ public class DoublyLinkedListTest {
 
 	@Test
 	public void testRemoveLastNodes() throws Exception {
-		List<DoublyLinkedNode> nodes = TestUtils.randomDoublyNodes(10);
+		List<DoublyLinkedNode<UUID, Integer>> nodes = TestUtils.randomDoublyNodes(10);
 
 		UUID removeKey = UUID.randomUUID();
-		nodes.add(new DoublyLinkedNode(removeKey));
-		nodes.add(new DoublyLinkedNode(removeKey));
-		nodes.add(new DoublyLinkedNode(removeKey));
+		Random random = new Random();
+		nodes.add(DoublyLinkedNode.from(removeKey, random.nextInt()));
+		nodes.add(DoublyLinkedNode.from(removeKey, random.nextInt()));
+		nodes.add(DoublyLinkedNode.from(removeKey, random.nextInt()));
 
-		DoublyLinkedList linkedList = DoublyLinkedList.from(nodes);
+		DoublyLinkedList<UUID, Integer> linkedList = DoublyLinkedList.from(nodes);
 
 		linkedList.remove(removeKey);
 

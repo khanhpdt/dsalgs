@@ -1,56 +1,47 @@
 package vn.khanhpdt.playgrounds.datastructures.nodes;
 
-import java.util.UUID;
-
 /**
+ * @param <K>  type of node key
+ * @param <V>  type of node value
  * @author khanhpdt
  */
-public class DoublyLinkedNode implements DoublyLinked<DoublyLinkedNode> {
+public class DoublyLinkedNode<K, V> implements DoublyLinked<DoublyLinkedNode<K, V>> {
 
-	private Node<UUID, Integer> content;
+	private Node<K, V> content;
 
-	private DoublyLinkedNode previous;
+	private DoublyLinkedNode<K, V> previous;
 
-	private DoublyLinkedNode next;
+	private DoublyLinkedNode<K, V> next;
 
-	public DoublyLinkedNode(UUID key) {
-		this.content = new Node<>(key);
-	}
-
-	public DoublyLinkedNode(Integer value) {
-		this.content = new Node<>(UUID.randomUUID(), value);
-	}
-
-	public static DoublyLinkedNode random() {
-		UUID randomUuid = UUID.randomUUID();
-		return new DoublyLinkedNode(randomUuid);
+	public DoublyLinkedNode(Node<K, V> content) {
+		this.content = content;
 	}
 
 	@Override
-	public DoublyLinkedNode getPrevious() {
+	public DoublyLinkedNode<K, V> getPrevious() {
 		return previous;
 	}
 
 	@Override
-	public void setPrevious(DoublyLinkedNode previous) {
+	public void setPrevious(DoublyLinkedNode<K, V> previous) {
 		this.previous = previous;
 	}
 
-	public Node<UUID, Integer> getContent() {
+	public Node<K, V> getContent() {
 		return this.content;
 	}
 
-	public UUID getKey() {
+	public K getKey() {
 		return getContent().getKey();
 	}
 
 	@Override
-	public DoublyLinkedNode getNext() {
+	public DoublyLinkedNode<K, V> getNext() {
 		return this.next;
 	}
 
 	@Override
-	public void setNext(DoublyLinkedNode next) {
+	public void setNext(DoublyLinkedNode<K, V> next) {
 		this.next = next;
 	}
 
@@ -69,12 +60,17 @@ public class DoublyLinkedNode implements DoublyLinked<DoublyLinkedNode> {
 			return false;
 		}
 
-		DoublyLinkedNode otherNode = (DoublyLinkedNode) obj;
+		@SuppressWarnings("unchecked")
+		DoublyLinkedNode<K, V> otherNode = (DoublyLinkedNode<K, V>) obj;
 		return this.getKey().equals(otherNode.getKey());
 	}
 
 	@Override
 	public String toString() {
 		return "DoublyLinkedNode: {" + getKey().toString() + ", " + getContent().getValue().toString() + "}";
+	}
+
+	public static <K, V> DoublyLinkedNode<K, V> from(K key, V value) {
+		return new DoublyLinkedNode<>(new Node<>(key, value));
 	}
 }

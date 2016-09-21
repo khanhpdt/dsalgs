@@ -48,7 +48,7 @@ public class Queue<N extends DoublyLinked<N>> {
 		return currentFront;
 	}
 
-	public static <N extends DoublyLinked<N>> Queue from(List<N> nodes) {
+	public static <N extends DoublyLinked<N>> Queue<N> from(List<N> nodes) {
 		Queue<N> queue = new Queue<>();
 		nodes.forEach(queue::enqueueRear);
 		return queue;
