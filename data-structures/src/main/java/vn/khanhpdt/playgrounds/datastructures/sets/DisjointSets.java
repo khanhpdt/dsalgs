@@ -2,6 +2,8 @@ package vn.khanhpdt.playgrounds.datastructures.sets;
 
 import vn.khanhpdt.playgrounds.datastructures.nodes.DisjointSetNode;
 
+import java.util.List;
+
 /**
  * @author khanhpdt
  */
@@ -11,27 +13,25 @@ public class DisjointSets {
 		// no instance
 	}
 
-	public static DisjointSet makeSet(DisjointSetNode... nodes) {
-		DisjointSet disjointSet = new DisjointSet();
-		for (DisjointSetNode node : nodes) {
-			disjointSet.insert(node);
-		}
+	public static <K, V> DisjointSet<K, V> makeSet(List<DisjointSetNode<K, V>> nodes) {
+		DisjointSet<K, V> disjointSet = new DisjointSet<>();
+		nodes.forEach(disjointSet::insert);
 		return disjointSet;
 	}
 
-	public static DisjointSet findSet(DisjointSetNode node) {
+	public static <K, V> DisjointSet<K, V> findSet(DisjointSetNode<K, V> node) {
 		return node.getSet();
 	}
 
-	public static DisjointSet union(DisjointSetNode node1, DisjointSetNode node2) {
+	public static <K, V> DisjointSet<K, V> union(DisjointSetNode<K, V> node1, DisjointSetNode<K, V> node2) {
 		return union(node1.getSet(), node2.getSet());
 	}
 
-	private static DisjointSet union(DisjointSet set1, DisjointSet set2) {
+	private static <K, V> DisjointSet<K, V> union(DisjointSet<K, V> set1, DisjointSet<K, V> set2) {
 		// use weighted-union heuristic: append the elements in the shorter set to the other set. This reduces the time
 		// to update the set of the appended nodes.
-		DisjointSet unionSet;
-		DisjointSet destroyedSet;
+		DisjointSet<K, V> unionSet;
+		DisjointSet<K, V> destroyedSet;
 		if (set1.size() >= set2.size()) {
 			unionSet = set1;
 			destroyedSet = set2;
@@ -41,7 +41,7 @@ public class DisjointSets {
 		}
 
 		// add nodes from destroyed set to the union set
-		DisjointSetNode node = destroyedSet.getHead();
+		DisjointSetNode<K, V> node = destroyedSet.getHead();
 		while (node != null) {
 			unionSet.insert(node);
 			node.setSet(unionSet);

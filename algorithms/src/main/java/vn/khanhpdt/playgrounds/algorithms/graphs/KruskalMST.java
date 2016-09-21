@@ -25,9 +25,9 @@ public class KruskalMST extends MinimumSpanningTree {
 	@Override
 	public List<GraphEdge> get() {
 		Map<GraphVertex, DisjointSetNode> disjointSetNodes = getGraph().getVertices().stream()
-				.collect(Collectors.toMap(Function.identity(), v -> new DisjointSetNode(v.getKey())));
+				.collect(Collectors.toMap(Function.identity(), v -> new DisjointSetNode<>(v.getKey())));
 
-		disjointSetNodes.values().forEach(DisjointSets::makeSet);
+		disjointSetNodes.values().forEach(node -> DisjointSets.makeSet(Collections.singletonList(node)));
 
 		// sort the edges to make it easy to loop over them in ascending order
 		List<GraphEdge> edges = getGraph().getEdges();

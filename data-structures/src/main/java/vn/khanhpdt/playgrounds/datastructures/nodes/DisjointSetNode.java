@@ -2,38 +2,32 @@ package vn.khanhpdt.playgrounds.datastructures.nodes;
 
 import vn.khanhpdt.playgrounds.datastructures.sets.DisjointSet;
 
-import java.util.UUID;
-
 /**
  * @author khanhpdt
  */
-public class DisjointSetNode implements ForwardLinked<DisjointSetNode> {
+public class DisjointSetNode<K, V> implements ForwardLinked<DisjointSetNode<K, V>> {
 	
-	private Node<UUID, Integer> content;
+	private Node<K, V> content;
 
-	private DisjointSetNode next;
+	private DisjointSetNode<K, V> next;
 
-	private DisjointSet set;
+	private DisjointSet<K, V> set;
 
-	public DisjointSetNode() {
-		this.content = new Node<>(UUID.randomUUID());
-	}
-
-	public DisjointSetNode(UUID key) {
+	public DisjointSetNode(K key) {
 		this.content = new Node<>(key);
 	}
 
-	public UUID getKey() {
+	public K getKey() {
 		return content.getKey();
 	}
 
 	@Override
-	public DisjointSetNode getNext() {
+	public DisjointSetNode<K, V> getNext() {
 		return next;
 	}
 
 	@Override
-	public void setNext(DisjointSetNode next) {
+	public void setNext(DisjointSetNode<K, V> next) {
 		this.next = next;
 	}
 
@@ -52,15 +46,16 @@ public class DisjointSetNode implements ForwardLinked<DisjointSetNode> {
 			return false;
 		}
 
-		DisjointSetNode otherNode = (DisjointSetNode) obj;
+		@SuppressWarnings("unchecked")
+		DisjointSetNode<K, V> otherNode = (DisjointSetNode<K, V>) obj;
 		return this.getKey().equals(otherNode.getKey());
 	}
 
-	public DisjointSet getSet() {
+	public DisjointSet<K, V> getSet() {
 		return set;
 	}
 
-	public void setSet(DisjointSet set) {
+	public void setSet(DisjointSet<K, V> set) {
 		this.set = set;
 	}
 }

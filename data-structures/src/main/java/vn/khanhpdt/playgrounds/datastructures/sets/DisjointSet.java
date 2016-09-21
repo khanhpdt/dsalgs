@@ -8,13 +8,13 @@ import java.util.UUID;
 /**
  * @author khanhpdt
  */
-public class DisjointSet {
+public class DisjointSet<K, V> {
 
 	private UUID key;
 
 	private int size;
 
-	private DoubleEndedLinkedList<DisjointSetNode> doubleEndedLinkedList;
+	private DoubleEndedLinkedList<DisjointSetNode<K, V>> doubleEndedLinkedList;
 
 	public DisjointSet() {
 		this.key = UUID.randomUUID();
@@ -43,18 +43,18 @@ public class DisjointSet {
 		return key;
 	}
 
-	public DisjointSetNode getHead() {
+	public DisjointSetNode<K, V> getHead() {
 		if (doubleEndedLinkedList == null) {
 			return null;
 		}
 		return doubleEndedLinkedList.getHead();
 	}
 
-	public DisjointSetNode getTail() {
+	public DisjointSetNode<K, V> getTail() {
 		return doubleEndedLinkedList.getTail();
 	}
 
-	public void insert(DisjointSetNode node) {
+	public void insert(DisjointSetNode<K, V> node) {
 		doubleEndedLinkedList.insertLast(node);
 		node.setSet(this);
 		size++;
