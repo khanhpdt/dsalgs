@@ -10,7 +10,7 @@ import java.util.*;
  *
  * @author khanhpdt
  */
-class TowersOfHanoi {
+public class TowersOfHanoi {
 
 	private static final int N_TOWERS = 3;
 
@@ -18,7 +18,7 @@ class TowersOfHanoi {
 
 	private List<Stack<SinglyLinkedNode<UUID, Integer>>> towers;
 
-	TowersOfHanoi(int nDisks) {
+	public TowersOfHanoi(int nDisks) {
 		initDisks(nDisks);
 		initTowers();
 		initSetup();
@@ -47,15 +47,15 @@ class TowersOfHanoi {
 		}
 	}
 
-	Stack<SinglyLinkedNode<UUID, Integer>> getLastTower() {
+	public Stack<SinglyLinkedNode<UUID, Integer>> getLastTower() {
 		return towers.get(towers.size() - 1);
 	}
 
-	Stack<SinglyLinkedNode<UUID, Integer>> getFirstTower() {
+	public Stack<SinglyLinkedNode<UUID, Integer>> getFirstTower() {
 		return towers.get(0);
 	}
 
-	void solve() {
+	public void solve() {
 		moveDisks(disks.size(), 0, 2);
 	}
 
