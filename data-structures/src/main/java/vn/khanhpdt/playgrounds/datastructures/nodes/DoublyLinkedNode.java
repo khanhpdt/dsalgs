@@ -35,6 +35,10 @@ public class DoublyLinkedNode<K, V> implements DoublyLinked<DoublyLinkedNode<K, 
 		return getContent().getKey();
 	}
 
+	public V getValue() {
+		return getContent().getValue();
+	}
+
 	@Override
 	public DoublyLinkedNode<K, V> getNext() {
 		return this.next;
