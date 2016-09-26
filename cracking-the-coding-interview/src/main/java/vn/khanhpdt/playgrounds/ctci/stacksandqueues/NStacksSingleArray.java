@@ -60,4 +60,8 @@ public class NStacksSingleArray {
 		}
 	}
 
+	public Stack getStack(int stackIndex) {
+		return stacks[stackIndex];
+	}
+
 }
