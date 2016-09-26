@@ -67,24 +67,67 @@ public class SetOfStacks {
 		}
 	}
 
-	public SinglyLinkedNode popAt(int stackIndex) {
+	public SinglyLinkedNode popAt(int stackIndex, boolean ensureCapacity) {
+		SinglyLinkedNode result = popAt(stackIndex);
+
+		// to make sure that all the stacks, except the top stack, are full
+		if (stackIndex > 0 && ensureCapacity) {
+			ensureFullCapacityAfterPop(stackIndex);
+		}
+
+		return result;
+	}
+
+	private SinglyLinkedNode popAt(int stackIndex) {
 		if (stacks.size() <= stackIndex) {
 			return null;
 		}
+		Stack<SinglyLinkedNode<UUID, Integer>> stack = stacks.get(stackIndex);
+		SinglyLinkedNode result = stack.pop();
+
+		if (stack.isEmpty()) {
+			stacks.remove(stackIndex);
+		}
+
+		return result;
+	}
+
+	private void ensureFullCapacityAfterPop(int stackIndex) {
+		if (stackIndex >= stacks.size()) {
+			return;
+		}
 
 		Stack<SinglyLinkedNode<UUID, Integer>> stack = stacks.get(stackIndex);
-		int stackSizeBeforePop = stack.size();
-		SinglyLinkedNode result = stack.pop();
-		// remove stack if it becomes empty after pop
-		if (stackSizeBeforePop == 1) {
+		while (stackIndex > 0 && stack.size() < stackCapacity) {
+			stack.push(removeBottom(stackIndex - 1));
+
+			stack = stacks.get(--stackIndex);
+		}
+	}
+
+	private SinglyLinkedNode<UUID, Integer> removeBottom(int stackIndex) {
+		Stack<SinglyLinkedNode<UUID, Integer>> stack = stacks.get(stackIndex);
+
+		SinglyLinkedNode<UUID, Integer> result = stack.removeBottom();
+
+		if (stack.isEmpty()) {
 			removeStack(stackIndex);
 		}
+
 		return result;
 	}
 
 	private void removeStack(int stackIndex) {
 		stacks.remove(stackIndex);
 		ensureStackAvailable();
+	}
+
+	public Stack<SinglyLinkedNode<UUID, Integer>> getStack(int stackIndex) {
+		return stacks.get(stackIndex);
+	}
+
+	public int countStacks() {
+		return stacks.size();
 	}
 
 }

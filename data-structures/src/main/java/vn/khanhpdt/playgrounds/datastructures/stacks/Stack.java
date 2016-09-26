@@ -49,5 +49,31 @@ public class Stack<N extends ForwardLinked<N>> {
 		return size;
 	}
 
+	public N removeBottom() {
+		// find stack bottom and its previous
+		// it is more time-efficient if the stack is a double-ended stack
+		N previous = null;
+		N current = head;
+		while (current != null && current.getNext() != null) {
+			previous = current;
+			current = current.getNext();
+		}
 
+		N result = null;
+		// current is the bottom
+		if (current != null) {
+			// current is also the top
+			if (previous == null) {
+				result = pop();
+			}
+			else {
+				// remove the bottom from the stack
+				previous.setNext(null);
+				size--;
+				result = current;
+			}
+		}
+
+		return result;
+	}
 }
