@@ -14,6 +14,7 @@
     - Min-priority queues
 - Trees
     - Binary search trees
+    - Tries
 - Heaps
     - Binary min-heaps
     - Binary max-heaps
