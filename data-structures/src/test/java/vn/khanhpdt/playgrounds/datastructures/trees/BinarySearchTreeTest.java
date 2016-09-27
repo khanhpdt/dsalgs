@@ -174,21 +174,36 @@ public class BinarySearchTreeTest {
 	@Test
 	public void testFindSuccessor_goDown() {
 		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(20));
-
 		assertThat(successor.getValue(), is(23));
 	}
 
 	@Test
 	public void testFindSuccessor_goUp() {
 		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(27));
-
 		assertThat(successor.getValue(), is(30));
 	}
 
 	@Test
 	public void testFindSuccessor_noneFound() {
 		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(40));
+		assertThat(successor, is(nullValue()));
+	}
 
+	@Test
+	public void testFindPredecessor_goDown() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(30));
+		assertThat(successor.getValue(), is(27));
+	}
+
+	@Test
+	public void testFindPredecessor_goUp() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(23));
+		assertThat(successor.getValue(), is(20));
+	}
+
+	@Test
+	public void testFindPredecessor_noneFound() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(15));
 		assertThat(successor, is(nullValue()));
 	}
 

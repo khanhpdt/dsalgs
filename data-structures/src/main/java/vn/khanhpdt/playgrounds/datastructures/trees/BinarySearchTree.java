@@ -6,7 +6,8 @@ import vn.khanhpdt.playgrounds.datastructures.stacks.Stack;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 
 /**
@@ -241,22 +242,6 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		}
 	}
 
-	private BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
-		return findMinimumNode(node.getRight());
-	}
-
-	private BinaryTreeNode<K, V> findMinimumNode(BinaryTreeNode<K, V> bstRoot) {
-		if (bstRoot == null) {
-			return null;
-		}
-
-		BinaryTreeNode<K, V> current = bstRoot;
-		while (current.getLeft() != null) {
-			current = current.getLeft();
-		}
-		return current;
-	}
-
 	/**
 	 * Makes the parent of fromNode become the parent of toNode and removes the link to fromNode from its parent.
 	 *
@@ -286,30 +271,6 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return nodes.stream().filter(n -> n.getKey().equals(nodeKey)).findFirst().orElseGet(null);
 	}
 
-	/**
-	 * @param node  must be in the tree
-	 * @throws NoSuchElementException if the given node is not in the tree
-	 * @return parent of the given node
-	 */
-	private BinaryTreeNode<K, V> findParentOf(BinaryTreeNode<K, V> node) {
-		BinaryTreeNode<K, V> parent = null;
-		BinaryTreeNode<K, V> currentNode = root;
-		while (currentNode != null && !currentNode.equals(node)) {
-			parent = currentNode;
-			if (node.compareTo(currentNode) < 0) {
-				currentNode = currentNode.getLeft();
-			} else if (node.compareTo(currentNode) > 0) {
-				currentNode = currentNode.getRight();
-			}
-		}
-
-		if (currentNode == null) {
-			throw new NoSuchElementException();
-		}
-
-		return parent;
-	}
-
 	public BinaryTreeNode<K, V> findNodeByValue(V value) {
 		BinaryTreeNode<K, V> current = root;
 		while (current != null) {
@@ -333,16 +294,60 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return findUpwardSuccessorOf(node);
 	}
 
+	public BinaryTreeNode<K, V> findPredecessorOf(BinaryTreeNode<K, V> node) {
+		if (node.getLeft() != null) {
+			return findDownwardPredecessorOf(node);
+		}
+		return findUpwardPredecessorOf(node);
+	}
+
+	private BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
+		return findMinimumNode(node.getRight());
+	}
+
+	private BinaryTreeNode<K, V> findDownwardPredecessorOf(BinaryTreeNode<K, V> node) {
+		return findMaximumNode(node.getLeft());
+	}
+
+	private BinaryTreeNode<K, V> findMinimumNode(BinaryTreeNode<K, V> bstRoot) {
+		return findOutermostNode(bstRoot, BinaryTreeNode::getLeft);
+	}
+
+	private BinaryTreeNode<K, V> findMaximumNode(BinaryTreeNode<K, V> bstRoot) {
+		return findOutermostNode(bstRoot, BinaryTreeNode::getRight);
+	}
+
+	private BinaryTreeNode<K, V> findOutermostNode(BinaryTreeNode<K, V> from,
+	                                               Function<BinaryTreeNode<K, V>, BinaryTreeNode<K, V>> nextMove) {
+		if (from == null) {
+			return null;
+		}
+
+		BinaryTreeNode<K, V> current = from;
+		BinaryTreeNode<K, V> next = nextMove.apply(current);
+		while (next != null) {
+			current = next;
+			next = nextMove.apply(current);
+		}
+		return current;
+	}
+
 	private BinaryTreeNode<K, V> findUpwardSuccessorOf(BinaryTreeNode<K, V> node) {
-		// find the closest ancestor larger than node.
+		return goUpUntil(node, upNode -> upNode.getValue().compareTo(node.getValue()) >= 0);
+	}
+
+	private BinaryTreeNode<K, V> findUpwardPredecessorOf(BinaryTreeNode<K, V> node) {
+		return goUpUntil(node, upNode -> upNode.getValue().compareTo(node.getValue()) <= 0);
+	}
+
+	private BinaryTreeNode<K, V> goUpUntil(BinaryTreeNode<K, V> node, Predicate<BinaryTreeNode<K, V>> until) {
 		BinaryTreeNode<K, V> ancestor = node.getParent();
 		while (ancestor != null) {
-			if (ancestor.getValue().compareTo(node.getValue()) >= 0) {
+			if (until.test(ancestor)) {
 				return ancestor;
 			}
 			ancestor = ancestor.getParent();
 		}
-
 		// none found
 		return null;
 	}
