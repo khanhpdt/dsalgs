@@ -15,6 +15,8 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 
 	private BinaryTreeNode<K, V> next;
 
+	private BinaryTreeNode<K, V> parent;
+
 	private BinaryTreeNode(Node<K, V> nodeContent) {
 		this.content = nodeContent;
 	}
@@ -37,6 +39,14 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 
 	public void setRight(BinaryTreeNode<K, V> right) {
 		this.right = right;
+	}
+
+	public BinaryTreeNode<K, V> getParent() {
+		return parent;
+	}
+
+	public void setParent(BinaryTreeNode<K, V> parent) {
+		this.parent = parent;
 	}
 
 	@Override

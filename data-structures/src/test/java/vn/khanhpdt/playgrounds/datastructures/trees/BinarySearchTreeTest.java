@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 /**
  * @author khanhpdt
@@ -57,14 +58,26 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testSimpleInsert() throws Exception {
-		assertThat(defaultBST.getRoot(), is(defaultNodes.get(0)));
-		assertThat(defaultBST.getRoot().getLeft(), is(defaultNodes.get(1)));
-		assertThat(defaultBST.getRoot().getLeft().getLeft(), is(defaultNodes.get(4)));
-		assertThat(defaultBST.getRoot().getLeft().getRight(), is(defaultNodes.get(2)));
-		assertThat(defaultBST.getRoot().getLeft().getRight().getLeft(), is(defaultNodes.get(7)));
-		assertThat(defaultBST.getRoot().getLeft().getRight().getRight(), is(defaultNodes.get(5)));
-		assertThat(defaultBST.getRoot().getRight(), is(defaultNodes.get(3)));
-		assertThat(defaultBST.getRoot().getRight().getRight(), is(defaultNodes.get(6)));
+		assertThat(defaultBST.getRoot().getValue(), is(30));
+		assertThat(defaultBST.getRoot().getLeft().getValue(), is(20));
+		assertThat(defaultBST.getRoot().getLeft().getLeft().getValue(), is(15));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getValue(), is(25));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getLeft().getValue(), is(23));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getRight().getValue(), is(27));
+		assertThat(defaultBST.getRoot().getRight().getValue(), is(35));
+		assertThat(defaultBST.getRoot().getRight().getRight().getValue(), is(40));
+	}
+
+	@Test
+	public void testParentsAfterInsert() throws Exception {
+		assertThat(defaultBST.getRoot().getParent(), is(nullValue()));
+		assertThat(defaultBST.getRoot().getLeft().getParent().getValue(), is(30));
+		assertThat(defaultBST.getRoot().getLeft().getLeft().getParent().getValue(), is(20));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getParent().getValue(), is(20));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getLeft().getParent().getValue(), is(25));
+		assertThat(defaultBST.getRoot().getLeft().getRight().getRight().getParent().getValue(), is(25));
+		assertThat(defaultBST.getRoot().getRight().getParent().getValue(), is(30));
+		assertThat(defaultBST.getRoot().getRight().getRight().getParent().getValue(), is(35));
 	}
 
 	@Test
@@ -147,6 +160,36 @@ public class BinarySearchTreeTest {
 		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = defaultBST.traversePostOrderIterative();
 		IntStream.range(0, postOrderIndexesAfterRemove.length)
 				.forEach(i -> assertThat("node " + i, postOrderNodes.get(i), is(defaultNodes.get(postOrderIndexesAfterRemove[i]))));
+	}
+
+	@Test
+	public void testParentAfterRemoveNodeWithTwoChildren() throws Exception {
+		defaultBST.remove(defaultBST.getRoot().getLeft().getKey());
+
+		assertThat(defaultBST.findNodeByValue(23).getParent().getValue(), is(30));
+		assertThat(defaultBST.findNodeByValue(25).getParent().getValue(), is(23));
+		assertThat(defaultBST.findNodeByValue(15).getParent().getValue(), is(23));
+	}
+
+	@Test
+	public void testFindSuccessor_goDown() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(20));
+
+		assertThat(successor.getValue(), is(23));
+	}
+
+	@Test
+	public void testFindSuccessor_goUp() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(27));
+
+		assertThat(successor.getValue(), is(30));
+	}
+
+	@Test
+	public void testFindSuccessor_noneFound() {
+		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(40));
+
+		assertThat(successor, is(nullValue()));
 	}
 
 }
