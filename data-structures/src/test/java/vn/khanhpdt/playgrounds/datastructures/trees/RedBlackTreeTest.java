@@ -108,4 +108,20 @@ public class RedBlackTreeTest {
 		}
 	}
 
+	@Test
+	public void testInsert_structure() {
+		RedBlackTree<UUID, Integer> rbt = createRBT(11, 2, 14, 1, 7, 5, 8, 12, 15, 10);
+
+		assertThat(rbt.getRoot().getValue(), is(7));
+		assertThat(rbt.getRoot().getLeft().getValue(), is(2));
+		assertThat(rbt.getRoot().getLeft().getLeft().getValue(), is(1));
+		assertThat(rbt.getRoot().getLeft().getRight().getValue(), is(5));
+		assertThat(rbt.getRoot().getRight().getValue(), is(11));
+		assertThat(rbt.getRoot().getRight().getLeft().getValue(), is(8));
+		assertThat(rbt.getRoot().getRight().getLeft().getRight().getValue(), is(10));
+		assertThat(rbt.getRoot().getRight().getRight().getValue(), is(14));
+		assertThat(rbt.getRoot().getRight().getRight().getLeft().getValue(), is(12));
+		assertThat(rbt.getRoot().getRight().getRight().getRight().getValue(), is(15));
+	}
+
 }

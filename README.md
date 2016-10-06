@@ -15,6 +15,7 @@
 - Trees
     - Binary search trees
     - Tries
+    - Red-black trees
 - Heaps
     - Binary min-heaps
     - Binary max-heaps
