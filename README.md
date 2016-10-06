@@ -1,4 +1,4 @@
-# A place to practice well-known data structures and algorithms in Java.
+# A place to practice well-known data structures and algorithms in Java
 
 ## Data structures
 
