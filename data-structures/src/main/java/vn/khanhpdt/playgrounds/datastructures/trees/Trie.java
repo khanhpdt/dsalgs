@@ -61,13 +61,13 @@ public class Trie<V> {
 		remove(root, key, 0);
 	}
 
-	private boolean remove(TrieNode<V> node, String key, int d) {
+	private boolean remove(TrieNode<V> node, String key, int currentMatchLength) {
 		// key not found
 		if (node == null) {
 			return false;
 		}
 
-		if (d == key.length()) {
+		if (currentMatchLength == key.length()) {
 			// key found
 			if (node.getValue() != null) {
 				// remove the value
@@ -80,9 +80,9 @@ public class Trie<V> {
 			}
 		}
 
-		int linkIndex = alphabet.toIndex(key.charAt(d));
+		int linkIndex = alphabet.toIndex(key.charAt(currentMatchLength));
 		TrieNode<V> nextNode = node.getLink(linkIndex);
-		boolean found = remove(nextNode, key, d + 1);
+		boolean found = remove(nextNode, key, currentMatchLength + 1);
 
 		// remove a node if it does not contribute to any key
 		if (found && nextNode.getValue() == null && !nextNode.hasActiveLink()) {
