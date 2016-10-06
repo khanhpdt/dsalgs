@@ -48,3 +48,8 @@
         - Bellman-Ford algorithm
         - Topological-sort-based algorithm for DAGs
         - Dijkstra algorithm
+
+## References
+
+1. Introduction to algorithms, 3rd
+2. Algorithms, 4th

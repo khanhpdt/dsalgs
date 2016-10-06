@@ -13,11 +13,12 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 
 	private BinaryTreeNode<K, V> right;
 
-	private BinaryTreeNode<K, V> next;
-
 	private BinaryTreeNode<K, V> parent;
 
-	private BinaryTreeNode(Node<K, V> nodeContent) {
+	// for traversing
+	private BinaryTreeNode<K, V> next;
+
+	protected BinaryTreeNode(Node<K, V> nodeContent) {
 		this.content = nodeContent;
 	}
 

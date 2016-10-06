@@ -1,8 +1,6 @@
 package vn.khanhpdt.playgrounds.datastructures;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
-import vn.khanhpdt.playgrounds.datastructures.nodes.DoublyLinkedNode;
-import vn.khanhpdt.playgrounds.datastructures.nodes.SinglyLinkedNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,8 @@ import java.util.stream.IntStream;
  * @author khanhpdt
  */
 public class TestUtils {
+
+	private static final Random RANDOM = new Random();
 
 	public static List<SinglyLinkedNode<UUID, Integer>> randomSinglyNodes(int size) {
 		List<SinglyLinkedNode<UUID, Integer>> nodes = new ArrayList<>();
@@ -32,10 +32,11 @@ public class TestUtils {
 	}
 
 	public static BinaryTreeNode<UUID, Integer> randomBinaryTreeNode() {
-		return BinaryTreeNode.from(UUID.randomUUID(), new Random().nextInt());
+		return BinaryTreeNode.from(UUID.randomUUID(), RANDOM.nextInt());
 	}
 
 	public static DoublyLinkedNode<UUID, Integer> randomDoublyLinkedNode() {
 		return DoublyLinkedNode.from(UUID.randomUUID(), new Random().nextInt());
 	}
+
 }
