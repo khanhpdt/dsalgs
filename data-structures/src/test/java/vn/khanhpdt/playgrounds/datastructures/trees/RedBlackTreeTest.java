@@ -95,21 +95,25 @@ public class RedBlackTreeTest {
 		rbt.insert(createRBTNode(8));
 		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8), Arrays.asList(BLACK, RED, BLACK, BLACK, BLACK, RED, RED));
 
+		rbt.insert(createRBTNode(12));
+		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8, 12), Arrays.asList(BLACK, RED, BLACK, BLACK, BLACK, RED, RED, RED));
+
 		rbt.insert(createRBTNode(15));
-		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8, 15), Arrays.asList(BLACK, RED, BLACK, BLACK, BLACK, RED, RED, RED));
+		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8, 12, 15), Arrays.asList(BLACK, RED, BLACK, BLACK, BLACK, RED, RED, RED, RED));
 
 		rbt.insert(createRBTNode(10));
-		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8, 15, 10), Arrays.asList(RED, RED, BLACK, BLACK, BLACK, BLACK, BLACK, RED, RED));
+		assertNodeColors(rbt, Arrays.asList(11, 2, 14, 1, 7, 5, 8, 12, 15, 10), Arrays.asList(RED, RED, BLACK, BLACK, BLACK, BLACK, BLACK, RED, RED, RED));
 	}
 
 	private static void assertNodeColors(RedBlackTree<UUID, Integer> rbt, List<Integer> nodeValues, List<Color> nodeColors) {
 		for (int i = 0; i < nodeValues.size(); i++) {
-			assertThat(rbt.findNodeByValue(nodeValues.get(i)).getColor(), is(nodeColors.get(i)));
+			assertThat("node " + nodeValues.get(i) + " : " + nodeColors.get(i),
+					rbt.findNodeByValue(nodeValues.get(i)).getColor(), is(nodeColors.get(i)));
 		}
 	}
 
 	@Test
-	public void testInsert_structure() {
+	public void testInsert_treeStructure() {
 		RedBlackTree<UUID, Integer> rbt = createRBT(11, 2, 14, 1, 7, 5, 8, 12, 15, 10);
 
 		assertThat(rbt.getRoot().getValue(), is(7));
@@ -122,6 +126,41 @@ public class RedBlackTreeTest {
 		assertThat(rbt.getRoot().getRight().getRight().getValue(), is(14));
 		assertThat(rbt.getRoot().getRight().getRight().getLeft().getValue(), is(12));
 		assertThat(rbt.getRoot().getRight().getRight().getRight().getValue(), is(15));
+	}
+
+	@Test
+	public void testRemove() {
+		RedBlackTree<UUID, Integer> rbt = createRBT(11, 2, 14, 1, 7, 5);
+
+		rbt.remove(11);
+		assertNodeColors(rbt, Arrays.asList(2, 14, 1, 7, 5), Arrays.asList(BLACK, BLACK, BLACK, RED, BLACK));
+		assertThat(rbt.getRoot().getValue(), is(2));
+		assertThat(rbt.getRoot().getLeft().getValue(), is(1));
+		assertThat(rbt.getRoot().getRight().getValue(), is(7));
+		assertThat(rbt.getRoot().getRight().getLeft().getValue(), is(5));
+		assertThat(rbt.getRoot().getRight().getRight().getValue(), is(14));
+
+		rbt.remove(7);
+		assertNodeColors(rbt, Arrays.asList(2, 14, 1, 5), Arrays.asList(BLACK, BLACK, BLACK, RED));
+		assertThat(rbt.getRoot().getValue(), is(2));
+		assertThat(rbt.getRoot().getLeft().getValue(), is(1));
+		assertThat(rbt.getRoot().getRight().getValue(), is(14));
+		assertThat(rbt.getRoot().getRight().getLeft().getValue(), is(5));
+
+		rbt.remove(2);
+		assertNodeColors(rbt, Arrays.asList(14, 1, 5), Arrays.asList(BLACK, BLACK, BLACK));
+		assertThat(rbt.getRoot().getValue(), is(5));
+		assertThat(rbt.getRoot().getLeft().getValue(), is(1));
+		assertThat(rbt.getRoot().getRight().getValue(), is(14));
+
+		rbt.remove(1);
+		assertNodeColors(rbt, Arrays.asList(14, 5), Arrays.asList(RED, BLACK));
+		assertThat(rbt.getRoot().getValue(), is(5));
+		assertThat(rbt.getRoot().getRight().getValue(), is(14));
+
+		rbt.remove(14);
+		assertNodeColors(rbt, Collections.singletonList(5), Collections.singletonList(BLACK));
+		assertThat(rbt.getRoot().getValue(), is(5));
 	}
 
 }

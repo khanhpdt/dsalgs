@@ -30,11 +30,6 @@ public class RedBlackTreeNullNode extends RedBlackTreeNode {
 	}
 
 	@Override
-	public RedBlackTreeNode getUncle() {
-		return INSTANCE;
-	}
-
-	@Override
 	public RedBlackTreeNode getGrandParent() {
 		return INSTANCE;
 	}

@@ -57,12 +57,8 @@ public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinaryTreeNode
 		return (RedBlackTreeNode<K, V>) super.getParent();
 	}
 
-	public RedBlackTreeNode<K, V> getUncle() {
-		RedBlackTreeNode<K, V> grandParent = getGrandParent();
-		return grandParent.getLeft().equals(getParent()) ? grandParent.getRight() : grandParent.getLeft();
-	}
-
 	public RedBlackTreeNode<K, V> getGrandParent() {
 		return getParent().getParent();
 	}
+
 }

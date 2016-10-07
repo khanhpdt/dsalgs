@@ -59,7 +59,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return node == getNullNode();
 	}
 
-	private boolean isNotNullNode(BinaryTreeNode<K, V> node) {
+	protected boolean isNotNullNode(BinaryTreeNode<K, V> node) {
 		return !isNullNode(node);
 	}
 
@@ -231,27 +231,27 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 			return;
 		}
 
+		// this node will replace the removed node
+		BinaryTreeNode<K, V> replacingNode;
+
 		// the removed node has two children
 		if (isNotNullNode(removedNode.getLeft()) && isNotNullNode(removedNode.getRight())) {
-			BinaryTreeNode<K, V> replacingNode = findDownwardSuccessorOf(removedNode);
+			replacingNode = findDownwardSuccessorOf(removedNode);
 
 			// because the replacing node is the successor of the removed node, it is either the right child of the
 			// removed node or the left-most node of the right subtree of the removed node.
 			replacingNode.setLeft(removedNode.getLeft());
 			removedNode.getLeft().setParent(replacingNode);
-
 			if (!replacingNode.equals(removedNode.getRight())) {
 				transplantParent(replacingNode, replacingNode.getRight());
-
 				replacingNode.setRight(removedNode.getRight());
 				removedNode.getRight().setParent(replacingNode);
 			}
-
 			transplantParent(removedNode, replacingNode);
 		}
 		// the removed node has only one child or none at all
 		else {
-			BinaryTreeNode<K, V> replacingNode = isNotNullNode(removedNode.getLeft()) ? removedNode.getLeft() : removedNode.getRight();
+			replacingNode = isNotNullNode(removedNode.getLeft()) ? removedNode.getLeft() : removedNode.getRight();
 			transplantParent(removedNode, replacingNode);
 		}
 	}
@@ -280,7 +280,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		}
 	}
 
-	private BinaryTreeNode<K, V> findNodeByKey(K nodeKey) {
+	protected BinaryTreeNode<K, V> findNodeByKey(K nodeKey) {
 		List<BinaryTreeNode<K, V>> nodes = traverseInOrderIterative();
 		return nodes.stream().filter(n -> n.getKey().equals(nodeKey)).findFirst().orElse(getNullNode());
 	}
@@ -315,7 +315,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return findUpwardPredecessorOf(node);
 	}
 
-	private BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
+	protected BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
 		return findMinimumNode(node.getRight());
 	}
 
