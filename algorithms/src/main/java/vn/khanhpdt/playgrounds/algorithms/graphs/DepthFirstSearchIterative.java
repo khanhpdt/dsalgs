@@ -26,14 +26,16 @@ public class DepthFirstSearchIterative<K, V> extends GraphSearch<K, V> {
 					.filter(GraphVertex::isNotDiscovered)
 					.forEach(adj -> {
 						// depth-first: discovers all nodes adjacent to the current node, but adds them to a stack
-						// so that they will be visited after their adjacents
+						// so that they will be processed AFTER processing the adjacents of the nodes at the same distance.
 						adj.markDiscovered(current, time++);
 						discoveredStack.push(adj);
 					});
 
+			// we visit a node only after discovering all of its adjacents
 			visitedStack.push(current);
 		}
 
+		// the stack now contains the reachable vertices in depth-first search order
 		List<GraphVertex<K, V>> reachableVertices = new ArrayList<>();
 		while (!visitedStack.isEmpty()) {
 			GraphVertex<K, V> current = visitedStack.pop();

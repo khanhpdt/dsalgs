@@ -26,7 +26,7 @@ public class BreadthFirstSearch<K, V> extends GraphSearch<K, V> {
 					.filter(GraphVertex::isNotDiscovered)
 					.forEach(adj -> {
 						// breadth-first: discovers all nodes adjacent to the current node, but adds them to a queue
-						// so that they will be visited before their adjacents
+						// so that they will be processed BEFORE processing the adjacents of the nodes at the same distance.
 						adj.markDiscovered(current, time++);
 						queue.enqueueRear(adj);
 					});
