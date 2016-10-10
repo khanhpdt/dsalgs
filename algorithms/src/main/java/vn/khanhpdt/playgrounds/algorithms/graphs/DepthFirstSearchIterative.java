@@ -31,7 +31,7 @@ public class DepthFirstSearchIterative<K, V> extends GraphSearch<K, V> {
 						discoveredStack.push(adj);
 					});
 
-			// we visit a node only after discovering all of its adjacents
+			// put to a stack so that this node will be visited after we visit all of its adjacents
 			visitedStack.push(current);
 		}
 

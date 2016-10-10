@@ -17,7 +17,9 @@ public class BreadthFirstSearch<K, V> extends GraphSearch<K, V> {
 		Queue<GraphVertex<K, V>> queue = new Queue<>();
 
 		queue.enqueueRear(sourceVertex);
+		// BFS visits a node when the node is discovered
 		sourceVertex.markDiscovered(null, time++);
+		sourceVertex.markVisited(time);
 
 		while (!queue.isEmpty()) {
 			GraphVertex<K, V> current = queue.dequeueFront();
@@ -25,13 +27,14 @@ public class BreadthFirstSearch<K, V> extends GraphSearch<K, V> {
 			current.getAdjacents().stream()
 					.filter(GraphVertex::isNotDiscovered)
 					.forEach(adj -> {
-						// breadth-first: discovers all nodes adjacent to the current node, but adds them to a queue
-						// so that they will be processed BEFORE processing the adjacents of the nodes at the same distance.
+						// breadth-first: visits all nodes adjacent to the current node, but adds them to a queue
+						// so that they will be processed BEFORE processing the adjacents of the nodes at the same distance
+						// from the current vertex.
 						adj.markDiscovered(current, time++);
+						adj.markVisited(time);
 						queue.enqueueRear(adj);
 					});
 
-			current.markVisited(time++);
 			reachableVertices.add(current);
 		}
 
