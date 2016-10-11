@@ -10,14 +10,13 @@ import static java.awt.Color.RED;
 /**
  * @author khanhpdt
  */
-public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K, V> {
+class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K, V> {
 
 	private RedBlackTreeNode<K, V> root = getNullNode();
 
 	@Override
-	@SuppressWarnings("unchecked")
 	RedBlackTreeNode<K, V> getNullNode() {
-		return (RedBlackTreeNode<K, V>) RedBlackTreeNullNode.INSTANCE;
+		return RedBlackTreeNullNode.getInstance();
 	}
 
 	// see [1, subsection 13.3] for details
@@ -127,8 +126,7 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	protected <R extends BinaryTreeNode<K, V>> void setRoot(R root) {
+	protected void setRoot(BinaryTreeNode<K, V> root) {
 		this.root = (RedBlackTreeNode<K, V>) root;
 	}
 
@@ -160,7 +158,7 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 	// see [1, subsection 13.4] for details
 	private void remove(RedBlackTreeNode<K, V> removedNode) {
 		// no node found with the given key
-		if (isNullNode(removedNode)) {
+		if (removedNode.isNull()) {
 			return;
 		}
 
@@ -171,10 +169,10 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 		boolean fixUp;
 		// the node where we start to the fix. this is the node that is moved to new position without changing its color.
 		RedBlackTreeNode<K, V> fixUpStartingNode;
-		RedBlackTreeNode<K, V> fixUpStartingNodeParent = null;
+		RedBlackTreeNode<K, V> fixUpStartingNodeParent;
 
 		// the removed node has two children
-		if (isNotNullNode(removedNode.getLeft()) && isNotNullNode(removedNode.getRight())) {
+		if (removedNode.getLeft().isNotNull() && removedNode.getRight().isNotNull()) {
 			replacingNode = (RedBlackTreeNode<K, V>) findDownwardSuccessorOf(removedNode);
 
 			// moving a black node might break the red-black properties
@@ -200,7 +198,7 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 		}
 		// the removed node has only one child or none at all
 		else {
-			replacingNode = isNotNullNode(removedNode.getLeft()) ? removedNode.getLeft() : removedNode.getRight();
+			replacingNode = removedNode.getLeft().isNotNull() ? removedNode.getLeft() : removedNode.getRight();
 
 			fixUp = replacingNode.getColor() == BLACK;
 			fixUpStartingNode = replacingNode;
@@ -218,7 +216,7 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 		/* The idea is to keep moving the node with the extra black up until the red-black properties hold */
 		while (!node.equals(getRoot()) && node.getColor() == BLACK) {
 			// since we are moving up, node can be null only one time at the beginning
-			RedBlackTreeNode<K, V> parent = isNullNode(node) ? firstParent : node.getParent();
+			RedBlackTreeNode<K, V> parent = node.isNull() ? firstParent : node.getParent();
 
 			if (node.equals(parent.getLeft())) {
 				RedBlackTreeNode<K, V> sibling = parent.getRight();
@@ -288,11 +286,10 @@ public class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K
 		node.setColor(BLACK);
 	}
 
-	@Override
-	protected void transplantParent(BinaryTreeNode<K, V> fromNode, BinaryTreeNode<K, V> toNode) {
-		BinaryTreeNode<K, V> parent = fromNode.getParent();
+	private void transplantParent(RedBlackTreeNode<K, V> fromNode, RedBlackTreeNode<K, V> toNode) {
+		RedBlackTreeNode<K, V> parent = fromNode.getParent();
 		// fromNode is the root
-		if (isNullNode(parent)) {
+		if (parent.isNull()) {
 			setRoot(toNode);
 		}
 		// fromNode is the left child

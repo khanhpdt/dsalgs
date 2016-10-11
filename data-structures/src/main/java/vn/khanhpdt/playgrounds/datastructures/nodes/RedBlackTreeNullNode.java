@@ -8,7 +8,7 @@ import java.util.UUID;
  */
 public class RedBlackTreeNullNode extends RedBlackTreeNode {
 
-	public static final RedBlackTreeNullNode INSTANCE = new RedBlackTreeNullNode(new Node<>(UUID.randomUUID()));
+	private static final RedBlackTreeNullNode INSTANCE = new RedBlackTreeNullNode(new Node<>(UUID.randomUUID()));
 
 	private RedBlackTreeNullNode(Node nodeContent) {
 		super(nodeContent, Color.BLACK);
@@ -57,5 +57,9 @@ public class RedBlackTreeNullNode extends RedBlackTreeNode {
 	@Override
 	public boolean equals(Object o) {
 		return o == INSTANCE;
+	}
+
+	public static <K, V extends Comparable<V>> RedBlackTreeNode<K, V> getInstance() {
+		return INSTANCE;
 	}
 }

@@ -11,27 +11,17 @@ public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinaryTreeNode
 
 	public RedBlackTreeNode(Node<K, V> nodeContent) {
 		super(nodeContent);
-
-		initNullNeighbors();
 	}
 
-	public RedBlackTreeNode(Node<K, V> nodeContent, Color color) {
-		super(nodeContent);
+	RedBlackTreeNode(Node<K, V> nodeContent, Color color) {
+		this(nodeContent);
 
 		this.color = color;
-
-		initNullNeighbors();
 	}
 
-	private void initNullNeighbors() {
-		this.setLeft(getNullNode());
-		this.setRight(getNullNode());
-		this.setParent(getNullNode());
-	}
-
-	@SuppressWarnings("unchecked")
-	private RedBlackTreeNode<K, V> getNullNode() {
-		return (RedBlackTreeNode<K, V>) RedBlackTreeNullNode.INSTANCE;
+	@Override
+	protected RedBlackTreeNode<K, V> getNullNode() {
+		return RedBlackTreeNullNode.getInstance();
 	}
 
 	public void setColor(Color color) {
@@ -61,4 +51,8 @@ public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinaryTreeNode
 		return getParent().getParent();
 	}
 
+	@Override
+	public boolean isNull() {
+		return this == getNullNode();
+	}
 }

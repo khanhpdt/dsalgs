@@ -1,6 +1,7 @@
 package vn.khanhpdt.playgrounds.datastructures.trees;
 
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 import vn.khanhpdt.playgrounds.datastructures.stacks.Stack;
 
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ import java.util.function.Predicate;
 /**
  * @author khanhpdt
  */
-public class BinarySearchTree<K, V extends Comparable<V>> {
+class BinarySearchTree<K, V extends Comparable<V>> {
 
 	private BinaryTreeNode<K, V> root = getNullNode();
 
-	protected <R extends BinaryTreeNode<K, V>> void setRoot(R root) {
+	void setRoot(BinaryTreeNode<K, V> root) {
 		this.root = root;
 	}
 
@@ -30,7 +31,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 	 */
 	public BinaryTreeNode<K, V> insert(BinaryTreeNode<K, V> node) {
 		// first node
-		if (getRoot() == getNullNode()) {
+		if (getRoot().isNull()) {
 			setRoot(node);
 			getRoot().setLeft(getNullNode());
 			getRoot().setRight(getNullNode());
@@ -51,22 +52,13 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 	}
 
 	BinaryTreeNode<K, V> getNullNode() {
-		// simply use java null to represent null node
-		return null;
-	}
-
-	protected boolean isNullNode(BinaryTreeNode<K, V> node) {
-		return node == getNullNode();
-	}
-
-	protected boolean isNotNullNode(BinaryTreeNode<K, V> node) {
-		return !isNullNode(node);
+		return BinaryTreeNullNode.getInstance();
 	}
 
 	private BinaryTreeNode<K, V> findParentOfNewNode(BinaryTreeNode<K, V> newNode) {
 		BinaryTreeNode<K, V> parent = getRoot();
 		BinaryTreeNode<K, V> current = getRoot();
-		while (isNotNullNode(current)) {
+		while (current.isNotNull()) {
 			parent = current;
 			if (newNode.compareTo(current) > 0) {
 				current = current.getRight();
@@ -77,12 +69,12 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return parent;
 	}
 
-	public List<BinaryTreeNode<K, V>> traverseInOrderRecursive() {
+	List<BinaryTreeNode<K, V>> traverseInOrderRecursive() {
 		return traverseInOrderRecursive(getRoot());
 	}
 
 	private List<BinaryTreeNode<K, V>> traverseInOrderRecursive(BinaryTreeNode<K, V> startingNode) {
-		if (isNullNode(startingNode)) {
+		if (startingNode.isNull()) {
 			return Collections.emptyList();
 		}
 
@@ -93,7 +85,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return result;
 	}
 
-	public List<BinaryTreeNode<K, V>> traverseInOrderIterative() {
+	List<BinaryTreeNode<K, V>> traverseInOrderIterative() {
 		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
 
 		// for temporarily holding nodes during traverse
@@ -106,8 +98,8 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 
 		BinaryTreeNode<K, V> currentNode = this.getRoot();
 		// there is no node left to traverse when currentNode is null and no node is in the stack
-		while (isNotNullNode(currentNode) || !stack.isEmpty()) {
-			if (isNotNullNode(currentNode)) {
+		while (currentNode.isNotNull() || !stack.isEmpty()) {
+			if (currentNode.isNotNull()) {
 				// save node to move to it later
 				stack.push(currentNode);
 				// traverse the left subtree of the node before traversing the node
@@ -125,12 +117,12 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return result;
 	}
 
-	public List<BinaryTreeNode<K, V>> traversePreOrderRecursive() {
+	List<BinaryTreeNode<K, V>> traversePreOrderRecursive() {
 		return traversePreOrderRecursive(getRoot());
 	}
 
 	private List<BinaryTreeNode<K, V>> traversePreOrderRecursive(BinaryTreeNode<K, V> startingNode) {
-		if (isNullNode(startingNode)) {
+		if (startingNode.isNull()) {
 			return Collections.emptyList();
 		}
 
@@ -141,19 +133,19 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return result;
 	}
 
-	public List<BinaryTreeNode<K, V>> traversePreOrderIterative() {
+	List<BinaryTreeNode<K, V>> traversePreOrderIterative() {
 		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
 
 		Stack<BinaryTreeNode<K, V>> stack = new Stack<>();
 
 		BinaryTreeNode<K, V> currentNode = this.getRoot();
-		while (isNotNullNode(currentNode) || !stack.isEmpty()) {
-			if (isNotNullNode(currentNode)) {
+		while (currentNode.isNotNull() || !stack.isEmpty()) {
+			if (currentNode.isNotNull()) {
 				// visit node
 				result.add(currentNode);
 
 				// save right to move to it later
-				if (isNotNullNode(currentNode.getRight())) {
+				if (currentNode.getRight().isNotNull()) {
 					stack.push(currentNode.getRight());
 				}
 
@@ -168,12 +160,12 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return result;
 	}
 
-	public List<BinaryTreeNode<K, V>> traversePostOrderRecursive() {
+	List<BinaryTreeNode<K, V>> traversePostOrderRecursive() {
 		return traversePostOrderRecursive(getRoot());
 	}
 
 	private List<BinaryTreeNode<K, V>> traversePostOrderRecursive(BinaryTreeNode<K, V> startingNode) {
-		if (isNullNode(startingNode)) {
+		if (startingNode.isNull()) {
 			return Collections.emptyList();
 		}
 
@@ -184,7 +176,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return result;
 	}
 
-	public List<BinaryTreeNode<K, V>> traversePostOrderIterative() {
+	List<BinaryTreeNode<K, V>> traversePostOrderIterative() {
 		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
 
 		Stack<BinaryTreeNode<K, V>> stack = new Stack<>();
@@ -193,8 +185,8 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		BinaryTreeNode<K, V> lastVisited = getNullNode();
 
 		BinaryTreeNode<K, V> currentNode = this.getRoot();
-		while (isNotNullNode(currentNode) || !stack.isEmpty()) {
-			if (isNotNullNode(currentNode)) {
+		while (currentNode.isNotNull() || !stack.isEmpty()) {
+			if (currentNode.isNotNull()) {
 				// save node to traverse to it later
 				stack.push(currentNode);
 
@@ -204,7 +196,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 				// one of the child of this node is the most recently visited node
 				BinaryTreeNode<K, V> parentOfLastVisited = stack.peek();
 
-				if (isNotNullNode(parentOfLastVisited.getRight()) && !parentOfLastVisited.getRight().equals(lastVisited)) {
+				if (parentOfLastVisited.getRight().isNotNull() && !parentOfLastVisited.getRight().equals(lastVisited)) {
 					// traverse right
 					currentNode = parentOfLastVisited.getRight();
 				} else {
@@ -227,7 +219,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		BinaryTreeNode<K, V> removedNode = findNodeByKey(nodeKey);
 
 		// no node found with the given key
-		if (isNullNode(removedNode)) {
+		if (removedNode.isNull()) {
 			return;
 		}
 
@@ -235,7 +227,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		BinaryTreeNode<K, V> replacingNode;
 
 		// the removed node has two children
-		if (isNotNullNode(removedNode.getLeft()) && isNotNullNode(removedNode.getRight())) {
+		if (removedNode.getLeft().isNotNull() && removedNode.getRight().isNotNull()) {
 			replacingNode = findDownwardSuccessorOf(removedNode);
 
 			// because the replacing node is the successor of the removed node, it is either the right child of the
@@ -251,7 +243,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		}
 		// the removed node has only one child or none at all
 		else {
-			replacingNode = isNotNullNode(removedNode.getLeft()) ? removedNode.getLeft() : removedNode.getRight();
+			replacingNode = removedNode.getLeft().isNotNull() ? removedNode.getLeft() : removedNode.getRight();
 			transplantParent(removedNode, replacingNode);
 		}
 	}
@@ -260,10 +252,10 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 	 * Makes the parent of fromNode become the parent of toNode and removes the link to fromNode from its parent.
 	 *
 	 */
-	protected void transplantParent(BinaryTreeNode<K, V> fromNode, BinaryTreeNode<K, V> toNode) {
+	private void transplantParent(BinaryTreeNode<K, V> fromNode, BinaryTreeNode<K, V> toNode) {
 		BinaryTreeNode<K, V> parent = fromNode.getParent();
 		// fromNode is the root
-		if (isNullNode(parent)) {
+		if (parent.isNull()) {
 			setRoot(toNode);
 		}
 		// fromNode is the left child
@@ -275,7 +267,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 			parent.setRight(toNode);
 		}
 
-		if (isNotNullNode(toNode)) {
+		if (toNode.isNotNull()) {
 			toNode.setParent(parent);
 		}
 	}
@@ -287,7 +279,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 
 	public BinaryTreeNode<K, V> findNodeByValue(V value) {
 		BinaryTreeNode<K, V> current = getRoot();
-		while (isNotNullNode(current)) {
+		while (current.isNotNull()) {
 			if (current.getValue().equals(value)) {
 				return current;
 			}
@@ -301,21 +293,21 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return getNullNode();
 	}
 
-	public BinaryTreeNode<K, V> findSuccessorOf(BinaryTreeNode<K, V> node) {
-		if (isNotNullNode(node.getRight())) {
+	BinaryTreeNode<K, V> findSuccessorOf(BinaryTreeNode<K, V> node) {
+		if (node.getRight().isNotNull()) {
 			return findDownwardSuccessorOf(node);
 		}
 		return findUpwardSuccessorOf(node);
 	}
 
-	public BinaryTreeNode<K, V> findPredecessorOf(BinaryTreeNode<K, V> node) {
-		if (isNotNullNode(node.getLeft())) {
+	BinaryTreeNode<K, V> findPredecessorOf(BinaryTreeNode<K, V> node) {
+		if (node.getLeft().isNotNull()) {
 			return findDownwardPredecessorOf(node);
 		}
 		return findUpwardPredecessorOf(node);
 	}
 
-	protected BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
+	BinaryTreeNode<K, V> findDownwardSuccessorOf(BinaryTreeNode<K, V> node) {
 		return findMinimumNode(node.getRight());
 	}
 
@@ -333,13 +325,13 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 
 	private BinaryTreeNode<K, V> findOutermostNode(BinaryTreeNode<K, V> from,
 	                                               Function<BinaryTreeNode<K, V>, BinaryTreeNode<K, V>> nextMove) {
-		if (isNullNode(from)) {
+		if (from.isNull()) {
 			return getNullNode();
 		}
 
 		BinaryTreeNode<K, V> current = from;
 		BinaryTreeNode<K, V> next = nextMove.apply(current);
-		while (isNotNullNode(next)) {
+		while (next.isNotNull()) {
 			current = next;
 			next = nextMove.apply(current);
 		}
@@ -356,7 +348,7 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 
 	private BinaryTreeNode<K, V> goUpUntil(BinaryTreeNode<K, V> node, Predicate<BinaryTreeNode<K, V>> until) {
 		BinaryTreeNode<K, V> ancestor = node.getParent();
-		while (isNotNullNode(ancestor)) {
+		while (ancestor.isNotNull()) {
 			if (until.test(ancestor)) {
 				return ancestor;
 			}

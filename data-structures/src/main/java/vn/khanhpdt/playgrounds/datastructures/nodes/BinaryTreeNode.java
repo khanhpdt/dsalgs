@@ -18,8 +18,20 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 	// for traversing
 	private BinaryTreeNode<K, V> next;
 
-	protected BinaryTreeNode(Node<K, V> nodeContent) {
+	BinaryTreeNode(Node<K, V> nodeContent) {
 		this.content = nodeContent;
+
+		initNullNeighbors();
+	}
+
+	private void initNullNeighbors() {
+		this.left = getNullNode();
+		this.right = getNullNode();
+		this.parent = getNullNode();
+	}
+
+	protected BinaryTreeNode<K, V> getNullNode() {
+		return BinaryTreeNullNode.getInstance();
 	}
 
 	public V getValue() {
@@ -94,6 +106,14 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 
 	public static <K, V extends Comparable<V>> BinaryTreeNode<K, V> from(K key, V value) {
 		return new BinaryTreeNode<>(new Node<>(key, value));
+	}
+
+	public boolean isNull() {
+		return this == BinaryTreeNullNode.getInstance();
+	}
+
+	public boolean isNotNull() {
+		return !isNull();
 	}
 
 }

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -70,7 +71,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testParentsAfterInsert() throws Exception {
-		assertThat(defaultBST.getRoot().getParent(), is(nullValue()));
+		assertThat(defaultBST.getRoot().getParent(), is(BinaryTreeNullNode.getInstance()));
 		assertThat(defaultBST.getRoot().getLeft().getParent().getValue(), is(30));
 		assertThat(defaultBST.getRoot().getLeft().getLeft().getParent().getValue(), is(20));
 		assertThat(defaultBST.getRoot().getLeft().getRight().getParent().getValue(), is(20));
@@ -186,7 +187,7 @@ public class BinarySearchTreeTest {
 	@Test
 	public void testFindSuccessor_noneFound() {
 		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(40));
-		assertThat(successor, is(nullValue()));
+		assertThat(successor, is(BinaryTreeNullNode.getInstance()));
 	}
 
 	@Test
@@ -204,7 +205,7 @@ public class BinarySearchTreeTest {
 	@Test
 	public void testFindPredecessor_noneFound() {
 		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(15));
-		assertThat(successor, is(nullValue()));
+		assertThat(successor, is(BinaryTreeNullNode.getInstance()));
 	}
 
 }
