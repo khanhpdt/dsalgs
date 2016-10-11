@@ -15,15 +15,15 @@ public class PreOrderTraversalRecursive {
 		return doTraverse(sourceNode);
 	}
 
-	private static <K, V extends Comparable<V>> List<BinaryTreeNode<K, V>> doTraverse(BinaryTreeNode<K, V> startingNode) {
-		if (startingNode.isNull()) {
+	private static <K, V extends Comparable<V>> List<BinaryTreeNode<K, V>> doTraverse(BinaryTreeNode<K, V> sourceNode) {
+		if (sourceNode.isNull()) {
 			return Collections.emptyList();
 		}
 
 		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-		result.add(startingNode);
-		result.addAll(doTraverse(startingNode.getLeft()));
-		result.addAll(doTraverse(startingNode.getRight()));
+		result.add(sourceNode);
+		result.addAll(doTraverse(sourceNode.getLeft()));
+		result.addAll(doTraverse(sourceNode.getRight()));
 		return result;
 	}
 

@@ -3,12 +3,12 @@ package vn.khanhpdt.playgrounds.datastructures.trees;
 import org.junit.Before;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
+import vn.khanhpdt.playgrounds.algorithms.trees.PostOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.algorithms.trees.PreOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -22,10 +22,6 @@ import static org.hamcrest.core.Is.is;
  * @author khanhpdt
  */
 public class BinarySearchTreeTest {
-
-	private static final List<Integer> IN_ORDER_INDEXES = Arrays.asList(4, 1, 7, 2, 5, 0, 3, 6);
-	private static final List<Integer> PRE_ORDER_INDEXES = Arrays.asList(0, 1, 4, 2, 7, 5, 3, 6);
-	private static final List<Integer> POST_ORDER_INDEXES = Arrays.asList(4, 7, 5, 2, 1, 6, 3, 0);
 
 	private List<BinaryTreeNode<UUID, Integer>> defaultNodes;
 	private BinarySearchTree<UUID, Integer> defaultBST;
@@ -83,27 +79,6 @@ public class BinarySearchTreeTest {
 	}
 
 	@Test
-	public void testTraversePreOrderIterative() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(preOrderNodes.get(i), is(defaultNodes.get(PRE_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
-	public void testTraversePostOrderRecursive() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = defaultBST.traversePostOrderRecursive();
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(postOrderNodes.get(i), is(defaultNodes.get(POST_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
-	public void testTraversePostOrderIterative() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = defaultBST.traversePostOrderIterative();
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(postOrderNodes.get(i), is(defaultNodes.get(POST_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
 	public void testRemoveRoot() throws Exception {
 		defaultBST.remove(defaultBST.getRoot().getKey());
 
@@ -138,7 +113,7 @@ public class BinarySearchTreeTest {
 		defaultBST.remove(defaultBST.getRoot().getLeft().getKey());
 
 		int[] postOrderIndexesAfterRemove = {4, 5, 2, 7, 6, 3, 0};
-		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = defaultBST.traversePostOrderIterative();
+		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = PostOrderTraversalIterative.traverse(defaultBST.getRoot());
 		IntStream.range(0, postOrderIndexesAfterRemove.length)
 				.forEach(i -> assertThat("node " + i, postOrderNodes.get(i), is(defaultNodes.get(postOrderIndexesAfterRemove[i]))));
 	}
