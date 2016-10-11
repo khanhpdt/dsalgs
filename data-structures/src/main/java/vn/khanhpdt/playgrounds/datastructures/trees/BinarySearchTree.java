@@ -1,9 +1,10 @@
 package vn.khanhpdt.playgrounds.datastructures.trees;
 
-import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -68,8 +69,14 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 	}
 
 	public void remove(K nodeKey) {
-		BinaryTreeNode<K, V> removedNode = findNodeByKey(nodeKey);
+		remove(findNodeByKey(nodeKey));
+	}
 
+	public void remove(V nodeValue) {
+		remove(findNodeByValue(nodeValue));
+	}
+
+	private void remove(BinaryTreeNode<K, V> removedNode) {
 		// no node found with the given key
 		if (removedNode.isNull()) {
 			return;
@@ -125,8 +132,26 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 	}
 
 	protected BinaryTreeNode<K, V> findNodeByKey(K nodeKey) {
-		List<BinaryTreeNode<K, V>> nodes = InOrderTraversalIterative.traverse(getRoot());
+		List<BinaryTreeNode<K, V>> nodes = traverseInOrder();
 		return nodes.stream().filter(n -> n.getKey().equals(nodeKey)).findFirst().orElse(getNullNode());
+	}
+
+	List<BinaryTreeNode<K, V>> traverseInOrder() {
+		return traverseInOrder(getRoot());
+	}
+
+	private List<BinaryTreeNode<K, V>> traverseInOrder(BinaryTreeNode<K, V> sourceNode) {
+		if (sourceNode.isNull()) {
+			return Collections.emptyList();
+		}
+
+		// in-order traversal
+		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
+		result.addAll(traverseInOrder(sourceNode.getLeft()));
+		result.add(sourceNode);
+		result.addAll(traverseInOrder(sourceNode.getRight()));
+
+		return result;
 	}
 
 	public BinaryTreeNode<K, V> findNodeByValue(V value) {

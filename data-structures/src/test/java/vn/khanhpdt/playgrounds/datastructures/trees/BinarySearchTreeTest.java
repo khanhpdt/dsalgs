@@ -2,9 +2,6 @@ package vn.khanhpdt.playgrounds.datastructures.trees;
 
 import org.junit.Before;
 import org.junit.Test;
-import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
-import vn.khanhpdt.playgrounds.algorithms.trees.PostOrderTraversalIterative;
-import vn.khanhpdt.playgrounds.algorithms.trees.PreOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
@@ -12,7 +9,6 @@ import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -80,47 +76,38 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testRemoveRoot() throws Exception {
-		defaultBST.remove(defaultBST.getRoot().getKey());
+		defaultBST.remove(30);
+		assertInOrderTraversal(defaultBST, 15, 20, 23, 25, 27, 35, 40);
+	}
 
-		int[] preOrderIndexesAfterRemove = {3, 1, 4, 2, 7, 5, 6};
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
-		IntStream.range(0, preOrderIndexesAfterRemove.length)
-				.forEach(i -> assertThat("node " + i, preOrderNodes.get(i), is(defaultNodes.get(preOrderIndexesAfterRemove[i]))));
+	private void assertInOrderTraversal(BinarySearchTree<UUID, Integer> bst, Integer... nodeValues) {
+		List<BinaryTreeNode<UUID, Integer>> nodes = bst.traverseInOrder();
+		for (int i = 0; i < nodes.size(); i++) {
+			assertThat(nodes.get(i).getValue(), is(nodeValues[i]));
+		}
 	}
 
 	@Test
 	public void testRemoveLeaf() throws Exception {
-		defaultBST.remove(defaultBST.getRoot().getLeft().getLeft().getKey());
-
-		int[] inOrderIndexesAfterRemove = {1, 7, 2, 5, 0, 3, 6};
-		List<BinaryTreeNode<UUID, Integer>> inOrderNodes = InOrderTraversalIterative.traverse(defaultBST.getRoot());
-		IntStream.range(0, inOrderIndexesAfterRemove.length)
-				.forEach(i -> assertThat("node " + i, inOrderNodes.get(i), is(defaultNodes.get(inOrderIndexesAfterRemove[i]))));
+		defaultBST.remove(15);
+		assertInOrderTraversal(defaultBST, 20, 23, 25, 27, 30, 35, 40);
 	}
 
 	@Test
 	public void testRemoveNodeWithOneChild() throws Exception {
-		defaultBST.remove(defaultBST.getRoot().getRight().getKey());
-
-		int[] preOrderIndexesAfterRemove = {0, 1, 4, 2, 7, 5, 6};
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
-		IntStream.range(0, preOrderIndexesAfterRemove.length)
-				.forEach(i -> assertThat("node " + i, preOrderNodes.get(i), is(defaultNodes.get(preOrderIndexesAfterRemove[i]))));
+		defaultBST.remove(35);
+		assertInOrderTraversal(defaultBST, 15, 20, 23, 25, 27, 30, 40);
 	}
 
 	@Test
 	public void testRemoveNodeWithTwoChildren() throws Exception {
-		defaultBST.remove(defaultBST.getRoot().getLeft().getKey());
-
-		int[] postOrderIndexesAfterRemove = {4, 5, 2, 7, 6, 3, 0};
-		List<BinaryTreeNode<UUID, Integer>> postOrderNodes = PostOrderTraversalIterative.traverse(defaultBST.getRoot());
-		IntStream.range(0, postOrderIndexesAfterRemove.length)
-				.forEach(i -> assertThat("node " + i, postOrderNodes.get(i), is(defaultNodes.get(postOrderIndexesAfterRemove[i]))));
+		defaultBST.remove(20);
+		assertInOrderTraversal(defaultBST, 15, 23, 25 , 27, 30, 35, 40);
 	}
 
 	@Test
 	public void testParentAfterRemoveNodeWithTwoChildren() throws Exception {
-		defaultBST.remove(defaultBST.getRoot().getLeft().getKey());
+		defaultBST.remove(20);
 
 		assertThat(defaultBST.findNodeByValue(23).getParent().getValue(), is(30));
 		assertThat(defaultBST.findNodeByValue(25).getParent().getValue(), is(23));
