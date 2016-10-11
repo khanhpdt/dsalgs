@@ -1,5 +1,6 @@
 package vn.khanhpdt.playgrounds.datastructures.trees;
 
+import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
 import vn.khanhpdt.playgrounds.datastructures.stacks.Stack;
@@ -13,7 +14,7 @@ import java.util.function.Predicate;
 /**
  * @author khanhpdt
  */
-class BinarySearchTree<K, V extends Comparable<V>> {
+public class BinarySearchTree<K, V extends Comparable<V>> {
 
 	private BinaryTreeNode<K, V> root = getNullNode();
 
@@ -21,7 +22,7 @@ class BinarySearchTree<K, V extends Comparable<V>> {
 		this.root = root;
 	}
 
-	protected BinaryTreeNode<K, V> getRoot() {
+	public BinaryTreeNode<K, V> getRoot() {
 		return root;
 	}
 
@@ -67,54 +68,6 @@ class BinarySearchTree<K, V extends Comparable<V>> {
 			}
 		}
 		return parent;
-	}
-
-	List<BinaryTreeNode<K, V>> traverseInOrderRecursive() {
-		return traverseInOrderRecursive(getRoot());
-	}
-
-	private List<BinaryTreeNode<K, V>> traverseInOrderRecursive(BinaryTreeNode<K, V> startingNode) {
-		if (startingNode.isNull()) {
-			return Collections.emptyList();
-		}
-
-		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-		result.addAll(traverseInOrderRecursive(startingNode.getLeft()));
-		result.add(startingNode);
-		result.addAll(traverseInOrderRecursive(startingNode.getRight()));
-		return result;
-	}
-
-	List<BinaryTreeNode<K, V>> traverseInOrderIterative() {
-		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-
-		// for temporarily holding nodes during traverse
-		Stack<BinaryTreeNode<K, V>> stack = new Stack<>();
-
-		/*
-		Main idea: Keep traversing accordingly to the in-order order. When reaching the sentinel node, goes back to the
-		most recently visited node which is at the top of the stack.
-		*/
-
-		BinaryTreeNode<K, V> currentNode = this.getRoot();
-		// there is no node left to traverse when currentNode is null and no node is in the stack
-		while (currentNode.isNotNull() || !stack.isEmpty()) {
-			if (currentNode.isNotNull()) {
-				// save node to move to it later
-				stack.push(currentNode);
-				// traverse the left subtree of the node before traversing the node
-				currentNode = currentNode.getLeft();
-			} else {
-				// visit node
-				BinaryTreeNode<K, V> visitedNode = stack.pop();
-				result.add(visitedNode);
-
-				// traverse the right subtree of the node after traversing the node
-				currentNode = visitedNode.getRight();
-			}
-		}
-
-		return result;
 	}
 
 	List<BinaryTreeNode<K, V>> traversePreOrderRecursive() {
@@ -273,7 +226,7 @@ class BinarySearchTree<K, V extends Comparable<V>> {
 	}
 
 	protected BinaryTreeNode<K, V> findNodeByKey(K nodeKey) {
-		List<BinaryTreeNode<K, V>> nodes = traverseInOrderIterative();
+		List<BinaryTreeNode<K, V>> nodes = InOrderTraversalIterative.traverse(getRoot());
 		return nodes.stream().filter(n -> n.getKey().equals(nodeKey)).findFirst().orElse(getNullNode());
 	}
 

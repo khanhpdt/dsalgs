@@ -2,6 +2,7 @@ package vn.khanhpdt.playgrounds.datastructures.trees;
 
 import org.junit.Before;
 import org.junit.Test;
+import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
@@ -15,7 +16,6 @@ import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNull.nullValue;
 
 /**
  * @author khanhpdt
@@ -82,20 +82,6 @@ public class BinarySearchTreeTest {
 	}
 
 	@Test
-	public void testTraverseInOrderIterative() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> inOrderNodes = defaultBST.traverseInOrderIterative();
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(inOrderNodes.get(i), is(defaultNodes.get(IN_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
-	public void testTraverseInOrderRecursive() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> inOrderNodes = defaultBST.traverseInOrderRecursive();
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(inOrderNodes.get(i), is(defaultNodes.get(IN_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
 	public void testTraversePreOrderRecursive() throws Exception {
 		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = defaultBST.traversePreOrderRecursive();
 		IntStream.range(0, defaultNodes.size())
@@ -138,7 +124,7 @@ public class BinarySearchTreeTest {
 		defaultBST.remove(defaultBST.getRoot().getLeft().getLeft().getKey());
 
 		int[] inOrderIndexesAfterRemove = {1, 7, 2, 5, 0, 3, 6};
-		List<BinaryTreeNode<UUID, Integer>> inOrderNodes = defaultBST.traverseInOrderIterative();
+		List<BinaryTreeNode<UUID, Integer>> inOrderNodes = InOrderTraversalIterative.traverse(defaultBST.getRoot());
 		IntStream.range(0, inOrderIndexesAfterRemove.length)
 				.forEach(i -> assertThat("node " + i, inOrderNodes.get(i), is(defaultNodes.get(inOrderIndexesAfterRemove[i]))));
 	}
