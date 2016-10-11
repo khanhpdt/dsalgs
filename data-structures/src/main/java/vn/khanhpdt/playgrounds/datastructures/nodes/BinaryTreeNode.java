@@ -116,4 +116,16 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 		return !isNull();
 	}
 
+	/**
+	 * The height of a node is the number of the edges on the longest path from the node to a leaf in the tree.
+	 *
+	 */
+	public int getHeight() {
+		// let height of null node be -1 by convention
+		if (isNull()) {
+			return -1;
+		}
+		return 1 + Math.max(getLeft().getHeight(), getRight().getHeight());
+	}
+
 }

@@ -235,4 +235,8 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return getNullNode();
 	}
 
+	public int getHeight() {
+		return getRoot().getHeight();
+	}
+
 }
