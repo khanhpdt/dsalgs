@@ -80,12 +80,13 @@ public class Graph<K, V> {
 		return vertices.size();
 	}
 
-	public void addDirectedEdges(int[][] pairIndexes) {
-		for (int[] pairIndex : pairIndexes) {
-			if (pairIndex.length == 2) {
-				addDirectedEdge(pairIndex[0], pairIndex[1]);
-			} else if (pairIndex.length == 3) {
-				addDirectedEdge(pairIndex[0], pairIndex[1], pairIndex[2]);
+	public void addDirectedEdges(int[][] indexPairs) {
+		for (int[] indexPair : indexPairs) {
+			if (indexPair.length == 2) {
+				addDirectedEdge(indexPair[0], indexPair[1]);
+			} else if (indexPair.length == 3) {
+				int edgeWeight = indexPair[2];
+				addDirectedEdge(indexPair[0], indexPair[1], edgeWeight);
 			}
 		}
 	}
