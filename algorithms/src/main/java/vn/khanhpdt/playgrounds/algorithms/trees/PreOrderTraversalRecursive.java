@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author khanhpdt
  */
-class InOrderTraversalRecursive {
+public class PreOrderTraversalRecursive {
 
 	static <K, V extends Comparable<V>> List<BinaryTreeNode<K, V>> traverse(BinaryTreeNode<K, V> sourceNode) {
 		return doTraverse(sourceNode);
@@ -21,9 +21,10 @@ class InOrderTraversalRecursive {
 		}
 
 		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-		result.addAll(doTraverse(startingNode.getLeft()));
 		result.add(startingNode);
+		result.addAll(doTraverse(startingNode.getLeft()));
 		result.addAll(doTraverse(startingNode.getRight()));
 		return result;
 	}
+
 }

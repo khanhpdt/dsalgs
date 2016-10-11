@@ -3,6 +3,7 @@ package vn.khanhpdt.playgrounds.datastructures.trees;
 import org.junit.Before;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.algorithms.trees.InOrderTraversalIterative;
+import vn.khanhpdt.playgrounds.algorithms.trees.PreOrderTraversalIterative;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
@@ -82,15 +83,8 @@ public class BinarySearchTreeTest {
 	}
 
 	@Test
-	public void testTraversePreOrderRecursive() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = defaultBST.traversePreOrderRecursive();
-		IntStream.range(0, defaultNodes.size())
-				.forEach(i -> assertThat(preOrderNodes.get(i), is(defaultNodes.get(PRE_ORDER_INDEXES.get(i)))));
-	}
-
-	@Test
 	public void testTraversePreOrderIterative() throws Exception {
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = defaultBST.traversePreOrderIterative();
+		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
 		IntStream.range(0, defaultNodes.size())
 				.forEach(i -> assertThat(preOrderNodes.get(i), is(defaultNodes.get(PRE_ORDER_INDEXES.get(i)))));
 	}
@@ -114,7 +108,7 @@ public class BinarySearchTreeTest {
 		defaultBST.remove(defaultBST.getRoot().getKey());
 
 		int[] preOrderIndexesAfterRemove = {3, 1, 4, 2, 7, 5, 6};
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = defaultBST.traversePreOrderIterative();
+		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
 		IntStream.range(0, preOrderIndexesAfterRemove.length)
 				.forEach(i -> assertThat("node " + i, preOrderNodes.get(i), is(defaultNodes.get(preOrderIndexesAfterRemove[i]))));
 	}
@@ -134,7 +128,7 @@ public class BinarySearchTreeTest {
 		defaultBST.remove(defaultBST.getRoot().getRight().getKey());
 
 		int[] preOrderIndexesAfterRemove = {0, 1, 4, 2, 7, 5, 6};
-		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = defaultBST.traversePreOrderIterative();
+		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
 		IntStream.range(0, preOrderIndexesAfterRemove.length)
 				.forEach(i -> assertThat("node " + i, preOrderNodes.get(i), is(defaultNodes.get(preOrderIndexesAfterRemove[i]))));
 	}

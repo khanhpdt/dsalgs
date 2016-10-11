@@ -59,4 +59,18 @@ public class BSTTraversalTest {
 				.forEach(i -> assertThat(inOrderNodes.get(i), is(defaultNodes.get(IN_ORDER_INDEXES.get(i)))));
 	}
 
+	@Test
+	public void testTraversePreOrderIterative() throws Exception {
+		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalIterative.traverse(defaultBST.getRoot());
+		IntStream.range(0, defaultNodes.size())
+				.forEach(i -> assertThat(preOrderNodes.get(i), is(defaultNodes.get(PRE_ORDER_INDEXES.get(i)))));
+	}
+
+	@Test
+	public void testTraversePreOrderRecursive() throws Exception {
+		List<BinaryTreeNode<UUID, Integer>> preOrderNodes = PreOrderTraversalRecursive.traverse(defaultBST.getRoot());
+		IntStream.range(0, defaultNodes.size())
+				.forEach(i -> assertThat(preOrderNodes.get(i), is(defaultNodes.get(PRE_ORDER_INDEXES.get(i)))));
+	}
+
 }

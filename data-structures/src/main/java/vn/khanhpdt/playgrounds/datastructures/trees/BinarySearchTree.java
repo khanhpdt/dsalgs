@@ -70,49 +70,6 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return parent;
 	}
 
-	List<BinaryTreeNode<K, V>> traversePreOrderRecursive() {
-		return traversePreOrderRecursive(getRoot());
-	}
-
-	private List<BinaryTreeNode<K, V>> traversePreOrderRecursive(BinaryTreeNode<K, V> startingNode) {
-		if (startingNode.isNull()) {
-			return Collections.emptyList();
-		}
-
-		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-		result.add(startingNode);
-		result.addAll(traversePreOrderRecursive(startingNode.getLeft()));
-		result.addAll(traversePreOrderRecursive(startingNode.getRight()));
-		return result;
-	}
-
-	List<BinaryTreeNode<K, V>> traversePreOrderIterative() {
-		List<BinaryTreeNode<K, V>> result = new ArrayList<>();
-
-		Stack<BinaryTreeNode<K, V>> stack = new Stack<>();
-
-		BinaryTreeNode<K, V> currentNode = this.getRoot();
-		while (currentNode.isNotNull() || !stack.isEmpty()) {
-			if (currentNode.isNotNull()) {
-				// visit node
-				result.add(currentNode);
-
-				// save right to move to it later
-				if (currentNode.getRight().isNotNull()) {
-					stack.push(currentNode.getRight());
-				}
-
-				// traverse left
-				currentNode = currentNode.getLeft();
-			} else {
-				// traverse right
-				currentNode = stack.pop();
-			}
-		}
-
-		return result;
-	}
-
 	List<BinaryTreeNode<K, V>> traversePostOrderRecursive() {
 		return traversePostOrderRecursive(getRoot());
 	}
