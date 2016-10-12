@@ -184,4 +184,8 @@ public class BinarySearchTree<K, V extends Comparable<V>> {
 		return getRoot().getHeight();
 	}
 
+	public int size() {
+		return traverseInOrder().size();
+	}
+
 }
