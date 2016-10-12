@@ -31,8 +31,8 @@ public class TestUtils {
 		return nodes;
 	}
 
-	public static BinaryTreeNode<UUID, Integer> randomBinaryTreeNode() {
-		return BinaryTreeNode.from(UUID.randomUUID(), RANDOM.nextInt());
+	public static BinarySearchTreeNode<UUID, Integer> randomBinaryTreeNode() {
+		return BinarySearchTreeNode.from(UUID.randomUUID(), RANDOM.nextInt());
 	}
 
 	public static DoublyLinkedNode<UUID, Integer> randomDoublyLinkedNode() {

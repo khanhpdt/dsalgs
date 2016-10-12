@@ -1,6 +1,6 @@
 package vn.khanhpdt.playgrounds.datastructures.trees;
 
-import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinarySearchTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.RedBlackTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.RedBlackTreeNullNode;
 
@@ -126,7 +126,7 @@ class RedBlackTree<K, V extends Comparable<V>> extends BinarySearchTree<K, V> {
 	}
 
 	@Override
-	protected void setRoot(BinaryTreeNode<K, V> root) {
+	protected void setRoot(BinarySearchTreeNode<K, V> root) {
 		this.root = (RedBlackTreeNode<K, V>) root;
 	}
 

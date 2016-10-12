@@ -2,6 +2,7 @@ package vn.khanhpdt.playgrounds.algorithms.trees;
 
 import org.junit.Before;
 import org.junit.Test;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinarySearchTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
 import vn.khanhpdt.playgrounds.datastructures.trees.BinarySearchTree;
 
@@ -24,7 +25,7 @@ public class BSTTraversalTest {
 	private static final List<Integer> PRE_ORDER_INDEXES = Arrays.asList(0, 1, 4, 2, 7, 5, 3, 6);
 	private static final List<Integer> POST_ORDER_INDEXES = Arrays.asList(4, 7, 5, 2, 1, 6, 3, 0);
 
-	private List<BinaryTreeNode<UUID, Integer>> defaultNodes;
+	private List<BinarySearchTreeNode<UUID, Integer>> defaultNodes;
 	private BinarySearchTree<UUID, Integer> defaultBST;
 
 	@Before
@@ -33,13 +34,13 @@ public class BSTTraversalTest {
 		defaultBST = getDefaultTree(defaultNodes);
 	}
 
-	private List<BinaryTreeNode<UUID, Integer>> getDefaultNodes() {
+	private List<BinarySearchTreeNode<UUID, Integer>> getDefaultNodes() {
 		return Stream.of(30, 20, 25, 35, 15, 27, 40, 23)
-				.map(value -> BinaryTreeNode.from(UUID.randomUUID(), value))
+				.map(value -> BinarySearchTreeNode.from(UUID.randomUUID(), value))
 				.collect(Collectors.toList());
 	}
 
-	private BinarySearchTree<UUID, Integer> getDefaultTree(List<BinaryTreeNode<UUID, Integer>> defaultNodes) {
+	private BinarySearchTree<UUID, Integer> getDefaultTree(List<BinarySearchTreeNode<UUID, Integer>> defaultNodes) {
 		BinarySearchTree<UUID, Integer> bst = new BinarySearchTree<>();
 		defaultNodes.forEach(bst::insert);
 		return bst;

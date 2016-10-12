@@ -3,8 +3,8 @@ package vn.khanhpdt.playgrounds.datastructures.trees;
 import org.junit.Before;
 import org.junit.Test;
 import vn.khanhpdt.playgrounds.datastructures.TestUtils;
-import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNode;
-import vn.khanhpdt.playgrounds.datastructures.nodes.BinaryTreeNullNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinarySearchTreeNode;
+import vn.khanhpdt.playgrounds.datastructures.nodes.BinarySearchTreeNullNode;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,7 +19,7 @@ import static org.hamcrest.core.Is.is;
  */
 public class BinarySearchTreeTest {
 
-	private List<BinaryTreeNode<UUID, Integer>> defaultNodes;
+	private List<BinarySearchTreeNode<UUID, Integer>> defaultNodes;
 	private BinarySearchTree<UUID, Integer> defaultBST;
 
 	@Before
@@ -28,13 +28,13 @@ public class BinarySearchTreeTest {
 		defaultBST = getDefaultTree(defaultNodes);
 	}
 
-	private List<BinaryTreeNode<UUID, Integer>> getDefaultNodes() {
+	private List<BinarySearchTreeNode<UUID, Integer>> getDefaultNodes() {
 		return Stream.of(30, 20, 25, 35, 15, 27, 40, 23)
-				.map(value -> BinaryTreeNode.from(UUID.randomUUID(), value))
+				.map(value -> BinarySearchTreeNode.from(UUID.randomUUID(), value))
 				.collect(Collectors.toList());
 	}
 
-	private BinarySearchTree<UUID, Integer> getDefaultTree(List<BinaryTreeNode<UUID, Integer>> defaultNodes) {
+	private BinarySearchTree<UUID, Integer> getDefaultTree(List<BinarySearchTreeNode<UUID, Integer>> defaultNodes) {
 		BinarySearchTree<UUID, Integer> bst = new BinarySearchTree<>();
 		defaultNodes.forEach(bst::insert);
 		return bst;
@@ -44,7 +44,7 @@ public class BinarySearchTreeTest {
 	public void testInsertFirstNode() throws Exception {
 		BinarySearchTree<UUID, Integer> bst = new BinarySearchTree<>();
 
-		BinaryTreeNode<UUID, Integer> firstNode = TestUtils.randomBinaryTreeNode();
+		BinarySearchTreeNode<UUID, Integer> firstNode = TestUtils.randomBinaryTreeNode();
 		bst.insert(firstNode);
 
 		assertThat(bst.getRoot(), is(firstNode));
@@ -64,7 +64,7 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testParentsAfterInsert() throws Exception {
-		assertThat(defaultBST.getRoot().getParent(), is(BinaryTreeNullNode.getInstance()));
+		assertThat(defaultBST.getRoot().getParent(), is(BinarySearchTreeNullNode.getInstance()));
 		assertThat(defaultBST.getRoot().getLeft().getParent().getValue(), is(30));
 		assertThat(defaultBST.getRoot().getLeft().getLeft().getParent().getValue(), is(20));
 		assertThat(defaultBST.getRoot().getLeft().getRight().getParent().getValue(), is(20));
@@ -81,7 +81,7 @@ public class BinarySearchTreeTest {
 	}
 
 	private void assertInOrderTraversal(BinarySearchTree<UUID, Integer> bst, Integer... nodeValues) {
-		List<BinaryTreeNode<UUID, Integer>> nodes = bst.traverseInOrder();
+		List<BinarySearchTreeNode<UUID, Integer>> nodes = bst.traverseInOrder();
 		for (int i = 0; i < nodes.size(); i++) {
 			assertThat(nodes.get(i).getValue(), is(nodeValues[i]));
 		}
@@ -116,38 +116,38 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void testFindSuccessor_goDown() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(20));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(20));
 		assertThat(successor.getValue(), is(23));
 	}
 
 	@Test
 	public void testFindSuccessor_goUp() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(27));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(27));
 		assertThat(successor.getValue(), is(30));
 	}
 
 	@Test
 	public void testFindSuccessor_noneFound() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(40));
-		assertThat(successor, is(BinaryTreeNullNode.getInstance()));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findSuccessorOf(defaultBST.findNodeByValue(40));
+		assertThat(successor, is(BinarySearchTreeNullNode.getInstance()));
 	}
 
 	@Test
 	public void testFindPredecessor_goDown() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(30));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(30));
 		assertThat(successor.getValue(), is(27));
 	}
 
 	@Test
 	public void testFindPredecessor_goUp() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(23));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(23));
 		assertThat(successor.getValue(), is(20));
 	}
 
 	@Test
 	public void testFindPredecessor_noneFound() {
-		BinaryTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(15));
-		assertThat(successor, is(BinaryTreeNullNode.getInstance()));
+		BinarySearchTreeNode<UUID, Integer> successor = defaultBST.findPredecessorOf(defaultBST.findNodeByValue(15));
+		assertThat(successor, is(BinarySearchTreeNullNode.getInstance()));
 	}
 
 }

@@ -3,9 +3,11 @@ package vn.khanhpdt.playgrounds.datastructures.nodes;
 /**
  * @param <K>  type of node key
  * @param <V>  type of node value
+ *
  * @author khanhpdt
  */
-public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<BinaryTreeNode<K, V>>, ForwardLinked<BinaryTreeNode<K, V>> {
+public class BinaryTreeNode<K, V extends Comparable<V>>
+		implements Comparable<BinaryTreeNode<K, V>>, ForwardLinked<BinaryTreeNode<K, V>> {
 
 	private Node<K, V> content;
 
@@ -28,10 +30,6 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 		this.left = getNullNode();
 		this.right = getNullNode();
 		this.parent = getNullNode();
-	}
-
-	protected BinaryTreeNode<K, V> getNullNode() {
-		return BinaryTreeNullNode.getInstance();
 	}
 
 	public V getValue() {
@@ -108,8 +106,12 @@ public class BinaryTreeNode<K, V extends Comparable<V>> implements Comparable<Bi
 		return new BinaryTreeNode<>(new Node<>(key, value));
 	}
 
+	BinaryTreeNode<K, V> getNullNode() {
+		throw new UnsupportedOperationException("Not supported yet!");
+	}
+
 	public boolean isNull() {
-		return this == BinaryTreeNullNode.getInstance();
+		return this == getNullNode();
 	}
 
 	public boolean isNotNull() {

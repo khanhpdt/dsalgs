@@ -5,7 +5,7 @@ import java.awt.Color;
 /**
  * @author khanhpdt
  */
-public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinaryTreeNode<K, V> {
+public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinarySearchTreeNode<K, V> {
 
 	private Color color;
 
@@ -51,8 +51,4 @@ public class RedBlackTreeNode<K, V extends Comparable<V>> extends BinaryTreeNode
 		return getParent().getParent();
 	}
 
-	@Override
-	public boolean isNull() {
-		return this == getNullNode();
-	}
 }
