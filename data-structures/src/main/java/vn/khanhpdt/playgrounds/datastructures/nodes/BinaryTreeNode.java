@@ -130,4 +130,16 @@ public class BinaryTreeNode<K, V extends Comparable<V>>
 		return 1 + Math.max(getLeft().getHeight(), getRight().getHeight());
 	}
 
+	/**
+	 * The depth of a node is the number of edges on the path from the node to the root of the tree.
+	 *
+	 */
+	public int getDepth() {
+		// let depth of null node be -1 by convention
+		if (isNull()) {
+			return -1;
+		}
+		return 1 + getParent().getDepth();
+	}
+
 }
