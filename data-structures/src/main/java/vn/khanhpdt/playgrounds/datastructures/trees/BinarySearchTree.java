@@ -12,7 +12,15 @@ import java.util.List;
  */
 public class BinarySearchTree<K, V extends Comparable<V>> {
 
-	private BinarySearchTreeNode<K, V> root = getNullNode();
+	private BinarySearchTreeNode<K, V> root;
+
+	public BinarySearchTree() {
+		this.root = getNullNode();
+	}
+
+	public BinarySearchTree(BinarySearchTreeNode<K, V> root) {
+		this.root = root;
+	}
 
 	void setRoot(BinarySearchTreeNode<K, V> root) {
 		this.root = root;
