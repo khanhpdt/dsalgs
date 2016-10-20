@@ -31,7 +31,8 @@
     - Shell sort
     - Merge sort
     - Heap sort
-    - Quick sort    
+    - Quick sort
+    - Counting sort
 - Tree
     - Post-order traverse
     - Pre-order traverse
