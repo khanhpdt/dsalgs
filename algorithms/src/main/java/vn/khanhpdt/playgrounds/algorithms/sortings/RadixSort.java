@@ -6,9 +6,14 @@ import java.util.function.Function;
 /**
  * @author khanhpdt
  */
-public class RadixSort {
+class RadixSort implements IntegerSort {
 
-	public static int[] sort(int[] numbers) {
+	/**
+	 * Worst-case complexity: O(d(n + b)), where d is the number of digits in each integer and b is the base of the
+	 * integer number system.
+	 */
+	@Override
+	public int[] sort(int[] numbers) {
 		int max = Arrays.stream(numbers).max().getAsInt();
 
 		int nDigits = countDigits(max);

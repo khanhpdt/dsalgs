@@ -6,26 +6,26 @@ import java.util.function.Function;
 /**
  * @author khanhpdt
  */
-public class CountingSort {
+class CountingSort implements IntegerSort {
 
 	/**
-	 * Sorts n integers in the range from 0 to k.
-	 * <p>Worst-case complexity: O(n + k)</p>
+	 * Worst-case complexity: O(n + k)
 	 */
-	public static int[] sort(int[] elements) {
-		return sort(elements, Function.identity());
+	@Override
+	public int[] sort(int[] integers) {
+		return sort(integers, Function.identity());
 	}
 
-	private static void validate(int[] elements) {
-		for (int element : elements) {
+	private static void validate(int[] integers) {
+		for (int element : integers) {
 			if (element < 0) {
 				throw new IllegalArgumentException("Only supports non-negative numbers at the moment");
 			}
 		}
 	}
 
-	public static int[] sort(int[] elements, Function<Integer, Integer> keyGetter) {
-		int[] keys = Arrays.stream(elements).map(keyGetter::apply).toArray();
+	public static int[] sort(int[] items, Function<Integer, Integer> keyGetter) {
+		int[] keys = Arrays.stream(items).map(keyGetter::apply).toArray();
 
 		validate(keys);
 
@@ -43,8 +43,8 @@ public class CountingSort {
 		// TODO sort in-place
 		int[] result = new int[keys.length];
 		// go backward to achieve stability
-		for (int i = elements.length - 1; i >= 0; i--) {
-			int element = elements[i];
+		for (int i = items.length - 1; i >= 0; i--) {
+			int element = items[i];
 			int key = keyGetter.apply(element);
 
 			// because of the counting, we're sure that the keys less than or equal to this key
