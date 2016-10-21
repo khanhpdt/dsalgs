@@ -1,0 +1,36 @@
+package vn.khanhpdt.playgrounds.algorithms.sortings;
+
+import java.util.Arrays;
+import java.util.function.Function;
+
+/**
+ * @author khanhpdt
+ */
+public class RadixSort {
+
+	public static int[] sort(int[] numbers) {
+		int max = Arrays.stream(numbers).max().getAsInt();
+
+		int nDigits = countDigits(max);
+
+		int[] sorted = numbers;
+		for (int i = 1; i <= nDigits; i++) {
+			int finalI = i;
+			// sort accordingly to the least significant digit first
+			Function<Integer, Integer> getDigit = x -> (x % (int) Math.pow(10, finalI)) / (int) Math.pow(10, finalI - 1);
+			sorted = CountingSort.sort(sorted, getDigit);
+		}
+
+		return sorted;
+	}
+
+	private static int countDigits(int n) {
+		int result = 0;
+		while (n > 0) {
+			result++;
+			n /= 10;
+		}
+		return result;
+	}
+
+}
