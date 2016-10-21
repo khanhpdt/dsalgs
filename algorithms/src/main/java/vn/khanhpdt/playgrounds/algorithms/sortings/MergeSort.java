@@ -3,12 +3,12 @@ package vn.khanhpdt.playgrounds.algorithms.sortings;
 /**
  * @author khanhpdt
  */
-public class MergeSort<T extends Comparable<T>> implements Sorter<T> {
+class MergeSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	@Override
-	public void sort(T[] elements) {
-		T[] auxiliary = elements.clone();
-		doSort(elements, auxiliary, 0, elements.length - 1);
+	public void sort(T[] items) {
+		T[] auxiliary = items.clone();
+		doSort(items, auxiliary, 0, items.length - 1);
 	}
 
 	private void doSort(T[] elements, T[] auxiliary, int start, int end) {

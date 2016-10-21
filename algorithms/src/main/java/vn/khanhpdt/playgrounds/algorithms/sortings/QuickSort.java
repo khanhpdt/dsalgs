@@ -5,11 +5,11 @@ import static vn.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.s
 /**
  * @author khanhpdt
  */
-public class QuickSort<T extends Comparable<T>> implements Sorter<T> {
+class QuickSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	@Override
-	public void sort(T[] elements) {
-		doSort(elements, 0, elements.length - 1);
+	public void sort(T[] items) {
+		doSort(items, 0, items.length - 1);
 	}
 
 	private void doSort(T[] elements, int start, int end) {

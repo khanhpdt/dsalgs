@@ -9,14 +9,14 @@ import static vn.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.s
 /**
  * @author khanhpdt
  */
-public class HeapSort<T extends Comparable<T>> implements Sorter<T> {
+class HeapSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	@Override
-	public void sort(T[] elements) {
-		BinaryMaxHeap heap = new BinaryMaxHeap<>(Arrays.asList(elements), T::compareTo);
-		for (int i = elements.length - 1; i > 0; i--) {
+	public void sort(T[] items) {
+		BinaryMaxHeap heap = new BinaryMaxHeap<>(Arrays.asList(items), T::compareTo);
+		for (int i = items.length - 1; i > 0; i--) {
 			// move the largest element (at index 0) to the tail
-			swap(elements, 0, i);
+			swap(items, 0, i);
 			// ignore the tail as it is already sorted
 			heap.reduceHeapSizeBy(1);
 			// restructure the heap because of the new root

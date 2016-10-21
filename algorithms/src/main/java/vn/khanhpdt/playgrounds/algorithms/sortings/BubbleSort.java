@@ -5,18 +5,18 @@ import static vn.khanhpdt.playgrounds.datastructuresalgorithms.commons.Commons.s
 /**
  * @author khanhpdt
  */
-public class BubbleSort<T extends Comparable<T>> implements Sorter<T> {
+class BubbleSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	@Override
-	public void sort(T[] elements) {
+	public void sort(T[] items) {
 		int sorted = 0;
 		// when (elements.length - 1) elements are sorted, all elements are also sorted
-		while (sorted < elements.length - 1) {
+		while (sorted < items.length - 1) {
 			// the last sorted elements are already sorted, so exclude them from the sort
-			for (int i = 0; i < (elements.length - 1) - sorted; i++) {
-				if (elements[i].compareTo(elements[i+1]) > 0) {
+			for (int i = 0; i < (items.length - 1) - sorted; i++) {
+				if (items[i].compareTo(items[i+1]) > 0) {
 					// swap when out of order
-					swap(elements, i, i + 1);
+					swap(items, i, i + 1);
 				}
 			}
 			sorted++;

@@ -3,13 +3,13 @@ package vn.khanhpdt.playgrounds.algorithms.sortings;
 /**
  * @author khanhpdt
  */
-public class SelectionSort<T extends Comparable<T>> implements Sorter<T> {
+class SelectionSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	@Override
-	public void sort(T[] elements) {
-		for (int i = 0; i < elements.length; i++) {
-			int minIndex = findIndexOfMinimum(elements, i);
-			exchangeElements(elements, i, minIndex);
+	public void sort(T[] items) {
+		for (int i = 0; i < items.length; i++) {
+			int minIndex = findIndexOfMinimum(items, i);
+			exchangeElements(items, i, minIndex);
 		}
 	}
 

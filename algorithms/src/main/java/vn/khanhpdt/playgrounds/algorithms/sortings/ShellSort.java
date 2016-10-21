@@ -3,15 +3,15 @@ package vn.khanhpdt.playgrounds.algorithms.sortings;
 /**
  * @author khanhpdt
  */
-public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
+class ShellSort<T extends Comparable<T>> implements ComparisonSort<T> {
 
 	private int gap;
 
 	private int gapSeed;
 
 	@Override
-	public void sort(T[] elements) {
-		generateGapSeed(elements.length);
+	public void sort(T[] items) {
+		generateGapSeed(items.length);
 
 		do {
 			generateGap();
@@ -19,15 +19,15 @@ public class ShellSort<T extends Comparable<T>> implements Sorter<T> {
 			// when i == gap, all the elements in the array are processed
 			for (int i = 0; i < gap; i++) {
 				// insertion-sort each subarray containing elements separated by gap-position
-				for (int j = i + gap; j < elements.length; j = j + gap) {
-					T element = elements[j];
+				for (int j = i + gap; j < items.length; j = j + gap) {
+					T element = items[j];
 
 					int k = j - gap;
-					while (k >= 0 && element.compareTo(elements[k]) < 0) {
-						elements[k + gap] = elements[k];
+					while (k >= 0 && element.compareTo(items[k]) < 0) {
+						items[k + gap] = items[k];
 						k = k - gap;
 					}
-					elements[k + gap] = element;
+					items[k + gap] = element;
 				}
 			}
 		}
