@@ -33,6 +33,7 @@
     - Heap sort
     - Quick sort
     - Counting sort
+    - Radix sort
 - Tree
     - Post-order traverse
     - Pre-order traverse
