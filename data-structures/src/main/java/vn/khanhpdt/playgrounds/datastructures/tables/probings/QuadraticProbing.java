@@ -1,53 +1,30 @@
 package vn.khanhpdt.playgrounds.datastructures.tables.probings;
 
-import java.util.function.Function;
-
 /**
  * @author khanhpdt
  */
-public class QuadraticProbing<K> implements ProbingMethod<K> {
-
-	private final Function<K, Integer> auxiliaryHashFunction;
+class QuadraticProbing<K> implements ProbingMethod {
 
 	private final int nSlots;
 
+	private final int initialSlotIndex;
+
 	private int sequenceNumber;
 
-	public QuadraticProbing(int nSlots) {
-		if (!isPowerOfTwo(nSlots)) {
-			throw new IllegalArgumentException("The current quadratic hash function only supports the hash table with the " +
-					"number of slots that is a power of two.");
-		}
-
+	QuadraticProbing(K key, int nSlots) {
 		this.nSlots = nSlots;
+		this.initialSlotIndex = Math.abs(key.hashCode() % this.nSlots);
 		this.sequenceNumber = 0;
-		this.auxiliaryHashFunction = this::defaultAuxiliaryHashFunction;
-	}
-
-	private boolean isPowerOfTwo(int n) {
-		int power = 1;
-		while (power < n) {
-			power = 2 * power;
-		}
-		return power == n;
-	}
-
-	private Integer defaultAuxiliaryHashFunction(K key) {
-		return Math.abs(key.hashCode() % nSlots);
 	}
 
 	@Override
-	public int probe(K key) {
-		int result = hash(key);
+	public int probe() {
+		// quadratic probing: the probing step is quadratic to the sequence number.
+		// However, this implementation works best when the number of slots is a prime number or a power of two.
+		// see Problem 11-3 in [1]
+		int result = (initialSlotIndex + (sequenceNumber * sequenceNumber + sequenceNumber) / 2) % nSlots;
 		sequenceNumber++;
 		return result;
-	}
-
-	private Integer hash(K key) {
-		// quadratic probing: the hash value is quadratic to the sequence number. However, this implementation can only
-		// be guaranteed to work if the number of slots is a power of two.
-		int probingOffset = ((sequenceNumber * sequenceNumber + sequenceNumber) / 2) % nSlots;
-		return Math.abs((auxiliaryHashFunction.apply(key) + probingOffset) % nSlots);
 	}
 
 }

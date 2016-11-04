@@ -1,39 +1,28 @@
 package vn.khanhpdt.playgrounds.datastructures.tables.probings;
 
-import java.util.function.Function;
-
 /**
  * @author khanhpdt
  */
-public class LinearProbing<K> implements ProbingMethod<K> {
-
-	private final Function<K, Integer> auxiliaryHashFunction;
+class LinearProbing<K> implements ProbingMethod {
 
 	private final int nSlots;
 
+	private final int initialHash;
+
 	private int sequenceNumber;
 
-	public LinearProbing(int nSlots) {
+	LinearProbing(K key, int nSlots) {
 		this.nSlots = nSlots;
+		this.initialHash = Math.abs(key.hashCode() % this.nSlots);
 		this.sequenceNumber = 0;
-		this.auxiliaryHashFunction = this::defaultAuxiliaryHashFunction;
-	}
-
-	private Integer defaultAuxiliaryHashFunction(K key) {
-		return Math.abs(key.hashCode() % nSlots);
 	}
 
 	@Override
-	public int probe(K key) {
-		int result = hash(key);
+	public int probe() {
+		// linear probing: the probing step is linear to the sequence number
+		int result = (initialHash + sequenceNumber) % nSlots;
 		sequenceNumber++;
 		return result;
-	}
-
-	private Integer hash(K key) {
-		// linear probing: the hash value is linear to the sequence number
-		int probingOffset = sequenceNumber;
-		return Math.abs((auxiliaryHashFunction.apply(key) + probingOffset) % nSlots);
 	}
 
 }

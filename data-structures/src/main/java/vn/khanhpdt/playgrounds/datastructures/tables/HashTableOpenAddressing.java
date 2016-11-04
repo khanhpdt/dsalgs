@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * @author khanhpdt
  */
-public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
+class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 
 	private Node<K, V>[] slots;
 
@@ -18,7 +18,7 @@ public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 
 	private SlotStatus[] slotStatuses;
 
-	public HashTableOpenAddressing(ProbingMethodName probingMethodName) {
+	HashTableOpenAddressing(ProbingMethodName probingMethodName) {
 		super();
 		init(probingMethodName);
 	}
@@ -31,7 +31,7 @@ public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 		Arrays.fill(slotStatuses, SlotStatus.AVAILABLE);
 	}
 
-	public HashTableOpenAddressing(int nSlots, ProbingMethodName probingMethodName) {
+	HashTableOpenAddressing(int nSlots, ProbingMethodName probingMethodName) {
 		super();
 		this.nSlots = nSlots;
 		init(probingMethodName);
@@ -43,13 +43,13 @@ public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 			throw new IllegalStateException("The hash table is already full.");
 		}
 
-		final ProbingMethod<K> probingMethod = ProbingMethods.create(probingMethodName, nSlots);
+		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, item.getKey(), nSlots);
 
 		// keep searching until either finding an available slot or all the slots are probed
-		int slotIndex = probingMethod.probe(item.getKey());
+		int slotIndex = probingMethod.probe();
 		int nProbes = 1;
 		while (slotStatuses[slotIndex] == SlotStatus.ALLOCATED && nProbes <= nSlots) {
-			slotIndex = probingMethod.probe(item.getKey());
+			slotIndex = probingMethod.probe();
 			nProbes++;
 		}
 
@@ -78,15 +78,15 @@ public class HashTableOpenAddressing<K, V> extends HashTable<K, V> {
 	}
 
 	private int searchSlot(K itemKey) {
-		final ProbingMethod<K> probingMethod = ProbingMethods.create(probingMethodName, nSlots);
+		final ProbingMethod probingMethod = ProbingMethods.create(probingMethodName, itemKey, nSlots);
 
-		int slotIndex = probingMethod.probe(itemKey);
+		int slotIndex = probingMethod.probe();
 		int nProbes = 1;
 
 		// if the slot at slotIndex is still available, the item is not in the hash table, because otherwise it would have
 		// been inserted into the slot
 		while (slotStatuses[slotIndex] == SlotStatus.ALLOCATED && !isSlotWithKey(slotIndex, itemKey) && nProbes <= nSlots) {
-			slotIndex = probingMethod.probe(itemKey);
+			slotIndex = probingMethod.probe();
 			nProbes++;
 		}
 
