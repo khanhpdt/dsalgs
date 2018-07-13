@@ -1,4 +1,3 @@
-from sorting.test_sorting import SortTestBase
 from sorting.utils import exchange, list_to_str
 
 
@@ -18,10 +17,3 @@ def selection_sort(arr):
             exchange(items, i, min_index)
 
     return items
-
-
-class SelectionSortTest(SortTestBase):
-
-    def sorting_func(self, items):
-        return selection_sort(items)
-

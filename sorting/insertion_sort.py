@@ -1,4 +1,3 @@
-from sorting.test_sorting import SortTestBase
 from sorting.utils import move, list_to_str
 
 
@@ -21,11 +20,6 @@ def insertion_sort(arr):
     return items
 
 
-class InsertionSortTest(SortTestBase):
-    def sorting_func(self, items):
-        return insertion_sort(items)
-
-
 def insertion_sort2(arr):
     print("Sorting [%s]..." % list_to_str(arr))
 
@@ -43,8 +37,3 @@ def insertion_sort2(arr):
             items = move(items, i, insertion_index)
 
     return items
-
-
-class InsertionSort2Test(SortTestBase):
-    def sorting_func(self, items):
-        return insertion_sort2(items)
