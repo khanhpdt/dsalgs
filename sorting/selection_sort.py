@@ -1,5 +1,4 @@
-import random
-from unittest import TestCase
+from sorting.test_sorting import SortTestBase
 
 
 def exchange(items, i1, i2):
@@ -21,15 +20,8 @@ def selection_sort(items):
     return items
 
 
-class SelectionSortTest(TestCase):
+class SelectionSortTest(SortTestBase):
 
-    def test_simple(self):
-        self.assertEqual(selection_sort([]), [])
-        self.assertEqual(selection_sort([1]), [1])
-        self.assertEqual(selection_sort([4, 1, 2, 3]), [1, 2, 3, 4])
+    def sorting_func(self, items):
+        return selection_sort(items)
 
-    def test_many(self):
-        for i in range(1, 100):
-            arr = list(range(1, i + 1))
-            random.shuffle(arr)
-            self.assertEqual(selection_sort(arr), sorted(arr))
