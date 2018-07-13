@@ -2,23 +2,23 @@ from sorting.test_sorting import SortTestBase
 from sorting.utils import move, list_to_str
 
 
-def insertion_sort(items):
-    print("Sorting [%s]..." % list_to_str(items))
+def insertion_sort(arr):
+    print("Sorting [%s]..." % list_to_str(arr))
 
-    items_copy = items.copy()
+    items = arr.copy()
 
-    for i in range(len(items_copy)):
-        # find the position to insert items[i] without breaking the order in the sorted area
+    for i in range(len(items)):
+        item = items[i]
+
+        # shift items on the left of item i to the right to preserve the right place to insert the item i
         j = i - 1
-        while j >= 0 and items_copy[j] > items_copy[i]:
+        while j >= 0 and items[j] > item:
+            items[j + 1] = items[j]
             j = j - 1
 
-        insertion_index = 0 if j < 0 else j + 1
+        items[j + 1] = item
 
-        if insertion_index != i:
-            items_copy = move(items_copy, i, insertion_index)
-
-    return items_copy
+    return items
 
 
 class InsertionSortTest(SortTestBase):
@@ -26,28 +26,25 @@ class InsertionSortTest(SortTestBase):
         return insertion_sort(items)
 
 
-def insertion_sort_2(items):
-    print("Sorting [%s]..." % list_to_str(items))
+def insertion_sort2(arr):
+    print("Sorting [%s]..." % list_to_str(arr))
 
-    items_copy = items.copy()
+    items = arr.copy()
 
-    for i in range(len(items_copy)):
-        item = items_copy[i]
-
+    for i in range(len(items)):
         # find the position to insert items[i] without breaking the order in the sorted area
         j = i - 1
-        while j >= 0 and items_copy[j] > item:
-            # This is the difference b/w this function and the insertion_sort() function above.
-            # shift item to the right to preserve place to insert the item
-            items_copy[j + 1] = items_copy[j]
-
+        while j >= 0 and items[j] > items[i]:
             j = j - 1
 
-        items_copy[j + 1] = item
+        insertion_index = 0 if j < 0 else j + 1
 
-    return items_copy
+        if insertion_index != i:
+            items = move(items, i, insertion_index)
+
+    return items
 
 
 class InsertionSort2Test(SortTestBase):
     def sorting_func(self, items):
-        return insertion_sort_2(items)
+        return insertion_sort2(items)

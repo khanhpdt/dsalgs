@@ -2,8 +2,10 @@ from sorting.test_sorting import SortTestBase
 from sorting.utils import exchange, list_to_str
 
 
-def selection_sort(items):
-    print("Sorting [%s]..." % list_to_str(items))
+def selection_sort(arr):
+    print("Sorting [%s]..." % list_to_str(arr))
+
+    items = arr.copy()
 
     for i in range(0, len(items) - 1):
         # select the minimum item from the unsorted items
