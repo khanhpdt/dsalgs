@@ -1,10 +1,5 @@
 from sorting.test_sorting import SortTestBase
-
-
-def exchange(items, i1, i2):
-    tmp = items[i1]
-    items[i1] = items[i2]
-    items[i2] = tmp
+from sorting.utils import exchange
 
 
 def selection_sort(items):
