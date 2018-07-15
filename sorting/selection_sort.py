@@ -2,7 +2,7 @@ from sorting.utils import exchange, list_to_str
 
 
 def selection_sort(arr):
-    print("Sorting [%s]..." % list_to_str(arr))
+    print("Sorting %s..." % list_to_str(arr))
 
     items = arr.copy()
 

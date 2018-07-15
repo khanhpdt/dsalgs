@@ -21,3 +21,7 @@ class TestUtils(object):
     def test_move_from_right_to_left(self):
         assert utils.move([1, 2, 3, 4, 5], 2, 0) == [3, 1, 2, 4, 5]
         assert utils.move([1, 2, 3, 4, 5], 3, 1) == [1, 4, 2, 3, 5]
+
+    def test_list_to_str(self):
+        assert utils.list_to_str([]) == "[]"
+        assert utils.list_to_str([1, 2, 3]) == "[1, 2, 3]"

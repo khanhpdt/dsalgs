@@ -8,7 +8,7 @@ def exchange(items, i1, i2):
 
 
 def list_to_str(items):
-    return ",".join([str(item) for item in items])
+    return "[%s]" % ", ".join([str(item) for item in items])
 
 
 def circular_shift_right(items, start, end):

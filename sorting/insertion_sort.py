@@ -2,7 +2,7 @@ from sorting.utils import move, list_to_str
 
 
 def insertion_sort(arr):
-    print("Sorting [%s]..." % list_to_str(arr))
+    print("Sorting %s..." % list_to_str(arr))
 
     items = arr.copy()
 
@@ -21,7 +21,7 @@ def insertion_sort(arr):
 
 
 def insertion_sort2(arr):
-    print("Sorting [%s]..." % list_to_str(arr))
+    print("Sorting %s..." % list_to_str(arr))
 
     items = arr.copy()
 
