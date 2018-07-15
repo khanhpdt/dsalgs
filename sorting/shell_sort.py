@@ -36,7 +36,7 @@ def shell_sort2(arr):
 
     while h >= 1:
         for i in range(h, len(items)):
-            # a compact version of insertion sort to sort the items in h-position apart
+            # a compact version of insertion sort to sort the items h-position apart
             # i.e., sort items i, i-h, i-2*h, ...
             for j in range(i, h - 1, -h):
                 if items[j] < items[j - h]:
