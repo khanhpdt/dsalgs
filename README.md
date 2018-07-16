@@ -21,4 +21,6 @@ pytest -q path_to_file
 # to see the test coverage
 pytest --cov src
 
+# to see statements not covered by tests
+pytest --cov=src --cov-report term-missing
 ```

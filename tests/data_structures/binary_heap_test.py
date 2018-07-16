@@ -72,6 +72,13 @@ class BinaryHeapTestCommon:
         assert root == 2
         assert self.heap.size() == 0
 
+    def test_remove_from_empty_heap(self):
+        self.heap.build([])
+
+        root = self.heap.remove_root()
+
+        assert root is None
+
     def test_get_invalid_item_index(self):
         self.heap.build([])
         assert self.heap.get(1) is None
