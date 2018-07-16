@@ -64,14 +64,50 @@ class BinaryHeapTestCommon:
             self.heap.build(arr)
             assert self.heap.check_heap_property()
 
+    def test_remove_makes_heap_empty(self):
+        self.heap.build([2])
+
+        root = self.heap.remove_root()
+
+        assert root == 2
+        assert self.heap.size() == 0
+
+    def test_get_invalid_item_index(self):
+        self.heap.build([])
+        assert self.heap.get(1) is None
+
+        self.heap.build([1, 3, 2])
+        assert self.heap.get(3) is None
+
+        self.heap.build([1, 3, 2])
+        assert self.heap.get(-1) is None
+
 
 class TestBinaryMaxHeap(BinaryHeapTestCommon):
 
     def setup_class(self):
-        self.heap = BinaryHeap(MaxHeapProperty())
+        self.heap = BinaryHeap.max_heap()
+
+    def test_remove_root_keeps_heap_property(self):
+        self.heap.build([2, 1, 3, 5, 4, 6])
+
+        root = self.heap.remove_root()
+
+        assert root == 6
+        assert self.heap.size() == 5
+        assert self.heap.check_heap_property()
 
 
 class TestBinaryMinHeap(BinaryHeapTestCommon):
 
     def setup_class(self):
-        self.heap = BinaryHeap(MinHeapProperty())
+        self.heap = BinaryHeap.min_heap()
+
+    def test_remove_root_keeps_heap_property(self):
+        self.heap.build([2, 1, 3, 5, 4, 6])
+
+        root = self.heap.remove_root()
+
+        assert root == 1
+        assert self.heap.size() == 5
+        assert self.heap.check_heap_property()
