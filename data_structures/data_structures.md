@@ -10,7 +10,7 @@ A binary heap is a heap satisfying binary tree properties, i.e., each node has a
 
 A binary heap is typically implemented by an array. Given the position of a node in the array, its parent and children can be easily located. If the node index is `i`, then the indexes of its parent, left and right child are `floor((i - 1)/2)`, `2*i + 1`, `2*i + 2`, given that the node index starts at 0.
 
-It takes `O(n)` time to build a binary heap from an unorderred array, where n is the heap size [1].
+A simple analysis on the algorithm will state that it takes `O(n*logn)` time to build a heap from an array of `n` items. However, the algorithm and its analysis in [1] shows that it is possible for the algorithm to asymptotically take only `O(n)` time to do that.
 
 # References
 

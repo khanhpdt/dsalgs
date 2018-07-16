@@ -1,4 +1,4 @@
-from sorting.utils import exchange, list_to_str
+from common.utils import exchange, list_to_str
 
 
 def selection_sort(arr):

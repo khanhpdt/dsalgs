@@ -1,4 +1,4 @@
-from sorting import utils
+from common import utils
 
 
 class TestUtils(object):

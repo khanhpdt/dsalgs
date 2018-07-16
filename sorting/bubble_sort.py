@@ -1,4 +1,4 @@
-from sorting.utils import list_to_str, exchange
+from common.utils import list_to_str, exchange
 
 
 def bubble_sort(arr):

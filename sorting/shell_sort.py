@@ -1,7 +1,7 @@
 from math import floor
 
 from sorting.insertion_sort import insertion_sort
-from sorting.utils import list_to_str, exchange
+from common.utils import list_to_str, exchange
 
 
 def shell_sort(arr):
