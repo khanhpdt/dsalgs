@@ -1,6 +1,6 @@
 import random
 
-from data_structures.binary_heap import BinaryHeap, MinHeapProperty, MaxHeapProperty
+from src.data_structures.binary_heap import BinaryHeap, MinHeapProperty, MaxHeapProperty
 
 
 class TestBinaryMinHeapProperty:

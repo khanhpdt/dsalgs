@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from math import floor
 
-from common.utils import exchange
+from src.common.utils import exchange
 
 
 class BinaryHeapProperty(ABC):

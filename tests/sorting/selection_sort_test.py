@@ -1,5 +1,5 @@
-from sorting.selection_sort import selection_sort
-from sorting.test.sort_test_common import SortTestCommon
+from src.sorting.selection_sort import selection_sort
+from tests.sorting.sort_test_common import SortTestCommon
 
 
 class TestSelectionSort(SortTestCommon):

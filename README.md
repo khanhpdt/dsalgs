@@ -17,4 +17,8 @@ pytest -v
 
 # to run a test file
 pytest -q path_to_file
+
+# to see the test coverage
+pytest --cov src
+
 ```

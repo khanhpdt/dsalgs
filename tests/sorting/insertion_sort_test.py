@@ -1,5 +1,5 @@
-from sorting.insertion_sort import insertion_sort, insertion_sort2
-from sorting.test.sort_test_common import SortTestCommon
+from src.sorting.insertion_sort import insertion_sort, insertion_sort2
+from tests.sorting.sort_test_common import SortTestCommon
 
 
 class TestInsertionSort(SortTestCommon):

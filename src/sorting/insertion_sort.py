@@ -1,4 +1,4 @@
-from common.utils import move, list_to_str
+from src.common.utils import move, list_to_str
 
 
 def insertion_sort(arr):

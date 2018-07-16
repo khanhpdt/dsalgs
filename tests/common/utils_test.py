@@ -1,4 +1,4 @@
-from common import utils
+from src.common import utils
 
 
 class TestUtils(object):
