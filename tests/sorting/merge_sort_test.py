@@ -1,4 +1,4 @@
-from src.sorting.merge_sort import merge, merge_sort_top_down
+from src.sorting.merge_sort import merge, merge_sort_top_down, merge_sort_bottom_up
 from tests.sorting.sort_test_common import SortTestCommon
 
 
@@ -19,3 +19,9 @@ class TestMergeSortTopDown(SortTestCommon):
 
     def sort_func(self, items):
         return merge_sort_top_down(items)
+
+
+class TestMergeSortBottomUp(SortTestCommon):
+
+    def sort_func(self, items):
+        return merge_sort_bottom_up(items)

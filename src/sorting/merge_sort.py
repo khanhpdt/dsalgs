@@ -28,7 +28,29 @@ def _merge_sort_top_down_recursive(items, start_idx, end_idx):
     merge(items, start_idx, mid, end_idx)
 
 
+def merge_sort_bottom_up(arr):
+    print("Sorting %s..." % list_to_str(arr))
+
+    items = arr.copy()
+    n = len(items)
+
+    # bottom-up: start from the smallest subarrays up until the whole array
+    sz = 1
+    while sz < n:
+        for start in range(0, n - sz, 2 * sz):
+            merge(items, start, start + sz - 1, min(start + 2 * sz - 1, n - 1))
+        sz = 2 * sz
+
+    return items
+
+
 def merge(items, start, mid, end):
+    """
+    Merge two sorted subarrays: one from start until mid, and the other from mid + 1 until end
+
+    :return: a sorted array containing elements in the two sorted subarrays
+    """
+
     aux = items[start:(end + 1)].copy()
 
     first_half_idx = 0

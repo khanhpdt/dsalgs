@@ -84,7 +84,9 @@ At each iteration, this algorithm swaps the largest element (which currently is 
 
 ## Merge sort
 
-This algorithm uses the divide-and-conquer technique to sort an input array. It first divides the array into two subarrays, then recursively sorts those subarrays, and finally _merges_ those subarrays to produce the sorted version of the original array.
+There are two approaches to implement merge sort. One is top-down and the other is bottom-up. 
+
+The top-down implementation uses the divide-and-conquer technique to sort the input array. It first divides the array into two subarrays, then recursively sorts those subarrays, and finally _merges_ those subarrays to produce the sorted version of the original array. On the other hand, the bottom-up implementation starts from the smallest subarrays and _merges_ them until arriving at the whole array.
 
 The crux of this algorithm is the merge operation, which combines two sorted arrays to produce a new sorted array with all the elements from those two arrays.
 
@@ -92,7 +94,7 @@ What this algorithm actually does is to organize a sequence of merges in such a 
 
 Characteristics:
 - Guarantee `O(nlogn)` to sort any array
-- Use extra `O(n)` space
+- Use extra `O(n)` space for the auxiliary array used when merging. It is possible to avoid using the extra space, but the implementation would be more complicated [1].
 
 [Computational complexity:](https://en.wikipedia.org/wiki/Merge_sort)
 
