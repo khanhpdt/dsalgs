@@ -76,7 +76,7 @@ This algorithm sorts by using the data structure _heap_ and its special heap pro
 
 At each iteration, this algorithm swaps the largest element (which currently is the root of heap) with the last element in the array. After this step, the largest element is considered sorted and thus ignored in later iterations. Since the swap might break the max-heap property, the algorithm must first restructure the heap (but without considering the sorted elements) to ensure the property and then repeats the iteration with the restructured heap.
 
-[Complexity:](https://en.wikipedia.org/wiki/Heapsort)
+[Computational complexity:](https://en.wikipedia.org/wiki/Heapsort)
 
 | Best | Average | Worst |
 | :----: | :------: | :-----: |
@@ -84,13 +84,17 @@ At each iteration, this algorithm swaps the largest element (which currently is 
 
 ## Merge sort
 
-This algorithm follows the divide-and-conquer technique. It divides the array into two subarrays, then recursively sorts each subarray, and finally _merges_ the sorted subarrays to produce the sorted version of the original array.
+This algorithm uses the divide-and-conquer technique to sort an input array. It first divides the array into two subarrays, then recursively sorts those subarrays, and finally _merges_ those subarrays to produce the sorted version of the original array.
 
-The crux of this algorithm is the merge operation, which combines two sorted arrays to produce a new sorted array with all the elments in the two arrays.
+The crux of this algorithm is the merge operation, which combines two sorted arrays to produce a new sorted array with all the elements from those two arrays.
 
-What this algorithm actually does is to organize a sequence of merges in such a way that the output is a sorted array. Thus, the sorting is done by the merge operation, and as a result the performance of this algorithm is determined by that of the merge operation.
+What this algorithm actually does is to organize a sequence of merges in such a way that the output is a sorted array. Thus, the sorting is actually done by the merge operation, and as a result the performance of this algorithm is determined by that of the merge operation.
 
-[Complexity:](https://en.wikipedia.org/wiki/Merge_sort)
+Characteristics:
+- Guarantee `O(nlogn)` to sort any array
+- Use extra `O(n)` space
+
+[Computational complexity:](https://en.wikipedia.org/wiki/Merge_sort)
 
 | Best | Average | Worst |
 | :----: | :------: | :-----: |
