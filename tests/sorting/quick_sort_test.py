@@ -6,6 +6,11 @@ from tests.sorting.sort_test_common import SortTestCommon
 
 class TestPartition:
 
+    def test_partition_return_mid(self):
+        arr = [3, 9, 2, 12, 5, 6, 4, 20, 28]
+        mid = partition(arr, 1, 7)
+        assert mid == 5
+
     def test_partition(self):
         arr = [3, 9, 2, 12, 5, 6, 4, 20, 28]
         partition(arr, 1, 7)
@@ -35,11 +40,14 @@ class TestPartition:
             assert arr[j] >= partitioning_item
 
 
+class TestQuickSort(SortTestCommon):
+
+    def sort_func(self, items):
+        return quick_sort(items)
+
+
 class TestPartition3Way:
     pass
 
 
-# class TestQuickSort(SortTestCommon):
-#
-#     def sort_func(self, items):
-#         return quick_sort(items)
+
