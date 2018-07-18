@@ -51,5 +51,55 @@ def partition(items, start, end):
     return right
 
 
-def partition_3way():
-    pass
+def quick_sort_3way(arr):
+    print("Sorting %s..." % list_to_str(arr))
+
+    items = arr.copy()
+    random.shuffle(items)
+
+    _quick_sort_3way_recursive(items, 0, len(items) - 1)
+
+    return items
+
+
+def _quick_sort_3way_recursive(items, start, end):
+    less_than_idx, greater_than_idx = partition_3way(items, start, end)
+    if less_than_idx is not None and greater_than_idx is not None:
+        _quick_sort_3way_recursive(items, start, less_than_idx - 1)
+        _quick_sort_3way_recursive(items, greater_than_idx + 1, end)
+
+
+def partition_3way(items, start, end):
+    if start >= end:
+        return None, None
+
+    partitioning_item = items[start]
+    less_than_idx = start
+    greater_than_idx = end
+
+    # Invariant:
+    #   - a[start..less_than_idx - 1] < partitioning_item
+    #   - a[greater_than_idx + 1..end] > partitioning_item
+    #   - a[less_than_idx..i-1] = partitioning_item
+    #   - a[i..greater_than_idx] are not yet examined
+
+    i = start + 1
+    while i <= greater_than_idx:
+        if items[i] < partitioning_item:
+            # move items < partitioning_item to the left
+            exchange(items, i, less_than_idx)
+            less_than_idx = less_than_idx + 1
+            # move the pointer because we know that the new item at the position i is
+            # either equal or less than the partitioning item
+            i = i + 1
+        elif items[i] > partitioning_item:
+            # move items > partitioning_item to the right
+            exchange(items, i, greater_than_idx)
+            greater_than_idx = greater_than_idx - 1
+            # here, we don't move the pointer because we don't know how the new item
+            # at the position i compares to the partitioning item
+        else:
+            # leave the items = partitioning_item where they are
+            i = i + 1
+
+    return less_than_idx, greater_than_idx
