@@ -1,3 +1,6 @@
+from src.common.comparable import Comparable
+
+
 def exchange(items, i1, i2):
     tmp = items[i1]
     items[i1] = items[i2]
@@ -82,3 +85,25 @@ def index_of_min(items):
             current_min = items[i]
 
     return current_min_index
+
+
+def compare(o1, o2):
+    if isinstance(o1, Comparable) and isinstance(o2, Comparable):
+        return o1.compare_to(o2)
+
+    if type(o1) != type(o2) or type(o1) not in (int, float, str):
+        raise ValueError("Not comparable")
+
+    if o1 > o2:
+        return 1
+    if o1 == o2:
+        return 0
+    return -1
+
+
+def lt_or_eq(o1, o2):
+    return compare(o1, o2) <= 0
+
+
+def gt_or_eq(o1, o2):
+    return compare(o1, o2) >= 0

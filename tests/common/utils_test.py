@@ -1,7 +1,16 @@
 import random
 
 from src.common import utils
-from src.common.utils import has_same_items, index_of_min
+from src.common.comparable import Comparable
+from src.common.utils import has_same_items, index_of_min, compare
+
+
+class Item(Comparable):
+    def __init__(self, value):
+        self.value = value
+
+    def compare_to(self, other):
+        return compare(self.value, other.value)
 
 
 class TestUtils(object):
@@ -51,3 +60,16 @@ class TestUtils(object):
         items = list(range(100))
         random.shuffle(items)
         assert index_of_min(items) == items.index(0)
+
+    def test_compare_primitives(self):
+        assert compare(1, 2) == -1
+        assert compare(2, 2) == 0
+        assert compare(2, 1) == 1
+
+        assert compare(1.1, 1.2) == -1
+        assert compare(2.1, 1.9) == 1
+        assert compare(2.1, 2.1) == 0
+
+        assert compare(Item(1), Item(2)) == -1
+        assert compare(Item(2), Item(2)) == 0
+        assert compare(Item(2), Item(1)) == 1

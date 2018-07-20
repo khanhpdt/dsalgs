@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from math import floor
 
-from src.common.utils import exchange
+from src.common.utils import exchange, compare, lt_or_eq, gt_or_eq
 
 
 class BinaryHeapProperty(ABC):
@@ -16,7 +16,7 @@ class BinaryHeapProperty(ABC):
 
     def hold_for_array(self, arr):
         i = 0
-        while 2 * i + 1 < len(arr):
+        while (2 * i + 1) < len(arr):
             child_1 = 2 * i + 1
             if not self.hold_for_item(arr[child_1], arr[i]):
                 print("Child %s > Node %s" % (child_1, i))
@@ -35,19 +35,19 @@ class BinaryHeapProperty(ABC):
 class MinHeapProperty(BinaryHeapProperty):
 
     def hold_for_item(self, item, parent):
-        return parent <= item
+        return lt_or_eq(parent, item)
 
     def select_child(self, child1, child1_idx, child2, child2_idx):
-        return child1_idx if child1 <= child2 else child2_idx
+        return child1_idx if lt_or_eq(child1, child2) else child2_idx
 
 
 class MaxHeapProperty(BinaryHeapProperty):
 
     def hold_for_item(self, item, parent):
-        return parent >= item
+        return gt_or_eq(parent, item)
 
     def select_child(self, child1, child1_idx, child2, child2_idx):
-        return child1_idx if child1 >= child2 else child2_idx
+        return child1_idx if gt_or_eq(child1, child2) else child2_idx
 
 
 class BinaryHeap:

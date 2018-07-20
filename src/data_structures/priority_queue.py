@@ -13,10 +13,10 @@ class PriorityQueue:
         - Remove: O(log(n)), where n is the number of items
     """
 
-    def __init__(self, type):
-        if type == MAX_PRIORITY_QUEUE:
+    def __init__(self, queue_type):
+        if queue_type == MAX_PRIORITY_QUEUE:
             self.heap = BinaryHeap.max_heap()
-        elif type == MIN_PRIORITY_QUEUE:
+        elif queue_type == MIN_PRIORITY_QUEUE:
             self.heap = BinaryHeap.min_heap()
         else:
             raise ValueError(f"Type {type} not supported")
