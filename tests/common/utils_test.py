@@ -1,4 +1,7 @@
+import random
+
 from src.common import utils
+from src.common.utils import has_same_items
 
 
 class TestUtils(object):
@@ -25,3 +28,16 @@ class TestUtils(object):
     def test_list_to_str(self):
         assert utils.list_to_str([]) == "[]"
         assert utils.list_to_str([1, 2, 3]) == "[1, 2, 3]"
+
+    def test_check_lists_contain_same_items(self):
+        assert has_same_items([], [])
+        assert has_same_items([1, 2, 3], [3, 1, 2])
+        assert not has_same_items([], [1])
+        assert not has_same_items([1, 2], [3, 1, 2])
+
+        items = list(range(100))
+        list1 = items.copy()
+        random.shuffle(list1)
+        list2 = items.copy()
+        random.shuffle(list2)
+        assert has_same_items(list1, list2)

@@ -43,3 +43,14 @@ class PriorityQueue:
 
     def _is_empty(self):
         return self.heap.size() == 0
+
+    def size(self):
+        return self.heap.size()
+
+    def peek(self):
+        if self._is_empty():
+            return None
+        return self.heap.get(0)
+
+    def get_all(self):
+        return self.heap.get_all()

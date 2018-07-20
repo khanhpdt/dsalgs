@@ -1,4 +1,7 @@
-def find_largest_items(m, n):
+from src.data_structures.priority_queue import PriorityQueue
+
+
+def find_largest_items(items, m):
     """
     Given n items, find m largest items, where m <= n.
 
@@ -7,4 +10,14 @@ def find_largest_items(m, n):
 
     Computational complexity: O(n*log(m))
     """
-    pass
+
+    queue = PriorityQueue.min_priority_queue()
+
+    for item in items:
+        if queue.size() < m:
+            queue.insert(item)
+        elif queue.peek() < item:
+            queue.remove()
+            queue.insert(item)
+
+    return queue.get_all()

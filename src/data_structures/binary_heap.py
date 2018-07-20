@@ -100,11 +100,11 @@ class BinaryHeap:
     def _get_parent_of(i):
         return int(floor((i - 1) / 2))
 
-    def _to_array(self):
+    def get_all(self):
         return self._items.copy()
 
     def check_heap_property(self):
-        return self._heap_property.hold_for_array(self._to_array())
+        return self._heap_property.hold_for_array(self.get_all())
 
     def remove(self):
         root_idx = 0
