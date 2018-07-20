@@ -62,3 +62,23 @@ def has_same_items(l1, l2):
         if sorted_l1[i] != sorted_l2[i]:
             return False
     return True
+
+
+def index_of_min(items):
+    start_index = None
+    for i in range(len(items)):
+        if items[i] is not None:
+            start_index = i
+            break
+
+    if start_index is None:
+        return None
+
+    current_min_index = start_index
+    current_min = items[current_min_index]
+    for i in range(len(items)):
+        if items[i] is not None and items[i] < current_min:
+            current_min_index = i
+            current_min = items[i]
+
+    return current_min_index

@@ -1,7 +1,7 @@
 import random
 
 from src.common import utils
-from src.common.utils import has_same_items
+from src.common.utils import has_same_items, index_of_min
 
 
 class TestUtils(object):
@@ -41,3 +41,13 @@ class TestUtils(object):
         list2 = items.copy()
         random.shuffle(list2)
         assert has_same_items(list1, list2)
+
+    def test_find_index_of_min(self):
+        assert index_of_min([3, 1, 2]) == 1
+        assert index_of_min([3, None, 2]) == 2
+        assert index_of_min([3, None, None]) == 0
+        assert index_of_min([None, None, None]) is None
+
+        items = list(range(100))
+        random.shuffle(items)
+        assert index_of_min(items) == items.index(0)
