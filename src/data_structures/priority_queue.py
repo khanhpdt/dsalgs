@@ -5,6 +5,13 @@ MIN_PRIORITY_QUEUE = "MIN_PRIORITY_QUEUE"
 
 
 class PriorityQueue:
+    """
+    Priority queue with heap-based implementation.
+
+    Computational complexity:
+        - Insert: O(log(n)), where n is the number of items
+        - Remove: O(log(n)), where n is the number of items
+    """
 
     def __init__(self, type):
         if type == MAX_PRIORITY_QUEUE:

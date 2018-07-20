@@ -51,6 +51,14 @@ class MaxHeapProperty(BinaryHeapProperty):
 
 
 class BinaryHeap:
+    """
+    Binary heap is a data structure where each node has at most two children
+    and is greater than or equal to its children.
+
+    Computational complexity:
+        - Insert: O(log(n)), where n is the number of items
+        - Remove: O(log(n)), where n is the number of items
+    """
 
     def __init__(self, heap_property: BinaryHeapProperty) -> None:
         self._heap_property = heap_property
