@@ -1,25 +1,33 @@
 from src.common.utils import index_of_min
 
+"""
+Inputs:
+    - m sorted streams
+Output:
+    - A sorted array containing all the items in the given streams.
+
+Constraints:
+    - The number of items in each stream is much larger than the number of streams.
+    - The algorithm supports online processing, i.e., not all data is available
+    before the processing but they will come in time.
+"""
+
 
 def multiway_merge(ordered_streams):
     """
-    Given m sorted streams, merge them to result in a new sorted stream containing
-    all items in the given streams.
+    This implementation uses a priority queue to find the smallest item
+    among m smallest items from m streams.
 
-    Constraints:
-        - The total number of items in all streams can be a huge number.
-        - The algorithm supports online processing, i.e., not all data is available
-        before the processing but they will come in time
-
-    Computational complexity: O(n*log(m)), where n is the total number
-    of items in all streams and m is the number of streams.
+    Complexity: O(n*log(m)), where n is the total number of items in all streams
+    and m is the number of streams.
     """
     pass
 
 
 def multiway_merge_simple(ordered_streams):
     """
-    Simple implementation.
+    This implementation keeps m smallest items from m streams in a list
+    and loop over that list to find the smallest item in the list.
 
     Complexity: O(n*m)
     """
