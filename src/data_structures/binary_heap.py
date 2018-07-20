@@ -67,8 +67,11 @@ class BinaryHeap:
     def build(self, arr):
         self._items = []
         for item in arr:
-            self._items.append(item)
-            self._ensure_heap_property_bottom_up(len(self._items) - 1)
+            self.insert(item)
+
+    def insert(self, item):
+        self._items.append(item)
+        self._ensure_heap_property_bottom_up(len(self._items) - 1)
 
     def _ensure_heap_property_bottom_up(self, item_idx):
         parent_idx = self._get_parent_of(item_idx)
@@ -95,7 +98,7 @@ class BinaryHeap:
     def check_heap_property(self):
         return self._heap_property.hold_for_array(self._to_array())
 
-    def remove_root(self):
+    def remove(self):
         root_idx = 0
         return self._remove_item(root_idx)
 

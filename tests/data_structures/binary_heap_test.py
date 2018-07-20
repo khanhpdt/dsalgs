@@ -67,7 +67,7 @@ class BinaryHeapTestCommon:
     def test_remove_makes_heap_empty(self):
         self.heap.build([2])
 
-        root = self.heap.remove_root()
+        root = self.heap.remove()
 
         assert root == 2
         assert self.heap.size() == 0
@@ -75,7 +75,7 @@ class BinaryHeapTestCommon:
     def test_remove_from_empty_heap(self):
         self.heap.build([])
 
-        root = self.heap.remove_root()
+        root = self.heap.remove()
 
         assert root is None
 
@@ -98,7 +98,7 @@ class TestBinaryMaxHeap(BinaryHeapTestCommon):
     def test_remove_root_keeps_heap_property(self):
         self.heap.build([2, 1, 3, 5, 4, 6])
 
-        root = self.heap.remove_root()
+        root = self.heap.remove()
 
         assert root == 6
         assert self.heap.size() == 5
@@ -113,7 +113,7 @@ class TestBinaryMinHeap(BinaryHeapTestCommon):
     def test_remove_root_keeps_heap_property(self):
         self.heap.build([2, 1, 3, 5, 4, 6])
 
-        root = self.heap.remove_root()
+        root = self.heap.remove()
 
         assert root == 1
         assert self.heap.size() == 5

@@ -11,6 +11,6 @@ def heap_sort(arr):
     heap.build(items)
 
     for i in reversed(range(len(items))):
-        items[i] = heap.remove_root()
+        items[i] = heap.remove()
 
     return items
