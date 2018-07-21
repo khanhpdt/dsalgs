@@ -1,4 +1,6 @@
+from src.common.key_value import KeyValue
 from src.common.utils import index_of_min
+from src.data_structures.priority_queue import PriorityQueue
 
 """
 Inputs:
@@ -21,7 +23,27 @@ def multiway_merge(ordered_streams):
     Complexity: O(n*log(m)), where n is the total number of items in all streams
     and m is the number of streams.
     """
-    pass
+
+    queue = PriorityQueue.min_priority_queue()
+
+    for stream_idx in range(len(ordered_streams)):
+        _insert_if_present(ordered_streams, stream_idx, queue)
+
+    result = []
+    while queue.size() > 0:
+        min_item = queue.remove()
+        result.append(min_item.key)
+
+        stream_idx = min_item.value
+        _insert_if_present(ordered_streams, stream_idx, queue)
+
+    return result
+
+
+def _insert_if_present(streams, stream_idx, queue):
+    item = next(streams[stream_idx], None)
+    if item is not None:
+        queue.insert(KeyValue(item, stream_idx))
 
 
 def multiway_merge_simple(ordered_streams):

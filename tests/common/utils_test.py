@@ -1,16 +1,8 @@
 import random
 
 from src.common import utils
-from src.common.comparable import Comparable
+from src.common.key_value import KeyValue
 from src.common.utils import has_same_items, index_of_min, compare
-
-
-class Item(Comparable):
-    def __init__(self, value):
-        self.value = value
-
-    def compare_to(self, other):
-        return compare(self.value, other.value)
 
 
 class TestUtils(object):
@@ -70,6 +62,6 @@ class TestUtils(object):
         assert compare(2.1, 1.9) == 1
         assert compare(2.1, 2.1) == 0
 
-        assert compare(Item(1), Item(2)) == -1
-        assert compare(Item(2), Item(2)) == 0
-        assert compare(Item(2), Item(1)) == 1
+        assert compare(KeyValue(1), KeyValue(2)) == -1
+        assert compare(KeyValue(2), KeyValue(2)) == 0
+        assert compare(KeyValue(2), KeyValue(1)) == 1
