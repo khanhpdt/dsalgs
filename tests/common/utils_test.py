@@ -1,8 +1,9 @@
 import random
 
 from src.common import utils
-from src.common.key_value import KeyValue
-from src.common.utils import has_same_items, index_of_min, compare
+from src.common.key_value import KeyValue, Key
+from src.common.utils import index_of_min, compare, eq, index_of
+from src.common.has_same_items import has_same_items
 
 
 class TestUtils(object):
@@ -53,6 +54,18 @@ class TestUtils(object):
         random.shuffle(items)
         assert index_of_min(items) == items.index(0)
 
+    def test_find_index_of_item(self):
+        assert index_of([3, 1, 2], 3) == 0
+        assert index_of([3, 1, 2], 1) == 1
+        assert index_of([3, None, 2], None) == 1
+        assert index_of([3, None, 2], 2) == 2
+
+        items = list(range(100))
+        random.shuffle(items)
+        assert index_of(items, 44) == items.index(44)
+
+        assert index_of([KeyValue(Key(1)), KeyValue(Key(4)), KeyValue(Key(2))], KeyValue(Key(4))) == 1
+
     def test_compare_primitives(self):
         assert compare(1, 2) == -1
         assert compare(2, 2) == 0
@@ -65,3 +78,22 @@ class TestUtils(object):
         assert compare(KeyValue(1), KeyValue(2)) == -1
         assert compare(KeyValue(2), KeyValue(2)) == 0
         assert compare(KeyValue(2), KeyValue(1)) == 1
+
+    def test_check_equals(self):
+        assert eq(None, None)
+
+        assert not eq(1, 2)
+        assert eq(2, 2)
+        assert not eq(2, 1)
+
+        assert not eq(1.1, 1.2)
+        assert not eq(2.1, 1.9)
+        assert eq(2.1, 2.1)
+
+        assert not eq(KeyValue(1), KeyValue(2))
+        assert eq(KeyValue(2), KeyValue(2))
+        assert not eq(KeyValue(2), KeyValue(1))
+
+        assert not eq(KeyValue(Key(1)), KeyValue(Key(2)))
+        assert eq(KeyValue(Key(2)), KeyValue(Key(2)))
+        assert not eq(KeyValue(Key(2)), KeyValue(Key(1)))

@@ -1,6 +1,6 @@
 import random
 
-from src.common.utils import exchange, list_to_str
+from src.common.utils import exchange, list_to_str, lt_or_eq, gt_or_eq, gt, lt
 
 
 def quick_sort(arr):
@@ -32,12 +32,12 @@ def partition(items, start, end):
     while True:
         # scan from the left to find the item not in correct position, i.e., item > partitioning item
         left = left + 1
-        while left <= end and items[left] <= partitioning_item:
+        while left <= end and lt_or_eq(items[left], partitioning_item):
             left = left + 1
 
         # scan from the right to find the item not in correct position, i.e., item < partitioning item
         right = right - 1
-        while right > start and items[right] >= partitioning_item:
+        while right > start and gt_or_eq(items[right], partitioning_item):
             right = right - 1
 
         # partitioning done. what's left is to move the partitioning item to the right position.
@@ -85,14 +85,14 @@ def partition_3way(items, start, end):
 
     i = start + 1
     while i <= greater_than_idx:
-        if items[i] < partitioning_item:
+        if lt(items[i], partitioning_item):
             # move items < partitioning_item to the left
             exchange(items, i, less_than_idx)
             less_than_idx = less_than_idx + 1
             # move the pointer because we know that the new item at the position i is
             # either equal or less than the partitioning item
             i = i + 1
-        elif items[i] > partitioning_item:
+        elif gt(items[i], partitioning_item):
             # move items > partitioning_item to the right
             exchange(items, i, greater_than_idx)
             greater_than_idx = greater_than_idx - 1

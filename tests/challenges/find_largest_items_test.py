@@ -1,7 +1,7 @@
 import random
 
 from src.challenges.find_largest_items import find_largest_items
-from src.common.utils import has_same_items
+from src.common.has_same_items import has_same_items
 
 
 class TestFindLargestItems:

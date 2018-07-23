@@ -12,6 +12,12 @@ def list_to_str(items):
 
 
 def circular_shift_right(items, start, end):
+    """
+    Circular shift items from start until end to the right by one position.
+    Circular here means the end item will not be removed but moved to the start position.
+
+    For example, if items = [1, 2, 3, 4, 5], start = 1, end = 3, then result = [1, 4, 2, 3, 5].
+    """
     if start > end:
         raise ValueError("Expected start <= end")
 
@@ -26,6 +32,13 @@ def circular_shift_right(items, start, end):
 
 
 def circular_shift_left(items, start, end):
+    """
+    Circular shift items from start until end to the left by one position.
+    Circular here means the start item will not be removed but moved to the end position.
+
+    For example, if items = [1, 2, 3, 4, 5], start = 1, end = 3, then result = [1, 3, 4, 2, 5].
+    """
+
     if start > end:
         raise ValueError("Expected start <= end")
 
@@ -40,34 +53,22 @@ def circular_shift_left(items, start, end):
 
 
 def move(items, from_pos, to_pos):
+    """
+    Move item from from_pos to to_pos and keep the relative order of the other items.
+    """
     move_from_left_to_right = from_pos < to_pos
     if move_from_left_to_right:
         return circular_shift_left(items, from_pos, to_pos)
     return circular_shift_right(items, to_pos, from_pos)
 
 
-def has_same_items(l1, l2):
-    """
-    This implementation takes O(n*log(n)) time mainly for sorting the two lists before comparing their items.
-
-    Another implementation would be to loop over the first list, build a hash table from that list, and then
-    loop over the second list to check if any item not in the hash table. Note that we also need to keep track of
-    the item count to handle duplicated items. This implementation takes O(n) time.
-    """
-
-    if len(l1) != len(l2):
-        return False
-
-    sorted_l1 = sorted(l1)
-    sorted_l2 = sorted(l2)
-
-    for i in range(len(sorted_l1)):
-        if sorted_l1[i] != sorted_l2[i]:
-            return False
-    return True
-
-
 def index_of_min(items):
+    """
+    Find index of the min item. None items are ignored in the search.
+
+    Might return None if all items are None.
+    """
+
     start_index = None
     for i in range(len(items)):
         if items[i] is not None:
@@ -87,11 +88,30 @@ def index_of_min(items):
     return current_min_index
 
 
+def index_of(items, item):
+    """
+    Find index of the given item in the given list.
+
+    :return: None if not found
+    """
+
+    for i in range(len(items)):
+        if eq(items[i], item):
+            return i
+    return None
+
+
 def compare(o1, o2):
+    if o1 is None and o2 is None:
+        return True
+
+    if type(o1) != type(o2):
+        raise ValueError("Not comparable")
+
     if isinstance(o1, Comparable) and isinstance(o2, Comparable):
         return o1.compare_to(o2)
 
-    if type(o1) != type(o2) or type(o1) not in (int, float, str):
+    if type(o1) not in (int, float, str):
         raise ValueError("Not comparable")
 
     if o1 > o2:
@@ -105,5 +125,29 @@ def lt_or_eq(o1, o2):
     return compare(o1, o2) <= 0
 
 
+def lt(o1, o2):
+    return compare(o1, o2) < 0
+
+
 def gt_or_eq(o1, o2):
     return compare(o1, o2) >= 0
+
+
+def gt(o1, o2):
+    return compare(o1, o2) > 0
+
+
+def eq(o1, o2):
+    if o1 is None and o2 is None:
+        return True
+
+    if type(o1) != type(o2):
+        return False
+
+    if isinstance(o1, Comparable) and isinstance(o2, Comparable):
+        return o1.equals(o2)
+
+    if type(o1) not in (int, float, str):
+        raise ValueError("Not comparable")
+
+    return o1 == o2
