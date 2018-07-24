@@ -1,5 +1,5 @@
-from src.sorting.merge_sort import merge, merge_sort_top_down, merge_sort_bottom_up
-from tests.sorting.sort_test_common import SortTestCommon
+from src.algorithms.sorting.merge_sort import merge, merge_sort_top_down, merge_sort_bottom_up
+from tests.algorithms.sorting.sort_test_common import SortTestCommon
 
 
 class TestMerge:

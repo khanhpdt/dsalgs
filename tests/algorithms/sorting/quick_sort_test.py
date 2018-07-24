@@ -1,7 +1,7 @@
 import random
 
-from src.sorting.quick_sort import quick_sort, partition, partition_3way, quick_sort_3way
-from tests.sorting.sort_test_common import SortTestCommon
+from src.algorithms.sorting.quick_sort import quick_sort, partition, partition_3way, quick_sort_3way
+from tests.algorithms.sorting.sort_test_common import SortTestCommon
 
 
 class TestPartition:

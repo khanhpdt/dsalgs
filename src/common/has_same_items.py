@@ -1,5 +1,5 @@
 from src.common.utils import eq
-from src.sorting.quick_sort import quick_sort
+from src.algorithms.sorting.quick_sort import quick_sort
 
 
 def has_same_items(l1, l2):

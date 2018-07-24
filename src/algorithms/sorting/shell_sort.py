@@ -1,6 +1,6 @@
 from math import floor
 
-from src.sorting.insertion_sort import insertion_sort
+from src.algorithms.sorting.insertion_sort import insertion_sort
 from src.common.utils import list_to_str, exchange
 
 
