@@ -151,3 +151,20 @@ def eq(o1, o2):
         raise ValueError("Not comparable")
 
     return o1 == o2
+
+
+def shift_right(items, start):
+    """
+    Shift items from the given index start to the right by one position.
+    The item at the index start will be assigned None.
+
+    Example: if items = [1, 2, 3, 4] and start = 1, then items will be [1, None, 2, 3, 4].
+    """
+
+    if start < 0 or start >= len(items):
+        return items
+
+    items.append(items[-1])
+    for i in range(len(items) - 2, start, -1):
+        items[i] = items[i - 1]
+    items[start] = None

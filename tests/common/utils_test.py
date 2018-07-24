@@ -1,9 +1,9 @@
 import random
 
 from src.common import utils
-from src.common.key_value import KeyValue, Key
-from src.common.utils import index_of_min, compare, eq, index_of
 from src.common.has_same_items import has_same_items
+from src.common.key_value import KeyValue, Key
+from src.common.utils import index_of_min, compare, eq, index_of, shift_right
 
 
 class TestUtils(object):
@@ -97,3 +97,17 @@ class TestUtils(object):
         assert not eq(KeyValue(Key(1)), KeyValue(Key(2)))
         assert eq(KeyValue(Key(2)), KeyValue(Key(2)))
         assert not eq(KeyValue(Key(2)), KeyValue(Key(1)))
+
+    def test_shift_right(self):
+        self.assert_shift_right([1, 2, 3, 4], 0, [None, 1, 2, 3, 4])
+        self.assert_shift_right([1, 2, 3, 4], 1, [1, None, 2, 3, 4])
+        self.assert_shift_right([1, 2, 3, 4], 3, [1, 2, 3, None, 4])
+        self.assert_shift_right([], 1, [])
+        self.assert_shift_right([1, 2, 3, 4], 4, [1, 2, 3, 4])
+        self.assert_shift_right([1, 2, 3, 4], -1, [1, 2, 3, 4])
+
+    @staticmethod
+    def assert_shift_right(items, start, expected_items):
+        items_copy = items.copy()
+        shift_right(items_copy, start)
+        assert items_copy == expected_items

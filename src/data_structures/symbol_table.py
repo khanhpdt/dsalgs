@@ -45,6 +45,13 @@ class SymbolTable(ABC):
         raise NotImplementedError("Implement this")
 
     @abstractmethod
+    def is_empty(self):
+        """
+        :return: True if the table is empty. False otherwise.
+        """
+        raise NotImplementedError("Implement this")
+
+    @abstractmethod
     def floor(self, key: Key):
         """
         :return: the largest key in the table that is less than or equal to the given key.
@@ -73,7 +80,7 @@ class SymbolTable(ABC):
         raise NotImplementedError("Implement this")
 
     @abstractmethod
-    def size(self, low: Key, high: Key):
+    def size(self, low: Key = None, high: Key = None):
         """
         :return: the number of keys in range [low, high] inclusive.
         If low or high is not given, the corresponding side is unbounded.
@@ -81,7 +88,7 @@ class SymbolTable(ABC):
         raise NotImplementedError("Implement this")
 
     @abstractmethod
-    def range(self, low: Key, high: Key):
+    def range(self, low: Key = None, high: Key = None):
         """
         :return: the list of keys in range [low, high].
         If low or high is not given, the corresponding side is unbounded.

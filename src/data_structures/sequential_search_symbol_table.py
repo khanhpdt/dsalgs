@@ -1,7 +1,7 @@
+from src.algorithms.sorting.quick_sort import quick_sort
 from src.common.key_value import Key, KeyValue
 from src.common.utils import index_of, gt, lt, gt_or_eq, lt_or_eq
 from src.data_structures.symbol_table import SymbolTable
-from src.algorithms.sorting.quick_sort import quick_sort
 
 
 class SequentialSearchSymbolTable(SymbolTable):
@@ -101,7 +101,7 @@ class SequentialSearchSymbolTable(SymbolTable):
         return result
 
     def select(self, rank):
-        if self.is_empty() or rank >= self.size():
+        if rank < 0 or rank >= self.size():
             return None
 
         sorted_items = quick_sort(self._items)
