@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from src.common.comparable import Comparable
-from src.common.utils import gt_or_eq, lt_or_eq, compare, eq, lt
+from src.common.utils import gt_or_eq, lt_or_eq, compare, eq, lt, gt
 
 
 class Node(Comparable):
@@ -26,6 +26,10 @@ class BinarySearchTree:
     def __init__(self):
         self._root: Node = None
 
+    @property
+    def root(self):
+        return self._root
+
     def put(self, key, value=None) -> None:
         if self.is_empty():
             self._root = Node(key, value)
@@ -33,11 +37,14 @@ class BinarySearchTree:
 
         current = self._root
         while current is not None:
-            parent = current
+            if eq(key, current.key):
+                current.value = value
+                return
 
+            parent = current
             parent.node_count = parent.node_count + 1
 
-            if lt_or_eq(key, current.key):
+            if lt(key, current.key):
                 current = current.left
                 if current is None:
                     parent.left = Node(key, value)
@@ -89,7 +96,9 @@ class BinarySearchTree:
         successor, parent_of_successor = self._find_successor_and_parent(node)
 
         if successor is None:  # the deleted node has no right subtree
-            if is_node_left_child:
+            if parent is None:  # the deleted node is the current root
+                self._root = node.left
+            elif is_node_left_child:
                 parent.left = node.left
             else:
                 parent.right = node.left
@@ -169,3 +178,97 @@ class BinarySearchTree:
         return node_satisfy \
             and self._satisfy_binary_search_tree_property(node.left) \
             and self._satisfy_binary_search_tree_property(node.right)
+
+    def min(self) -> Optional[Node]:
+        if self.is_empty():
+            return None
+
+        current = self._root
+        while current.left is not None:
+            current = current.left
+        return current
+
+    def max(self) -> Optional[Node]:
+        if self.is_empty():
+            return None
+
+        current = self._root
+        while current.right is not None:
+            current = current.right
+        return current
+
+    def floor(self, key):
+        return self._floor(key, self._root)
+
+    def _floor(self, key, node):
+        if node is None:
+            return None
+
+        if eq(key, node.key):
+            return node
+
+        if lt(key, node.key):
+            return self._floor(key, node.left)
+
+        right_subtree_floor = self._floor(key, node.right)
+        return right_subtree_floor if right_subtree_floor is not None else node
+
+    def ceiling(self, key):
+        return self._ceiling(key, self._root)
+
+    def _ceiling(self, key, node):
+        if node is None:
+            return None
+
+        if eq(key, node.key):
+            return node
+
+        if gt(key, node.key):
+            return self._ceiling(key, node.right)
+
+        left_subtree_ceiling = self._ceiling(key, node.left)
+        return left_subtree_ceiling if left_subtree_ceiling is not None else node
+
+    def rank(self, key):
+        return self._rank(key, self._root)
+
+    def _rank(self, key, node):
+        if node is None:
+            return 0
+        left_child_count = node.left.node_count if node.left is not None else 0
+        if eq(key, node.key):
+            return left_child_count
+        if gt(key, node.key):
+            return 1 + left_child_count + self._rank(key, node.right)
+        return self._rank(key, node.left)
+
+    def select(self, rank):
+        return self._select(rank, self._root)
+
+    def _select(self, rank, node):
+        if node is None:
+            return None
+
+        rank_of_node = node.left.node_count if node.left is not None else 0
+        if rank_of_node == rank:
+            return node
+        if rank_of_node < rank:
+            return self._select(rank - (rank_of_node + 1), node.right)
+        return self._select(rank, node.left)
+
+    def range(self, low, high):
+        return self._range(self._root, low, high)
+
+    def _range(self, node, low, high):
+        if node is None:
+            return []
+
+        node_satisfy = (low is None or gt_or_eq(node.key, low)) \
+            and (high is None or lt_or_eq(node.key, high))
+        result = [node] if node_satisfy else []
+
+        if low is not None and lt(node.key, low):
+            return result + self._range(node.right, low, high)
+        if high is not None and gt(node.key, high):
+            return result + self._range(node.left, low, high)
+        return result + self._range(node.left, low, high) + self._range(node.right, low, high)

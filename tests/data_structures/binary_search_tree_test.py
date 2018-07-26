@@ -214,3 +214,8 @@ class TestBinarySearchTree:
 
             assert self.tree.size() == 80
             assert self.tree.satisfy_binary_search_tree_property()
+
+    def test_delete_the_only_node(self):
+        self.tree.put(1)
+        self.tree.delete(1)
+        assert self.tree.is_empty()
