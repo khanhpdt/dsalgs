@@ -1,10 +1,10 @@
 from src.algorithms.sorting.quick_sort import quick_sort
 from src.common.key_value import Key, KeyValue
 from src.common.utils import index_of, gt, lt, gt_or_eq, lt_or_eq
-from src.data_structures.symbol_table import SymbolTable
+from src.data_structures.ordered_symbol_table import OrderedSymbolTable
 
 
-class SequentialSearchSymbolTable(SymbolTable):
+class SequentialSearchSymbolTable(OrderedSymbolTable):
     """
     This implementation maintains an unordered list to store the items.
     The search operation searches a given key by simply going over each item
@@ -43,7 +43,7 @@ class SequentialSearchSymbolTable(SymbolTable):
             return None
 
         current_min = self._items[0].key
-        for i in range(1, self.size()):
+        for i in range(1, self.size_of_range()):
             if lt(self._items[i].key, current_min):
                 current_min = self._items[i].key
         return current_min
@@ -53,20 +53,17 @@ class SequentialSearchSymbolTable(SymbolTable):
             return None
 
         current_max = self._items[0].key
-        for i in range(1, self.size()):
+        for i in range(1, self.size_of_range()):
             if gt(self._items[i].key, current_max):
                 current_max = self._items[i].key
         return current_max
-
-    def is_empty(self):
-        return len(self._items) == 0
 
     def floor(self, key: Key):
         if self.is_empty():
             return None
 
         candidate = None
-        for i in range(self.size()):
+        for i in range(self.size_of_range()):
             current_item_key = self._items[i].key
             if current_item_key.equals(key):
                 return current_item_key
@@ -82,7 +79,7 @@ class SequentialSearchSymbolTable(SymbolTable):
             return None
 
         candidate = None
-        for i in range(self.size()):
+        for i in range(self.size_of_range()):
             current_item_key = self._items[i].key
             if current_item_key.equals(key):
                 return current_item_key
@@ -101,13 +98,13 @@ class SequentialSearchSymbolTable(SymbolTable):
         return result
 
     def select(self, rank):
-        if rank < 0 or rank >= self.size():
+        if rank < 0 or rank >= self.size_of_range():
             return None
 
         sorted_items = quick_sort(self._items)
         return sorted_items[rank].key
 
-    def size(self, low: Key = None, high: Key = None):
+    def size_of_range(self, low: Key = None, high: Key = None):
         return len(self.range(low, high))
 
     def range(self, low: Key = None, high: Key = None):
@@ -125,3 +122,6 @@ class SequentialSearchSymbolTable(SymbolTable):
                 result.append(key)
 
         return result
+
+    def size(self):
+        return len(self._items)

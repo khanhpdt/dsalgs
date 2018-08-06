@@ -31,27 +31,26 @@ class BinarySearchTree:
         return self._root
 
     def put(self, key, value=None) -> None:
-        if self.is_empty():
-            self._root = Node(key, value)
-            return
+        self._root = self._put(Node(key, value), self._root)
 
-        current = self._root
-        while current is not None:
-            if eq(key, current.key):
-                current.value = value
-                return
+    def _put(self, new_node: Node, position: Node):
+        if position is None:
+            return new_node
 
-            parent = current
-            parent.node_count = parent.node_count + 1
+        if eq(new_node.key, position.key):
+            position.value = new_node.value
+            return position
 
-            if lt(key, current.key):
-                current = current.left
-                if current is None:
-                    parent.left = Node(key, value)
-            else:
-                current = current.right
-                if current is None:
-                    parent.right = Node(key, value)
+        if lt(new_node.key, position.key):
+            position.left = self._put(new_node, position.left)
+        else:
+            position.right = self._put(new_node, position.right)
+
+        position.node_count = (position.left.node_count if position.left is not None else 0) \
+            + (position.right.node_count if position.right is not None else 0) \
+            + 1
+
+        return position
 
     def size(self):
         return self._root.node_count if self._root is not None else 0

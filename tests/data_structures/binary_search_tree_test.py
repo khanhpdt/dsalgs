@@ -37,6 +37,20 @@ class TestBinarySearchTree:
         for i in range(len(self.default_keys)):
             assert self.tree.get(self.default_keys[i]).node_count == node_counts[i]
 
+    def test_put_replace_existing_value(self):
+        self.build_default_tree()
+
+        size_before = self.tree.size()
+
+        keys = self.default_keys.copy()
+        random.shuffle(keys)
+        for key in keys:
+            new_value = 10000 + key
+            self.tree.put(key, new_value)
+
+            assert self.tree.get(key).value == new_value
+            assert self.tree.size() == size_before
+
     def build_default_tree(self):
         self.default_keys = [157, 120, 168, 100, 140, 110, 130, 135]
         for key in self.default_keys:

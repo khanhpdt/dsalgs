@@ -2,10 +2,10 @@ from math import floor
 
 from src.common.key_value import Key, KeyValue
 from src.common.utils import lt, eq, shift_right, gt
-from src.data_structures.symbol_table import SymbolTable
+from src.data_structures.ordered_symbol_table import OrderedSymbolTable
 
 
-class BinarySearchSymbolTable(SymbolTable):
+class BinarySearchSymbolTable(OrderedSymbolTable):
 
     def __init__(self) -> None:
         self._items: [KeyValue] = []
@@ -43,9 +43,6 @@ class BinarySearchSymbolTable(SymbolTable):
 
     def max(self):
         return self._items[-1].key if not self.is_empty() else None
-
-    def is_empty(self):
-        return len(self._items) == 0
 
     def floor(self, key: Key):
         r = self.rank(key)
@@ -87,7 +84,7 @@ class BinarySearchSymbolTable(SymbolTable):
             return None
         return self._items[rank].key
 
-    def size(self, low: Key = None, high: Key = None):
+    def size_of_range(self, low: Key = None, high: Key = None):
         return len(self.range(low, high))
 
     def range(self, low: Key = None, high: Key = None):
@@ -105,3 +102,6 @@ class BinarySearchSymbolTable(SymbolTable):
             result.append(self._items[rank_of_high].key)
 
         return result
+
+    def size(self):
+        return len(self._items)

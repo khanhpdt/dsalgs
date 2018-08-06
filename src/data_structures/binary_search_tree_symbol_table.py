@@ -1,9 +1,9 @@
 from src.common.key_value import Key
 from src.data_structures.binary_search_tree import BinarySearchTree
-from src.data_structures.symbol_table import SymbolTable
+from src.data_structures.ordered_symbol_table import OrderedSymbolTable
 
 
-class BinarySearchTreeSymbolTable(SymbolTable):
+class BinarySearchTreeSymbolTable(OrderedSymbolTable):
 
     def __init__(self) -> None:
         self.tree = BinarySearchTree()
@@ -29,9 +29,6 @@ class BinarySearchTreeSymbolTable(SymbolTable):
         max_node = self.tree.max()
         return max_node.key if max_node is not None else None
 
-    def is_empty(self):
-        return self.tree.is_empty()
-
     def floor(self, key: Key):
         floor_node = self.tree.floor(key)
         return floor_node.key if floor_node is not None else None
@@ -47,9 +44,12 @@ class BinarySearchTreeSymbolTable(SymbolTable):
         node = self.tree.select(rank)
         return node.key if node is not None else None
 
-    def size(self, low: Key = None, high: Key = None):
+    def size_of_range(self, low: Key = None, high: Key = None):
         return len(self.range(low, high))
 
     def range(self, low: Key = None, high: Key = None):
         nodes = self.tree.range(low, high)
         return list(map(lambda node: node.key, nodes))
+
+    def size(self):
+        return self.tree.size()
