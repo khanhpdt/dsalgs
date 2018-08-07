@@ -3,7 +3,7 @@ from src.common.has_same_items import has_same_items
 from src.data_structures.graph import Graph
 
 
-class SingleSourcePathsTestCommon:
+class DepthFirstPathsTestCommon:
 
     def setup_method(self):
         self.graph = Graph()
@@ -64,14 +64,14 @@ class SingleSourcePathsTestCommon:
         self.assert_path(paths, 8, [])
 
 
-class TestSingleSourcePaths(SingleSourcePathsTestCommon):
+class TestDepthFirstPaths(DepthFirstPathsTestCommon):
 
     def setup_method(self):
         super().setup_method()
         self.TestClass = DepthFirstPaths
 
 
-class TestSingleSourcePaths2(SingleSourcePathsTestCommon):
+class TestDepthFirstPaths2(DepthFirstPathsTestCommon):
 
     def setup_method(self):
         super().setup_method()

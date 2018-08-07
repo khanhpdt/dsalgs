@@ -57,3 +57,6 @@ class Graph:
         if vertex is None:
             raise ValueError(f"Found no vertex with key: {vertex_key}.")
         return vertex.adjacent
+
+    def vertices(self):
+        return self._vertices.copy()
