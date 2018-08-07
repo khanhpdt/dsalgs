@@ -1,11 +1,11 @@
-from src.data_structures.graph import Graph, Vertex
+from src.algorithms.graph_search import GraphSearch
+from src.data_structures.graph import Vertex
 
 
-class DepthFirstSearch:
+class DepthFirstSearch(GraphSearch):
 
-    def __init__(self, graph: Graph, source: Vertex) -> None:
-        self.graph = graph
-        self.source = source
+    def __init__(self, source: Vertex) -> None:
+        super().__init__(source)
         self._marked = {}
 
         self._search(self.source)
