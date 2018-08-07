@@ -1,4 +1,4 @@
-from src.algorithms.single_source_paths import SingleSourcePaths, SingleSourcePaths2
+from src.algorithms.depth_first_paths import DepthFirstPaths, DepthFirstPaths2
 from src.common.has_same_items import has_same_items
 from src.data_structures.graph import Graph
 
@@ -68,11 +68,11 @@ class TestSingleSourcePaths(SingleSourcePathsTestCommon):
 
     def setup_method(self):
         super().setup_method()
-        self.TestClass = SingleSourcePaths
+        self.TestClass = DepthFirstPaths
 
 
 class TestSingleSourcePaths2(SingleSourcePathsTestCommon):
 
     def setup_method(self):
         super().setup_method()
-        self.TestClass = SingleSourcePaths2
+        self.TestClass = DepthFirstPaths2

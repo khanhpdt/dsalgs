@@ -3,8 +3,10 @@ from typing import Optional
 from src.data_structures.graph import Graph, Vertex
 
 
-class SingleSourcePaths:
+class DepthFirstPaths:
     """
+    Finds all the paths incident to the source using depth-first search.
+
     This implementation finds all the paths from the source to all of its connected vertices
     and saves those paths in memory.
     """
@@ -36,7 +38,7 @@ class SingleSourcePaths:
         return self._paths[v.key] if v.key in self._paths else []
 
 
-class SingleSourcePaths2:
+class DepthFirstPaths2:
     """
     This implementation does not store all the connected paths in memory.
     Instead, it only stores the second-to-last vertex of each path.
