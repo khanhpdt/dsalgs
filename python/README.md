@@ -1,4 +1,4 @@
-# ds-algorithms
+# About
 
 Data structures and Algorithms in Python
 
