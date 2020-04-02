@@ -3,9 +3,9 @@ package ll
 
 // Node represents a node in a linked list.
 type Node struct {
-	Content string
-	Next    *Node
-	Prev    *Node
+	Key  string
+	Next *Node
+	Prev *Node
 }
 
 // LinkedList represents a doubly linked list.
@@ -13,12 +13,12 @@ type LinkedList struct {
 	Head *Node
 }
 
-// Insert inserts a node with the given content to the linked list.
-func (l *LinkedList) Insert(s string) {
+// Insert inserts a node with the given key to the linked list.
+func (l *LinkedList) Insert(key string) {
 	if l.Head == nil {
-		l.Head = &Node{Content: s}
+		l.Head = &Node{Key: key}
 	} else {
-		var newNode = Node{Content: s, Next: l.Head}
+		var newNode = Node{Key: key, Next: l.Head}
 
 		newNode.Next.Prev = &newNode
 
@@ -26,12 +26,36 @@ func (l *LinkedList) Insert(s string) {
 	}
 }
 
-// Search returns the first node with content equal to s.
-func (l *LinkedList) Search(s string) *Node {
+// Search returns the first node with the given key.
+func (l *LinkedList) Search(key string) *Node {
 	for node := l.Head; node != nil; node = node.Next {
-		if node.Content == s {
+		if node.Key == key {
 			return node
 		}
+	}
+	return nil
+}
+
+// Delete deletes the node with given key from the list.
+// It returns the deleted node or nil if not found.
+func (l *LinkedList) Delete(key string) *Node {
+	for node := l.Head; node != nil; node = node.Next {
+		if node.Key != key {
+			continue
+		}
+
+		if node.Next != nil && node.Prev != nil { // in-middle node
+			node.Prev.Next = node.Next
+			node.Next.Prev = node.Prev
+		} else if node.Next != nil && node.Prev == nil { // first node
+			l.Head = node.Next
+			l.Head.Prev = nil
+		} else if node.Next == nil && node.Prev != nil { // last node
+			node.Prev.Next = nil
+		} else { // the only node in the list
+			l.Head = nil
+		}
+		return node
 	}
 	return nil
 }
