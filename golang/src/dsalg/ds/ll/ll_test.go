@@ -1,6 +1,9 @@
 package ll
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestInsertThenSearch(t *testing.T) {
 	var list = new(LinkedList)
@@ -115,5 +118,25 @@ func TestDeleteInMiddleNode(t *testing.T) {
 	}
 	if l.Head.Next.Next != nil {
 		t.Error("head.next.next != nil, want: nil")
+	}
+}
+
+func TestToString(t *testing.T) {
+	var l = new(LinkedList)
+	l.Insert("a")
+	l.Insert("b")
+	l.Insert("c")
+
+	var s = fmt.Sprintf("%s", l)
+	if s != "c, b, a" {
+		t.Errorf(`got = %s, want: "c, b, a"`, s)
+	}
+}
+
+func TestToStringEmptyList(t *testing.T) {
+	var l = new(LinkedList)
+	var s = fmt.Sprintf("%s", l)
+	if s != "" {
+		t.Errorf(`got = %s, want: ""`, s)
 	}
 }

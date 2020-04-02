@@ -1,6 +1,8 @@
 // Package ll provides linked list data structures.
 package ll
 
+import "strings"
+
 // Node represents a node in a linked list.
 type Node struct {
 	Key  string
@@ -58,4 +60,18 @@ func (l *LinkedList) Delete(key string) *Node {
 		return node
 	}
 	return nil
+}
+
+func (l *LinkedList) String() string {
+	var sb strings.Builder
+	var isFirst = true
+	for node := l.Head; node != nil; node = node.Next {
+		if !isFirst {
+			sb.WriteString(", ")
+		}
+		sb.WriteString(node.Key)
+
+		isFirst = false
+	}
+	return sb.String()
 }
