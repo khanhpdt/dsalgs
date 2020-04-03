@@ -128,8 +128,8 @@ func TestToString(t *testing.T) {
 	l.Insert("c")
 
 	var s = fmt.Sprintf("%s", l)
-	if s != "c, b, a" {
-		t.Errorf(`got = %s, want: "c, b, a"`, s)
+	if s != "c -> b -> a" {
+		t.Errorf(`got = %s, want: "c -> b -> a"`, s)
 	}
 }
 

@@ -67,7 +67,7 @@ func (l *LinkedList) String() string {
 	var isFirst = true
 	for node := l.Head; node != nil; node = node.Next {
 		if !isFirst {
-			sb.WriteString(", ")
+			sb.WriteString(" -> ")
 		}
 		sb.WriteString(node.Key)
 
