@@ -6,29 +6,27 @@ import (
 )
 
 type Stack struct {
-	Head *ll.Node
+	head *ll.Node
 }
 
-// Pop removes the top item (the item added last) from the stack.
-func (s *Stack) Pop() {
-	if s.Head != nil {
-		s.Head = s.Head.Next
+// Pop removes and returns the top item (the item added last) from the stack.
+// Return NOK if the stack is empty.
+func (s *Stack) Pop() (string, bool) {
+	if s.head != nil {
+		key := s.head.Key
+		s.head = s.head.Next
+		return key, true
 	}
+	return "", false
 }
 
 // Push adds the item to the top of the stack.
 func (s *Stack) Push(key string) {
-	var newNode = &ll.Node{Key: key}
-	if s.Head == nil {
-		s.Head = newNode
-	} else {
-		newNode.Next = s.Head
-		s.Head.Prev = newNode
-		s.Head = newNode
-	}
+	newNode := &ll.Node{Key: key, Next: s.head}
+	s.head = newNode
 }
 
 func (s *Stack) String() string {
-	var l = ll.LinkedList{Head: s.Head}
+	l := &ll.LinkedList{Head: s.head}
 	return l.String()
 }

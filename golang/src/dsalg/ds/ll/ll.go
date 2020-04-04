@@ -29,18 +29,18 @@ func (l *LinkedList) Insert(key string) {
 }
 
 // Search returns the first node with the given key.
-func (l *LinkedList) Search(key string) *Node {
+func (l *LinkedList) Search(key string) (*Node, bool) {
 	for node := l.Head; node != nil; node = node.Next {
 		if node.Key == key {
-			return node
+			return node, true
 		}
 	}
-	return nil
+	return nil, false
 }
 
 // Delete deletes the node with given key from the list.
 // It returns the deleted node or nil if not found.
-func (l *LinkedList) Delete(key string) *Node {
+func (l *LinkedList) Delete(key string) (*Node, bool) {
 	for node := l.Head; node != nil; node = node.Next {
 		if node.Key != key {
 			continue
@@ -57,9 +57,9 @@ func (l *LinkedList) Delete(key string) *Node {
 		} else { // the only node in the list
 			l.Head = nil
 		}
-		return node
+		return node, true
 	}
-	return nil
+	return nil, false
 }
 
 func (l *LinkedList) String() string {
@@ -74,4 +74,36 @@ func (l *LinkedList) String() string {
 		isFirst = false
 	}
 	return sb.String()
+}
+
+// Equal returns true if this list and the other list contains the same number of items
+// and the items have same keys in the same order.
+func (l *LinkedList) Equal(other *LinkedList) bool {
+	switch {
+	case l == nil && other == nil:
+		return true
+	case l == nil && other != nil:
+		return false
+	case l != nil && other == nil:
+		return false
+	}
+
+	switch {
+	case l.Head == nil && other.Head == nil:
+		return true
+	case l.Head == nil && other.Head != nil:
+		return false
+	case l.Head != nil && other.Head == nil:
+		return false
+	default:
+		return l.Head.Key == other.Head.Key && (&LinkedList{Head: l.Head.Next}).Equal(&LinkedList{Head: other.Head.Next})
+	}
+}
+
+func NewList(keys ...string) *LinkedList {
+	l := new(LinkedList)
+	for _, k := range keys {
+		l.Insert(k)
+	}
+	return l
 }

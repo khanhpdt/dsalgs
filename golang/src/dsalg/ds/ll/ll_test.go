@@ -8,14 +8,14 @@ import (
 func TestInsertThenSearch(t *testing.T) {
 	var list = new(LinkedList)
 
-	if list.Search("a") != nil {
+	if _, ok := list.Search("a"); ok {
 		t.Error(`Search("a") found, want: not found`)
 	}
 
 	list.Insert("a")
 
-	var node = list.Search("a")
-	if node == nil {
+	node, ok := list.Search("a")
+	if !ok {
 		t.Error(`Search("a") not found, want: found`)
 	}
 
@@ -61,14 +61,24 @@ func TestSetPreviousLink(t *testing.T) {
 	}
 }
 
+func TestDeleteNotExistingNode(t *testing.T) {
+	l := NewList("a")
+
+	_, ok := l.Delete("b")
+
+	if ok {
+		t.Errorf("Delete not existing key returns OK.")
+	}
+}
+
 func TestDeleteOnlyNode(t *testing.T) {
 	var l = new(LinkedList)
 	l.Insert("a")
 
-	var deleted = l.Delete("a")
+	deleted, _ := l.Delete("a")
 
-	if deleted == nil {
-		t.Error(`Delete("a") returns nil, want: not nil`)
+	if deleted.Key != "a" {
+		t.Errorf(`Delete wrong key. got: %q, want: "a"`, deleted.Key)
 	}
 	if l.Head != nil {
 		t.Error("list is still not nil, want: nil")
@@ -138,5 +148,27 @@ func TestToStringEmptyList(t *testing.T) {
 	var s = fmt.Sprintf("%s", l)
 	if s != "" {
 		t.Errorf(`got = %s, want: ""`, s)
+	}
+}
+
+func TestEqual(t *testing.T) {
+	tests := []struct {
+		l1   *LinkedList
+		l2   *LinkedList
+		want bool
+	}{
+		{nil, nil, true},
+		{nil, NewList("a"), false},
+		{(&LinkedList{Head: nil}), NewList("a"), false},
+		{NewList("a"), (&LinkedList{Head: nil}), false},
+		{NewList("a"), nil, false},
+		{NewList("a", "b"), NewList("a", "b"), true},
+		{NewList("a", "b"), NewList("b", "a"), false},
+		{NewList("a", "b"), NewList("a", "b", "a"), false},
+	}
+	for _, test := range tests {
+		if isEqual := test.l1.Equal(test.l2); isEqual != test.want {
+			t.Errorf("%s == %s? got %t, want: %t", test.l1, test.l2, isEqual, test.want)
+		}
 	}
 }
