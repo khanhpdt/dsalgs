@@ -32,3 +32,7 @@ func TestRootEmpty(t *testing.T) {
 		t.Errorf("root of empty returns OK")
 	}
 }
+
+func TestLen(t *testing.T) {
+	
+}
