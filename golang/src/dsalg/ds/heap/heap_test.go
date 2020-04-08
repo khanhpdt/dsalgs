@@ -1,6 +1,9 @@
 package heap
 
-import "testing"
+import (
+	"dsalg/utils/slice"
+	"testing"
+)
 
 func TestMaxHeap(t *testing.T) {
 	h := new(MaxHeap)
@@ -34,5 +37,44 @@ func TestRootEmpty(t *testing.T) {
 }
 
 func TestLen(t *testing.T) {
-	
+	h := new(MaxHeap)
+
+	if h.Len() != 0 {
+		t.Errorf("len = %d, want: 0", h.Len())
+	}
+
+	h.Insert("a")
+
+	if h.Len() != 1 {
+		t.Errorf("len = %d, want: 1", h.Len())
+	}
+
+	h.Insert("b")
+
+	if h.Len() != 2 {
+		t.Errorf("len = %d, want: 2", h.Len())
+	}
+}
+
+func TestNewMaxHeap(t *testing.T) {
+	tests := []struct {
+		items []string
+		want  []string
+	}{
+		{items: []string{}, want: []string{}},
+		{items: []string{"a"}, want: []string{"a"}},
+		{items: []string{"a", "b"}, want: []string{"b", "a"}},
+		{items: []string{"a", "b", "c"}, want: []string{"c", "b", "a"}},
+		{items: []string{"a", "c", "d", "e", "b"}, want: []string{"e", "c", "d", "a", "b"}},
+	}
+
+	for _, test := range tests {
+		h := NewMaxHeap(&test.items)
+
+		keys := h.Keys()
+
+		if !slice.Equal(&keys, &test.want) {
+			t.Errorf("got = %v, want: %s", keys, test.want)
+		}
+	}
 }

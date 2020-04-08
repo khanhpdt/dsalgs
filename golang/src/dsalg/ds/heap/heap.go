@@ -27,8 +27,7 @@ func (h *MaxHeap) swim(i int) {
 	}
 
 	if h.nodes[parent].key < h.nodes[largest].key {
-		h.nodes[parent], h.nodes[largest] = h.nodes[largest], h.nodes[parent]
-
+		h.Exchange(parent, largest)
 		// continue up to the root
 		h.swim(parent)
 	}
@@ -48,29 +47,24 @@ func (h *MaxHeap) Root() (string, bool) {
 	return h.nodes[0].key, true
 }
 
-// sink re-heapify the maxheap from i down to bottom.
-func (h *MaxHeap) sink(i int) {
-	if i <= 0 || i >= h.Len() {
-		return
-	}
-
+// Sink re-heapify the maxheap from i down to n.
+func (h *MaxHeap) Sink(i, n int) {
 	left, right := i*2+1, i*2+2
 
 	// no child
-	if left >= h.Len() {
+	if left >= n {
 		return
 	}
 
 	largest := left
-	if right < h.Len() && h.nodes[left].key < h.nodes[right].key {
+	if right < n && h.nodes[left].key < h.nodes[right].key {
 		largest = right
 	}
 
 	if h.nodes[i].key < h.nodes[largest].key {
-		h.nodes[i], h.nodes[largest] = h.nodes[largest], h.nodes[i]
-
+		h.Exchange(i, largest)
 		// continue down to the bottom
-		h.sink(largest)
+		h.Sink(largest, n)
 	}
 }
 
@@ -91,7 +85,7 @@ func NewMaxHeap(items *[]string) *MaxHeap {
 
 	// though this for loop seems to take O(NlogN), it actually only takes O(N).
 	for i := nonLeaveNodeStart; i >= 0; i-- {
-		h.sink(i)
+		h.Sink(i, h.Len())
 	}
 
 	return h
@@ -108,4 +102,13 @@ func (h *MaxHeap) Exchange(i, j int) {
 		panic(fmt.Sprintf("Either i or j is in invalid range: i=%d, j=%d.", i, j))
 	}
 	h.nodes[i], h.nodes[j] = h.nodes[j], h.nodes[i]
+}
+
+// Keys returns the keys in the nodes.
+func (h *MaxHeap) Keys() []string {
+	keys := make([]string, h.Len())
+	for i, n := range h.nodes {
+		keys[i] = n.key
+	}
+	return keys
 }
