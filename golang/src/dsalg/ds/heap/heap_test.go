@@ -69,11 +69,11 @@ func TestNewMaxHeap(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		h := NewMaxHeap(&test.items)
+		h := NewMaxHeap(test.items)
 
 		keys := h.Keys()
 
-		if !slice.Equal(&keys, &test.want) {
+		if !slice.Equal(keys, test.want) {
 			t.Errorf("got = %v, want: %s", keys, test.want)
 		}
 	}

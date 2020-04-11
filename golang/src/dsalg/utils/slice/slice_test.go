@@ -16,7 +16,7 @@ func TestEqual(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		isEqual := Equal(&test.x, &test.y)
+		isEqual := Equal(test.x, test.y)
 		if isEqual != test.want {
 			t.Errorf("got = %t, want: %t", isEqual, test.want)
 		}

@@ -21,9 +21,9 @@ func TestHeapSort(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		sorted := HeapSort(&test.input)
-		if !slice.Equal(sorted, &test.want) {
-			t.Errorf("got = %v, want = %v", *sorted, test.want)
+		sorted := HeapSort(test.input)
+		if !slice.Equal(sorted, test.want) {
+			t.Errorf("got = %v, want = %v", sorted, test.want)
 		}
 	}
 }

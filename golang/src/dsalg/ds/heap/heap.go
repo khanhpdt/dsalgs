@@ -69,16 +69,16 @@ func (h *MaxHeap) Sink(i, n int) {
 }
 
 // NewMaxHeap constructs a new max heap from the given items.
-func NewMaxHeap(items *[]string) *MaxHeap {
+func NewMaxHeap(items []string) *MaxHeap {
 	h := new(MaxHeap)
 
-	if len(*items) == 0 {
+	if len(items) == 0 {
 		return h
 	}
 
 	// map items to nodes
-	for i := 0; i < len(*items); i++ {
-		h.nodes = append(h.nodes, &Node{key: (*items)[i]})
+	for i := 0; i < len(items); i++ {
+		h.nodes = append(h.nodes, &Node{key: items[i]})
 	}
 
 	nonLeaveNodeStart := (h.Len() - 1) / 2
